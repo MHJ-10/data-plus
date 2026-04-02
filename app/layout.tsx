@@ -23,7 +23,7 @@ export default function RootLayout({
       lang="fa"
       dir="rtl"
       data-theme="light"
-      className={`${harmattan.variable} h-full antialiased`}
+      className={`${harmattan.className} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>

@@ -36,12 +36,9 @@
 
   --radius: 0.25rem;
   --field-radius: 0.5rem;
-
-  --font-harmattan: var(--font-harmattan);
 }
 
 [data-theme="dark"] {
-  color-scheme: dark;
   --accent: oklch(75.24% 0.0884 225.59);
   --accent-foreground: oklch(15% 0.0177 225.59);
   --background: oklch(12% 0.0043 225.59);
@@ -72,4 +69,8 @@
   --surface-tertiary-foreground: oklch(99.11% 0.0043 225.59);
   --warning: oklch(82.03% 0.14 72.95);
   --warning-foreground: oklch(21.03% 0.0059 72.95);
+}
+
+@theme inline {
+  --font-harmattan: var(--font-harmattan);
 }
