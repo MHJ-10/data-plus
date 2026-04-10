@@ -13,7 +13,7 @@ export default function DashboardLayout({
       <Sidebar className="col-span-1" paths={sidebarPaths} />
       <div className="col-span-5 flex flex-col">
         <header className="bg-accent h-15">Header</header>
-        <main>{children}</main>
+        <main className="p-2 sm:p-5">{children}</main>
       </div>
     </div>
   );

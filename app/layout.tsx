@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Harmattan } from "next/font/google";
 import "./globals.css";
+import Provider from "./provider";
 
 const harmattan = Harmattan({
   variable: "--font-harmattan",
@@ -25,7 +26,9 @@ export default function RootLayout({
       data-theme="light"
       className={`${harmattan.className} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }
