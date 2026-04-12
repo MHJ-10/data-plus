@@ -1,2 +1,2 @@
-export { default as Sidebar } from "./sidebar";
 export { default as Uploader } from "./uploader";
+export { default as Menu } from "./menu";
