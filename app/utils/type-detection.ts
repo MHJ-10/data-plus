@@ -1,0 +1,108 @@
+export type ColumnType =
+  | "boolean"
+  | "number"
+  | "date"
+  | "id-like"
+  | "text"
+  | "category";
+
+export interface DetectColumnTypeResponse {
+  type: ColumnType;
+  uniqueRatio: number;
+  avgStringLength: number;
+}
+
+function isBoolean(val: any) {
+  if (typeof val === "boolean") return true;
+
+  const v = String(val).toLowerCase();
+  return ["true", "false", "yes", "no", "0", "1"].includes(v);
+}
+
+export function looksLikeId(colName: string) {
+  const name = colName.toLowerCase();
+
+  const idKeywords = ["id", "uuid", "ean", "code", "phone", "index"];
+
+  if (idKeywords.some((k) => name.includes(k))) return true;
+  return false;
+}
+
+function isNumber(val: any) {
+  return typeof val === "number" && !isNaN(val);
+}
+
+function isDate(val: any) {
+  const d = new Date(val);
+  return !isNaN(d.getTime());
+}
+
+function detectColumnType(arr: any, colName: string): DetectColumnTypeResponse {
+  const clean = arr.filter((v) => v !== null && v !== undefined && v !== "");
+
+  let type: ColumnType | null;
+
+  const total = clean.length;
+
+  let numberCount = 0;
+  let booleanCount = 0;
+  let dateCount = 0;
+  let stringCount = 0;
+
+  let totalStringLength = 0;
+
+  const uniqueSet = new Set<any>();
+
+  clean.forEach((v) => {
+    uniqueSet.add(v);
+
+    if (isNumber(v)) numberCount++;
+    else if (isBoolean(v)) booleanCount++;
+    else if (isDate(v)) dateCount++;
+    else {
+      stringCount++;
+      totalStringLength += String(v).length;
+    }
+  });
+
+  const uniqueCount = uniqueSet.size;
+  const uniqueRatio = uniqueCount / total;
+
+  const numberRatio = numberCount / total;
+  const booleanRatio = booleanCount / total;
+  const dateRatio = dateCount / total;
+
+  const avgStringLength = stringCount > 0 ? totalStringLength / stringCount : 0;
+
+  if (uniqueCount <= 2 && booleanRatio > 0.8) type = "boolean";
+  else if (looksLikeId(colName)) type = "id-like";
+  else if (numberRatio > 0.8) type = "number";
+  else if (dateRatio > 0.7) type = "date";
+  else if (avgStringLength > 20 && uniqueRatio > 0.5) type = "text";
+  else type = "category";
+
+  return { avgStringLength, uniqueRatio, type };
+}
+
+function getRandomSample(arr: any[], size: number = 100) {
+  const shuffled = [...arr].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, size);
+}
+
+export function detectAllColumns(data: any[]) {
+  if (!data.length) return {};
+
+  const columns = Object.keys(data[0]);
+
+  const result: Record<string, ColumnType> = {};
+
+  const sampleData = getRandomSample(data, 100);
+
+  columns.forEach((col) => {
+    const values = sampleData.map((row) => row[col]);
+
+    result[col] = detectColumnType(values, col);
+  });
+
+  return result;
+}
