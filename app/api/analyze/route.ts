@@ -1,3 +1,5 @@
+import { buildChartData } from "@/utils/chart-builder";
+import { generateCharts } from "@/utils/chart-candidate";
 import { mapAllRoles } from "@/utils/role-convertor";
 import { detectAllColumns } from "@/utils/type-detection";
 import Papa from "papaparse";
@@ -19,13 +21,17 @@ export async function POST(req: Request) {
     skipEmptyLines: true,
   });
 
-  //Type detection
   const types = detectAllColumns(data);
-
-  // Role Detection
   const roles = mapAllRoles(types);
+  const charts = generateCharts(roles);
+  const chartData = charts.map((chart) => {
+    buildChartData(data, chart);
+  });
 
   return Response.json({
+    types,
     roles,
+    charts,
+    chartData,
   });
 }

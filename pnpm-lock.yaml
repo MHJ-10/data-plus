@@ -17,6 +17,9 @@ importers:
       '@openrouter/sdk':
         specifier: ^0.11.2
         version: 0.11.2
+      arquero:
+        specifier: ^8.0.3
+        version: 8.0.3
       axios:
         specifier: ^1.14.0
         version: 1.14.0
@@ -1486,6 +1489,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@uwdata/flechette@2.4.0':
+    resolution: {integrity: sha512-cwxeYWe2iua4zPUopiqhYXkxaQWr0GK4Kbak7i0zemo3sgmNJ3IE+pNi6XD1dOK7q50SEXTLwieP5JycG6D56A==}
+
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -1509,6 +1515,9 @@ packages:
   aria-query@5.3.2:
     resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
     engines: {node: '>= 0.4'}
+
+  arquero@8.0.3:
+    resolution: {integrity: sha512-7YQwe/GPVBUiahaPwEwgvu6VHyuhX0Ut61JZlIJYsAobOH5unLBwTmh43BobhX/N4dW1sb8WyKlQ8GjFq2whzQ==}
 
   array-buffer-byte-length@1.0.2:
     resolution: {integrity: sha512-LHE+8BuR7RYGDKvnrmcuSq3tDcKv9OFEXQt/HpbZhY7V6h0zlUXutnAD82GiFx9rdieCMjkvtcsPqBwgUl1Iiw==}
@@ -4913,6 +4922,8 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
+  '@uwdata/flechette@2.4.0': {}
+
   acorn-jsx@5.3.2(acorn@8.16.0):
     dependencies:
       acorn: 8.16.0
@@ -4933,6 +4944,11 @@ snapshots:
   argparse@2.0.1: {}
 
   aria-query@5.3.2: {}
+
+  arquero@8.0.3:
+    dependencies:
+      '@uwdata/flechette': 2.4.0
+      acorn: 8.16.0
 
   array-buffer-byte-length@1.0.2:
     dependencies:

@@ -38,7 +38,9 @@ function isDate(val: any) {
 }
 
 function detectColumnType(arr: any, colName: string): DetectColumnTypeResponse {
-  const clean = arr.filter((v) => v !== null && v !== undefined && v !== "");
+  const clean = arr.filter(
+    (v: any) => v !== null && v !== undefined && v !== "",
+  );
 
   let type: ColumnType | null;
 
@@ -53,7 +55,7 @@ function detectColumnType(arr: any, colName: string): DetectColumnTypeResponse {
 
   const uniqueSet = new Set<any>();
 
-  clean.forEach((v) => {
+  clean.forEach((v: any) => {
     uniqueSet.add(v);
 
     if (isNumber(v)) numberCount++;
@@ -96,7 +98,7 @@ export function detectAllColumns(data: any[]) {
 
   const result: Record<string, ColumnType> = {};
 
-  const sampleData = getRandomSample(data, 100);
+  const sampleData = getRandomSample(data, Math.min(data.length, 200));
 
   columns.forEach((col) => {
     const values = sampleData.map((row) => row[col]);

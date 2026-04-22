@@ -2,13 +2,18 @@ import { ColumnType } from "./type-detection";
 
 type ColumnRole = "dimension" | "measure" | "temporal" | "ignore";
 
-export function mapTypeToRole(
-  type: ColumnType,
-  stats: {
-    uniqueRatio: number;
-    avgStringLength: number;
-  },
-): ColumnRole {
+interface ColumnStat {
+  uniqueRatio: number;
+  avgStringLength: number;
+}
+
+export interface MapAllRolesResponse {
+  column: string;
+  role: ColumnRole;
+  stats: ColumnStat;
+}
+
+export function mapTypeToRole(type: ColumnType, stats: ColumnStat): ColumnRole {
   const { uniqueRatio, avgStringLength } = stats;
 
   if (type === "id-like") {
@@ -38,12 +43,13 @@ export function mapTypeToRole(
   return "dimension";
 }
 
-export function mapAllRoles(data: Record<string, any>) {
+export function mapAllRoles(data: Record<string, any>): MapAllRolesResponse[] {
   return Object.entries(data).map(
     ([column, { type, avgStringLength, uniqueRatio }]) => ({
       column,
+      stats: { avgStringLength, uniqueRatio },
       role: mapTypeToRole(type, {
-        avgStringLength: avgStringLength,
+        avgStringLength,
         uniqueRatio,
       }),
     }),
