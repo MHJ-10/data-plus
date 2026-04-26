@@ -1,5 +1,4 @@
-import { mapAllRoles, MapAllRolesResponse } from "./role-convertor";
-import { detectAllColumns } from "./type-detection";
+import { MapAllRolesResponse } from "./role-convertor";
 
 type ChartType = "bar" | "line" | "area" | "pie" | "treemap";
 
@@ -60,8 +59,7 @@ export const generateCharts = (
   });
 
   dimensions.forEach((dim) => {
-    console.log(dim);
-    const u = dim.stats.uniqueRatio;
+    // const u = dim.stats.uniqueRatio;
 
     // if (u > 0.02 && u < 0.3) {
     charts.push({

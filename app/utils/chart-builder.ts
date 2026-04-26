@@ -1,10 +1,9 @@
-import { ChartCandidate } from "./chart-candidate";
 import * as aq from "arquero";
+import { ChartCandidate } from "./chart-candidate";
 
 export function buildChartData(data: any, chart: ChartCandidate) {
-  const table = aq.fromJSON(data);
-
-  console.log(table);
+  const table = aq.from(data);
+  const charts = [];
 
   // if (chart.type === "bar" || chart.type === "treemap") {
   //   return table
@@ -16,14 +15,15 @@ export function buildChartData(data: any, chart: ChartCandidate) {
   // }
 
   // // 🟣 PIE
-  // if (chart.type === "pie") {
-  //   return table
-  //     .groupby(chart.x)
-  //     .rollup({
-  //       value: aq.op.count(),
-  //     })
-  //     .objects();
-  // }
+  if (chart.type === "pie" && chart.x) {
+    const chartData = table
+      .groupby(chart.x)
+      .rollup({
+        value: aq.op.count(),
+      })
+      .objects();
+    charts.push(chartData);
+  }
 
   // // 🔵 LINE / AREA
   // if (chart.type === "line" || chart.type === "area") {
@@ -36,5 +36,5 @@ export function buildChartData(data: any, chart: ChartCandidate) {
   //     }));
   // }
 
-  return [];
+  return charts;
 }
