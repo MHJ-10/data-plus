@@ -11,6 +11,7 @@ const LineChart = (props: ChartBaseProps) => {
       <XAxis dataKey={nameKey || "name"} stroke="var(--color-foreground)" />
       <YAxis
         width="auto"
+        direction="ltr"
         dataKey={dataKey || "value"}
         stroke="var(--color-foreground)"
       />

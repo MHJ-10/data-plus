@@ -14,7 +14,7 @@ const AreaChart = (props: ChartBaseProps) => {
         </linearGradient>
       </defs>
       <XAxis dataKey={nameKey || "name"} stroke="var(--color-foreground)" />
-      <YAxis width="auto" stroke="var(--color-foreground)" />
+      <YAxis width="auto" direction="ltr" stroke="var(--color-foreground)" />
       <Tooltip />
       <Area
         type="monotone"
