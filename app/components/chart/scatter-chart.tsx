@@ -26,11 +26,15 @@ const ScatterChart = (props: ChartBaseProps) => {
         direction="ltr"
         stroke="var(--color-foreground)"
       />
-      <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+      <Tooltip
+        wrapperClassName="!bg-segment rounded-md !border-border !p-1"
+        cursor={{ strokeDasharray: "3 3" }}
+      />
       <Scatter
         className="fill-link"
         activeShape={{ fill: "var(--color-accent)" }}
         data={data}
+        fill="var(--color-foreground)"
       />
     </RScatterChart>
   );

@@ -53,14 +53,15 @@ const TreemapChart = (props: ChartBaseProps) => {
   );
 
   return (
-    <ResponsiveContainer height="100%" width="100%">
+    <ResponsiveContainer className="size-full">
       <Treemap
         data={sortedData}
         nameKey={nameKey || "name"}
         dataKey={valueKey}
+        fill="var(--color-foreground)"
         content={<CustomizedContent data={sortedData} dataKey={valueKey} />}
       >
-        <Tooltip />
+        <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
       </Treemap>
     </ResponsiveContainer>
   );

@@ -15,7 +15,7 @@ const BarChart = (props: ChartBaseProps) => {
     >
       <XAxis dataKey={nameKey || "name"} stroke="var(--color-foreground)" />
       <YAxis width="auto" direction="ltr" stroke="var(--color-foreground)" />
-      <Tooltip />
+      <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
       <Bar
         dataKey={dataKey || "value"}
         fill="var(--color-link)"

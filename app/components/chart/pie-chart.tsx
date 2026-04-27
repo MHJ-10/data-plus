@@ -16,9 +16,9 @@ const PieChart = (props: ChartBaseProps) => {
         cy="50%"
         outerRadius="100%"
         fill="var(--color-link)"
-        isAnimationActive={true}
+        stroke="var(--color-background)"
       />
-      <Tooltip />
+      <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
     </RPieChart>
   );
 };

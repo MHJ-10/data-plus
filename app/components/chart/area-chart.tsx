@@ -15,7 +15,7 @@ const AreaChart = (props: ChartBaseProps) => {
       </defs>
       <XAxis dataKey={nameKey || "name"} stroke="var(--color-foreground)" />
       <YAxis width="auto" direction="ltr" stroke="var(--color-foreground)" />
-      <Tooltip />
+      <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
       <Area
         type="monotone"
         dataKey={dataKey || "value"}

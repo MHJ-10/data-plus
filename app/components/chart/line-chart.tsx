@@ -24,7 +24,7 @@ const LineChart = (props: ChartBaseProps) => {
         dot={{ fill: "var(--color-accent)" }}
         activeDot={{ stroke: "var(--color-link)" }}
       />
-      <Tooltip />
+      <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
     </RLineChart>
   );
 };
