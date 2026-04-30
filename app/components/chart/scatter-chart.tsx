@@ -10,18 +10,14 @@ import {
 import { ChartBaseProps } from "./interface";
 
 const ScatterChart = (props: ChartBaseProps) => {
-  const { data, dataKey, nameKey } = props;
+  const { data, dataKey = "x", nameKey = "y" } = props;
 
   return (
     <RScatterChart className="aspect-[1.618] size-full" responsive>
-      <XAxis
-        type="number"
-        dataKey={dataKey || "x"}
-        stroke="var(--color-foreground)"
-      />
+      <XAxis type="number" dataKey={dataKey} stroke="var(--color-foreground)" />
       <YAxis
         type="number"
-        dataKey={nameKey || "y"}
+        dataKey={nameKey}
         width="auto"
         direction="ltr"
         stroke="var(--color-foreground)"

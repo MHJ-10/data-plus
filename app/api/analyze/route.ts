@@ -27,9 +27,6 @@ export async function POST(req: Request) {
   const chartData = charts.map((chart) => buildChartData(data, chart));
 
   return Response.json({
-    types,
-    roles,
-    charts,
-    chartData,
+    charts: chartData,
   });
 }

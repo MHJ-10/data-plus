@@ -14,6 +14,15 @@ const CustomizedContent = (props: any) => {
     return `color-mix(in srgb, var(--color-link) ${intensity}%, white)`;
   };
 
+  const truncateText = (text: string, maxWidth: number) => {
+    const avgCharWidth = 6;
+    const maxChars = Math.floor(maxWidth / avgCharWidth);
+
+    if (text.length <= maxChars) return text;
+
+    return text.slice(0, maxChars - 1) + "…";
+  };
+
   const values = data.map((d: any) => d[dataKey]);
 
   const min = Math.min(...values);
@@ -26,17 +35,16 @@ const CustomizedContent = (props: any) => {
         y={y}
         width={width}
         height={height}
-        style={{
-          fill: getColor(value, min, max),
-        }}
+        style={{ fill: getColor(value, min, max) }}
       />
       {width > 50 && height > 25 && (
         <text
-          x={x + 50}
-          y={y + 20}
-          className="fill-background text-center text-lg font-medium"
+          x={x + width / 2}
+          y={y + height / 2 + 7}
+          textAnchor="middle"
+          className="fill-background text-sm"
         >
-          {name}
+          {truncateText(name, width)}
         </text>
       )}
     </g>
@@ -44,22 +52,20 @@ const CustomizedContent = (props: any) => {
 };
 
 const TreemapChart = (props: ChartBaseProps) => {
-  const { data, dataKey, nameKey } = props;
-
-  const valueKey = dataKey || "value";
+  const { data, dataKey = "value", nameKey = "name" } = props;
 
   const sortedData = data.sort(
-    (a, b) => (b[valueKey] as number) - (a[valueKey] as number),
+    (a, b) => (b[dataKey] as number) - (a[dataKey] as number),
   );
 
   return (
     <ResponsiveContainer className="size-full">
       <Treemap
         data={sortedData}
-        nameKey={nameKey || "name"}
-        dataKey={valueKey}
+        nameKey={nameKey}
+        dataKey={dataKey}
         fill="var(--color-foreground)"
-        content={<CustomizedContent data={sortedData} dataKey={valueKey} />}
+        content={<CustomizedContent data={sortedData} dataKey={dataKey} />}
       >
         <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
       </Treemap>

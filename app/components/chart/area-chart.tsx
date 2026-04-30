@@ -3,7 +3,7 @@ import { Area, AreaChart as RAreaChart, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartBaseProps } from "./interface";
 
 const AreaChart = (props: ChartBaseProps) => {
-  const { data, dataKey, nameKey } = props;
+  const { data, dataKey = "value", nameKey = "name" } = props;
 
   return (
     <RAreaChart className="aspect-[1.618] size-full" responsive data={data}>
@@ -13,12 +13,12 @@ const AreaChart = (props: ChartBaseProps) => {
           <stop offset="95%" stopColor="var(--color-link)" stopOpacity={0} />
         </linearGradient>
       </defs>
-      <XAxis dataKey={nameKey || "name"} stroke="var(--color-foreground)" />
+      <XAxis dataKey={nameKey} stroke="var(--color-foreground)" />
       <YAxis width="auto" direction="ltr" stroke="var(--color-foreground)" />
       <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
       <Area
         type="monotone"
-        dataKey={dataKey || "value"}
+        dataKey={dataKey}
         stroke="var(--color-accent)"
         fillOpacity={1}
         fill="url(#colorValue)"

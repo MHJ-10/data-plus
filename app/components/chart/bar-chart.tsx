@@ -4,7 +4,7 @@ import { BarChart as RBarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 import { ChartBaseProps } from "./interface";
 
 const BarChart = (props: ChartBaseProps) => {
-  const { data, dataKey, nameKey } = props;
+  const { data, dataKey = "value", nameKey = "name" } = props;
 
   return (
     <RBarChart
@@ -13,11 +13,11 @@ const BarChart = (props: ChartBaseProps) => {
       responsive
       data={data}
     >
-      <XAxis dataKey={nameKey || "name"} stroke="var(--color-foreground)" />
+      <XAxis dataKey={nameKey} stroke="var(--color-foreground)" />
       <YAxis width="auto" direction="ltr" stroke="var(--color-foreground)" />
       <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
       <Bar
-        dataKey={dataKey || "value"}
+        dataKey={dataKey}
         fill="var(--color-link)"
         activeBar={{
           fill: "var(--color-accent)",

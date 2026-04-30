@@ -1,6 +1,6 @@
 import { MapAllRolesResponse } from "./role-convertor";
 
-type ChartType = "bar" | "line" | "area" | "pie" | "treemap";
+export type ChartType = "bar" | "line" | "area" | "pie" | "treemap" | "scatter";
 
 export interface ChartCandidate {
   type: ChartType;
@@ -19,7 +19,7 @@ export const generateCharts = (
   const charts: ChartCandidate[] = [];
 
   dimensions.forEach((dim) => {
-    // if (dim.stats.uniqueRatio > 0.7) return;
+    if (dim.stats.uniqueRatio > 0.7) return;
 
     measures.forEach((measure) => {
       charts.push({
@@ -29,14 +29,14 @@ export const generateCharts = (
         score: 0.8 + (1 - dim.stats.uniqueRatio),
       });
 
-      //   if (dim.stats.uniqueRatio > 0.05) {
-      charts.push({
-        type: "treemap",
-        x: dim.column,
-        y: measure.column,
-        score: 0.7,
-      });
-      //   }
+      if (dim.stats.uniqueRatio > 0.05) {
+        charts.push({
+          type: "treemap",
+          x: dim.column,
+          y: measure.column,
+          score: 0.7,
+        });
+      }
     });
   });
 
@@ -59,15 +59,15 @@ export const generateCharts = (
   });
 
   dimensions.forEach((dim) => {
-    // const u = dim.stats.uniqueRatio;
+    const u = dim.stats.uniqueRatio;
 
-    // if (u > 0.02 && u < 0.3) {
-    charts.push({
-      type: "pie",
-      x: dim.column,
-      score: 0.85,
-    });
-    // }
+    if (u > 0.02 && u < 0.3) {
+      charts.push({
+        type: "pie",
+        x: dim.column,
+        score: 0.85,
+      });
+    }
   });
 
   return charts;
