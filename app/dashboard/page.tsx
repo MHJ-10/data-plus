@@ -1,74 +1,148 @@
-import {
-  AreaChart,
-  BarChart,
-  LineChart,
-  PieChart,
-  ScatterChart,
-  TreemapChart,
-} from "@/components";
-import { Card } from "@heroui/react";
+"use client";
+
+import { BarChart, ChartCard } from "@/components";
+import { Button, Card, Tabs } from "@heroui/react";
+import { EllipseIcon, EllipsisIcon } from "lucide-react";
 
 const data = [
   {
-    name: "Page A",
-    uv: 4000,
+    Category: "Books & Stationery",
+    value: 388.5,
   },
   {
-    name: "Page B",
-    uv: 3000,
+    Category: "Shoes & Footwear",
+    value: 491,
   },
   {
-    name: "Page C",
-    uv: 2000,
+    Category: "Kitchen Appliances",
+    value: 251,
   },
   {
-    name: "Page D",
-    uv: 2780,
+    Category: "Kids' Clothing",
+    value: 397.8,
   },
   {
-    name: "Page E",
-    uv: 1890,
+    Category: "Skincare",
+    value: 514.6666666666666,
   },
   {
-    name: "Page F",
-    uv: 2390,
+    Category: "Laptops & Computers",
+    value: 328,
   },
   {
-    name: "Page G",
-    uv: 3490,
+    Category: "Automotive",
+    value: 421.66666666666663,
+  },
+  {
+    Category: "Fitness Equipment",
+    value: 703.3333333333334,
+  },
+  {
+    Category: "Health & Wellness",
+    value: 268.3333333333333,
+  },
+  {
+    Category: "Cleaning Supplies",
+    value: 391.3333333333333,
+  },
+  {
+    Category: "Cycling",
+    value: 799.3333333333334,
+  },
+  {
+    Category: "Team Sports",
+    value: 523.5,
+  },
+  {
+    Category: "Smartphones",
+    value: 449.25,
+  },
+  {
+    Category: "Women's Clothing",
+    value: 518.8,
+  },
+  {
+    Category: "Bedding & Bath",
+    value: 453,
+  },
+  {
+    Category: "Grooming Tools",
+    value: 702.5,
+  },
+  {
+    Category: "Clothing & Apparel",
+    value: 858,
+  },
+  {
+    Category: "Furniture",
+    value: 689,
+  },
+  {
+    Category: "Sports & Outdoors",
+    value: 396.6666666666667,
+  },
+  {
+    Category: "Fragrances",
+    value: 477.5,
+  },
+  {
+    Category: "Haircare",
+    value: 681.6666666666666,
+  },
+  {
+    Category: "Fishing & Hunting",
+    value: 100,
+  },
+  {
+    Category: "Office Supplies",
+    value: 465.2,
+  },
+  {
+    Category: "Home Decor",
+    value: 782.5,
+  },
+  {
+    Category: "Camping & Hiking",
+    value: 612.6666666666666,
+  },
+  {
+    Category: "Beauty & Personal Care",
+    value: 278.5,
+  },
+  {
+    Category: "Cameras & Accessories",
+    value: 444.5,
+  },
+  {
+    Category: "Men's Clothing",
+    value: 464.5,
+  },
+  {
+    Category: "Accessories (Bags, Hats, Belts)",
+    value: 206,
+  },
+  {
+    Category: "Smartwatches",
+    value: 32,
+  },
+  {
+    Category: "Makeup",
+    value: 257.5,
+  },
+  {
+    Category: "Home & Kitchen",
+    value: 367.5,
   },
 ];
 
 const DashboardPage = () => {
   return (
-    <div className="grid grid-cols-1 gap-5 md:grid-cols-1 lg:grid-cols-3">
-      <Card className="h-96" variant="secondary">
-        <BarChart data={data} dataKey="uv" />
-      </Card>
-      <Card className="h-96" variant="secondary">
-        <PieChart data={data} dataKey="uv" />
-      </Card>
-      <Card className="h-96" variant="secondary">
-        <LineChart data={data} dataKey="uv" />
-      </Card>
-      <Card className="h-96" variant="secondary">
-        <AreaChart data={data} dataKey="uv" />
-      </Card>
-      <Card className="h-96 lg:col-span-2" variant="secondary">
-        <TreemapChart data={data} dataKey="uv" />
-      </Card>
-      <Card className="h-96" variant="secondary">
-        <ScatterChart
-          data={[
-            { x: 100, y: 200, z: 200 },
-            { x: 120, y: 100, z: 260 },
-            { x: 170, y: 300, z: 400 },
-            { x: 140, y: 250, z: 280 },
-            { x: 150, y: 400, z: 500 },
-            { x: 110, y: 280, z: 200 },
-          ]}
-        />
-      </Card>
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-1 lg:grid-cols-2">
+      <ChartCard
+        data={data}
+        title="متن تستی برای چارت"
+        types={["bar", "treemap"]}
+      />
     </div>
   );
 };

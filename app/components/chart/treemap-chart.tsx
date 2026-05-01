@@ -54,18 +54,19 @@ const CustomizedContent = (props: any) => {
 const TreemapChart = (props: ChartBaseProps) => {
   const { data, dataKey = "value", nameKey = "name" } = props;
 
-  const sortedData = data.sort(
+  const sortedData = [...data].sort(
     (a, b) => (b[dataKey] as number) - (a[dataKey] as number),
   );
 
   return (
-    <ResponsiveContainer className="size-full">
+    <ResponsiveContainer className="aspect-[1.618] size-full">
       <Treemap
         data={sortedData}
         nameKey={nameKey}
         dataKey={dataKey}
         fill="var(--color-foreground)"
         content={<CustomizedContent data={sortedData} dataKey={dataKey} />}
+        animationDuration={500}
       >
         <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
       </Treemap>

@@ -15,6 +15,7 @@
     "arquero": "^8.0.3",
     "axios": "^1.14.0",
     "clsx": "^2.1.1",
+    "html-to-image": "^1.11.13",
     "lucide-react": "1.0.0-rc.1",
     "next": "16.2.1",
     "next-auth": "^4.24.13",
