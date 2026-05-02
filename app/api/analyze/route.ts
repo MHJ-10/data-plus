@@ -8,7 +8,6 @@ export async function POST(req: Request) {
   const formData = await req.formData();
   const file = formData.get("file") as File;
 
-  // Convert File to Array
   if (!file) {
     return Response.json({ error: "No file uploaded" }, { status: 400 });
   }

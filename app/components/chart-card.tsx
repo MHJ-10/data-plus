@@ -21,16 +21,17 @@ import TreemapChart from "./chart/treemap-chart";
 import LineChart from "./chart/line-chart";
 import ScatterChart from "./chart/scatter-chart";
 import { useDownloadPNG } from "@/hooks";
-import { downloadCSVFile } from "@/utils";
+import { cn, downloadCSVFile } from "@/utils";
 
 interface ChartCardProps<T = { [key: string]: string | number }> {
   data: T[];
   types: ChartType[];
   title: string;
+  className?: string;
 }
 
 const ChartCard = (props: ChartCardProps) => {
-  const { data, title, types } = props;
+  const { data, title, types, className } = props;
 
   const [selectedType, setSelectedType] = useState<ChartType>(types[0]);
   const chartRef = useRef<HTMLDivElement>(null);
@@ -45,20 +46,22 @@ const ChartCard = (props: ChartCardProps) => {
     scatter: { label: "پراگندگی", icon: <ScatterChartIcon /> },
   };
 
+  const nameKey = Object.keys(data[0])[0];
+
   const renderChart = (type: ChartType) => {
     switch (type) {
       case "area":
-        return <AreaChart nameKey="Category" data={data} />;
+        return <AreaChart nameKey={nameKey} data={data} />;
       case "bar":
-        return <BarChart nameKey="Category" data={data} />;
+        return <BarChart nameKey={nameKey} data={data} />;
       case "line":
-        return <LineChart nameKey="Category" data={data} />;
+        return <LineChart nameKey={nameKey} data={data} />;
       case "pie":
-        return <PieChart nameKey="Category" data={data} />;
+        return <PieChart nameKey={nameKey} data={data} />;
       case "treemap":
-        return <TreemapChart nameKey="Category" data={data} />;
+        return <TreemapChart nameKey={nameKey} data={data} />;
       case "scatter":
-        return <ScatterChart nameKey="Category" data={data} />;
+        return <ScatterChart nameKey={nameKey} data={data} />;
       default:
         return <></>;
     }
@@ -86,31 +89,34 @@ const ChartCard = (props: ChartCardProps) => {
   };
 
   return (
-    <Card variant="secondary" className="border">
+    <Card variant="secondary" className={cn("border", className)}>
       <Card.Header className="flex flex-row items-center justify-between">
         <Card.Title className="flex-1 truncate text-xl">{title}</Card.Title>
         <div className="flex items-center gap-4">
-          <Tabs
-            className="w-fit"
-            variant="primary"
-            selectedKey={selectedType}
-            onSelectionChange={(value) => {
-              const type = value as ChartType;
-              setSelectedType(type);
-            }}
-          >
-            <Tabs.ListContainer>
-              <Tabs.List aria-label="Options">
-                {types.map((type) => (
-                  <Tabs.Tab key={type} id={type}>
-                    {chartTypeMap[type].label}
-                    <span className="ms-2">{chartTypeMap[type].icon}</span>
-                    <Tabs.Indicator />
-                  </Tabs.Tab>
-                ))}
-              </Tabs.List>
-            </Tabs.ListContainer>
-          </Tabs>
+          {types.length > 1 ? (
+            <Tabs
+              className="w-fit"
+              variant="primary"
+              selectedKey={selectedType}
+              onSelectionChange={(value) => {
+                const type = value as ChartType;
+                setSelectedType(type);
+              }}
+            >
+              <Tabs.ListContainer>
+                <Tabs.List aria-label="Options">
+                  {types.map((type) => (
+                    <Tabs.Tab key={type} id={type}>
+                      {chartTypeMap[type].label}
+                      <span className="ms-2">{chartTypeMap[type].icon}</span>
+                      <Tabs.Indicator />
+                    </Tabs.Tab>
+                  ))}
+                </Tabs.List>
+              </Tabs.ListContainer>
+            </Tabs>
+          ) : null}
+
           <Dropdown>
             <Button isIconOnly className="rounded-full" variant="ghost">
               <EllipsisIcon />
@@ -136,7 +142,9 @@ const ChartCard = (props: ChartCardProps) => {
           </Dropdown>
         </div>
       </Card.Header>
-      <Card.Content ref={chartRef}>{renderChart(selectedType)}</Card.Content>
+      <Card.Content ref={chartRef} className="size-full">
+        {renderChart(selectedType)}
+      </Card.Content>
     </Card>
   );
 };

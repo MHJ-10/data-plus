@@ -2,8 +2,14 @@ import { MapAllRolesResponse } from "./role-convertor";
 
 export type ChartType = "bar" | "line" | "area" | "pie" | "treemap" | "scatter";
 
+export type ChartCategory =
+  | "rectangular"
+  | "trend"
+  | "circular"
+  | "distribution";
+
 export interface ChartCandidate {
-  type: ChartType;
+  category: ChartCategory;
   x?: string;
   y?: string;
   score: number;
@@ -23,38 +29,38 @@ export const generateCharts = (
 
     measures.forEach((measure) => {
       charts.push({
-        type: "bar",
+        category: "rectangular",
         x: dim.column,
         y: measure.column,
         score: 0.8 + (1 - dim.stats.uniqueRatio),
       });
 
-      if (dim.stats.uniqueRatio > 0.05) {
-        charts.push({
-          type: "treemap",
-          x: dim.column,
-          y: measure.column,
-          score: 0.7,
-        });
-      }
+      // if (dim.stats.uniqueRatio > 0.05) {
+      //   charts.push({
+      //     category: "rectangular",
+      //     x: dim.column,
+      //     y: measure.column,
+      //     score: 0.7,
+      //   });
+      // }
     });
   });
 
   temporals.forEach((temp) => {
     measures.forEach((measure) => {
       charts.push({
-        type: "line",
+        category: "trend",
         x: temp.column,
         y: measure.column,
         score: 0.95,
       });
 
-      charts.push({
-        type: "area",
-        x: temp.column,
-        y: measure.column,
-        score: 0.9,
-      });
+      // charts.push({
+      //   category: "distribution",
+      //   x: temp.column,
+      //   y: measure.column,
+      //   score: 0.9,
+      // });
     });
   });
 
@@ -63,7 +69,7 @@ export const generateCharts = (
 
     if (u > 0.02 && u < 0.3) {
       charts.push({
-        type: "pie",
+        category: "circular",
         x: dim.column,
         score: 0.85,
       });

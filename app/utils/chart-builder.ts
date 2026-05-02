@@ -5,7 +5,7 @@ export function buildChartData(data: any, chart: ChartCandidate) {
   const table = aq.from(data);
 
   if (chart.x) {
-    if (chart.type === "bar" || chart.type === "treemap") {
+    if (chart.category === "rectangular") {
       const chartData = table
         .groupby(chart.x)
         .rollup({
@@ -16,10 +16,11 @@ export function buildChartData(data: any, chart: ChartCandidate) {
       return {
         types: ["bar", "treemap"],
         data: chartData,
+        title: `نمودار ${chart.x} - ${chart.y}`,
       };
     }
 
-    if (chart.type === "pie") {
+    if (chart.category === "circular") {
       const chartData = table
         .groupby(chart.x)
         .rollup({
@@ -30,10 +31,11 @@ export function buildChartData(data: any, chart: ChartCandidate) {
       return {
         types: ["pie"],
         data: chartData,
+        title: `نمودار ${chart.x}`,
       };
     }
 
-    if (chart.type === "line" || chart.type === "area") {
+    if (chart.category === "trend") {
       const chartData = table
         .orderby(chart.x)
         .objects()
@@ -45,6 +47,7 @@ export function buildChartData(data: any, chart: ChartCandidate) {
       return {
         typs: ["line", "area"],
         data: chartData,
+        title: `نمودار ${chart.x} - ${chart.y}`,
       };
     }
   }
