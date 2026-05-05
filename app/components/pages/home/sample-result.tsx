@@ -13,7 +13,7 @@ const SampleResult = () => {
           dashboard.csv — تحلیل خودکار در ۰.۳ ثانیه
         </p>
       </div>
-      <div className="grid grid-cols-3 gap-6 p-8">
+      <div className="grid grid-cols-1 gap-6 p-8 sm:grid-cols-3">
         <div className="col-span-2 space-y-4">
           <div className="from-success/10 to-success/30 flex h-48 items-center justify-center rounded-xl bg-linear-to-br">
             <p>پیش‌نمایش نمودار</p>
@@ -23,7 +23,7 @@ const SampleResult = () => {
             <div className="from-warning/10 to-warning/30 h-32 rounded-xl bg-linear-to-br" />
           </div>
         </div>
-        <div className="space-y-3 my-auto">
+        <div className="my-auto space-y-3">
           <div className="bg-accent/10 rounded-xl p-4">
             <p className="mb-2 text-xs">💡 یک نگاه سریع</p>
             <p className="text-sm">درآمد در سه‌ماهه دوم ۳۴٪ رشد داشته است</p>
