@@ -6,6 +6,7 @@ import {
   PowerfulFeatures,
   SampleResult,
   SeeInAction,
+  UseCases,
   VisualizationTypes,
 } from "./components";
 
@@ -18,6 +19,7 @@ export default function Home() {
       <HowItWorks />
       <PowerfulFeatures />
       <VisualizationTypes />
+      <UseCases />
     </div>
   );
 }
