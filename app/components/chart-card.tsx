@@ -26,12 +26,13 @@ import { cn, downloadCSVFile } from "@/utils";
 interface ChartCardProps<T = { [key: string]: string | number }> {
   data: T[];
   types: ChartType[];
-  title: string;
+  title?: string;
   className?: string;
+  hideActions?: boolean;
 }
 
 const ChartCard = (props: ChartCardProps) => {
-  const { data, title, types, className } = props;
+  const { data, title, types, className, hideActions = false } = props;
 
   const [selectedType, setSelectedType] = useState<ChartType>(types[0]);
   const chartRef = useRef<HTMLDivElement>(null);
@@ -91,7 +92,9 @@ const ChartCard = (props: ChartCardProps) => {
   return (
     <Card variant="secondary" className={cn("border", className)}>
       <Card.Header className="flex flex-row items-center justify-between">
-        <Card.Title className="flex-1 truncate text-xl">{title}</Card.Title>
+        {title ? (
+          <Card.Title className="flex-1 truncate text-xl">{title}</Card.Title>
+        ) : null}
         <div className="flex items-center gap-4">
           {types.length > 1 ? (
             <Tabs
@@ -117,29 +120,31 @@ const ChartCard = (props: ChartCardProps) => {
             </Tabs>
           ) : null}
 
-          <Dropdown>
-            <Button isIconOnly className="rounded-full" variant="ghost">
-              <EllipsisIcon />
-            </Button>
-            <Dropdown.Popover className="w-fit min-w-0">
-              <Dropdown.Menu
-                dir="rtl"
-                onSelectionChange={(key) => {
-                  handleDropdownClick(Object.values(key)[0] as "pdf" | "csv");
-                }}
-                selectionMode="single"
-              >
-                <Dropdown.Item textValue="csv" id="csv">
-                  <SheetIcon className="size-4" />
-                  <Label>دانلود فایل csv</Label>
-                </Dropdown.Item>
-                <Dropdown.Item id="pdf" textValue="pdf">
-                  <ImageIcon className="size-4" />
-                  <Label>دانلود فایل png</Label>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown.Popover>
-          </Dropdown>
+          {!hideActions ? (
+            <Dropdown>
+              <Button isIconOnly className="rounded-full" variant="ghost">
+                <EllipsisIcon />
+              </Button>
+              <Dropdown.Popover className="w-fit min-w-0">
+                <Dropdown.Menu
+                  dir="rtl"
+                  onSelectionChange={(key) => {
+                    handleDropdownClick(Object.values(key)[0] as "pdf" | "csv");
+                  }}
+                  selectionMode="single"
+                >
+                  <Dropdown.Item textValue="csv" id="csv">
+                    <SheetIcon className="size-4" />
+                    <Label>دانلود فایل csv</Label>
+                  </Dropdown.Item>
+                  <Dropdown.Item id="pdf" textValue="pdf">
+                    <ImageIcon className="size-4" />
+                    <Label>دانلود فایل png</Label>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown.Popover>
+            </Dropdown>
+          ) : null}
         </div>
       </Card.Header>
       <Card.Content ref={chartRef} className="size-full">
