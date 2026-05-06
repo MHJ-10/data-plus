@@ -1,6 +1,6 @@
 "use client";
 
-import { Hero, SampleResult, SeeInAction } from "./components";
+import { Hero, HowItWorks, SampleResult, SeeInAction } from "./components";
 
 export default function Home() {
   return (
@@ -8,6 +8,7 @@ export default function Home() {
       <Hero />
       <SampleResult />
       <SeeInAction />
+      <HowItWorks />
     </div>
   );
 }
