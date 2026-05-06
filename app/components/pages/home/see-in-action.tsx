@@ -3,35 +3,35 @@ import { ChartType } from "@/utils/chart-candidate";
 import { Card, Surface } from "@heroui/react";
 import { DatabaseIcon, InfoIcon, TrendingUpIcon } from "lucide-react";
 
+const items = [
+  {
+    title: "رشد ۶۹٪ درآمد",
+    description:
+      "با مقایسه سه‌ماهه اول و دوم ۲۰۲۶، روند رشد ماه‌به‌ماه به‌صورت پیوسته مشاهده می‌شود",
+    icon: <TrendingUpIcon />,
+  },
+  {
+    title: "اوج در آوریل",
+    description: "بیشترین درآمد ثبت‌شده: ۶٬۲۰۰ دلار با ۳۴۰ کاربر فعال",
+    icon: <InfoIcon />,
+  },
+  {
+    title: "پیشتازی الکترونیک",
+    description: "دسته برتر با سهم ۳۶٪ از بازار، پس از آن پوشاک با ۲۷٪",
+    icon: <DatabaseIcon />,
+  },
+];
+
+const data = [
+  { name: "January", value: 1800 },
+  { name: "February", value: 2000 },
+  { name: "March", value: 2200 },
+  { name: "April", value: 6200 },
+  { name: "May", value: 5800 },
+  { name: "June", value: 5400 },
+];
+
 const SeeInAction = () => {
-  const items = [
-    {
-      title: "رشد ۶۹٪ درآمد",
-      description:
-        "با مقایسه سه‌ماهه اول و دوم ۲۰۲۶، روند رشد ماه‌به‌ماه به‌صورت پیوسته مشاهده می‌شود",
-      icon: <TrendingUpIcon />,
-    },
-    {
-      title: "اوج در آوریل",
-      description: "بیشترین درآمد ثبت‌شده: ۶٬۲۰۰ دلار با ۳۴۰ کاربر فعال",
-      icon: <InfoIcon />,
-    },
-    {
-      title: "پیشتازی الکترونیک",
-      description: "دسته برتر با سهم ۳۶٪ از بازار، پس از آن پوشاک با ۲۷٪",
-      icon: <DatabaseIcon />,
-    },
-  ];
-
-  const data = [
-    { name: "January", value: 1800 },
-    { name: "February", value: 2000 },
-    { name: "March", value: 2200 },
-    { name: "April", value: 6200 },
-    { name: "May", value: 5800 },
-    { name: "June", value: 5400 },
-  ];
-
   return (
     <div className="flex flex-col items-center gap-8">
       <h3 className="text-center text-4xl font-bold">

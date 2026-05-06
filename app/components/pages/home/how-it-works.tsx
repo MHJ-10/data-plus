@@ -1,31 +1,30 @@
 import { Card } from "@heroui/react";
 import { BarChart3Icon, SparklesIcon, UploadIcon } from "lucide-react";
 
-const HowItWorks = () => {
-  const steps = [
-    {
-      title: "آپلود داده‌ها",
-      description:
-        "فایل‌های CSV را بکشید و رها کنید. نیازی به فرمت‌بندی نیست—داده‌های نامرتب را هم پردازش می‌کنیم.",
-      icon: <UploadIcon />,
-      color: "from-warning/60 to-warning/80",
-    },
-    {
-      title: "تحلیل خودکار",
-      description:
-        "شناسایی هوشمند نوع ستون‌ها، ارتباطات و الگوهای موجود در داده‌ها",
-      icon: <SparklesIcon />,
-      color: "from-danger/60 to-danger/80",
-    },
-    {
-      title: "دریافت نمودار و بینش",
-      description:
-        "در لحظه، نمودارهای زیبا و بینش‌های قابل‌استفاده دریافت کنید",
-      icon: <BarChart3Icon />,
-      color: "from-success/60 to-success/80",
-    },
-  ];
+const steps = [
+  {
+    title: "آپلود داده‌ها",
+    description:
+      "فایل‌های CSV را بکشید و رها کنید. نیازی به فرمت‌بندی نیست—داده‌های نامرتب را هم پردازش می‌کنیم.",
+    icon: <UploadIcon />,
+    color: "from-warning/60 to-warning/80",
+  },
+  {
+    title: "تحلیل خودکار",
+    description:
+      "شناسایی هوشمند نوع ستون‌ها، ارتباطات و الگوهای موجود در داده‌ها",
+    icon: <SparklesIcon />,
+    color: "from-danger/60 to-danger/80",
+  },
+  {
+    title: "دریافت نمودار و بینش",
+    description: "در لحظه، نمودارهای زیبا و بینش‌های قابل‌استفاده دریافت کنید",
+    icon: <BarChart3Icon />,
+    color: "from-success/60 to-success/80",
+  },
+];
 
+const HowItWorks = () => {
   return (
     <div className="flex flex-col items-center gap-8">
       <h3 className="text-center text-4xl font-bold">
