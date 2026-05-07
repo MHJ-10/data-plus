@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  CTA,
   Hero,
   HowItWorks,
   PowerfulFeatures,
@@ -24,6 +25,7 @@ export default function Home() {
         <UseCases />
       </div>
       <TechnicalHighlight />
+      <CTA />
     </>
   );
 }
