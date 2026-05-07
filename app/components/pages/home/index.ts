@@ -5,3 +5,4 @@ export { default as HowItWorks } from "./how-it-works";
 export { default as PowerfulFeatures } from "./powerful-features";
 export { default as VisualizationTypes } from "./visualization-types";
 export { default as UseCases } from "./use-cases";
+export { default as TechnicalHighlight } from "./technical-highlight";
