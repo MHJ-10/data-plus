@@ -2,6 +2,7 @@
 
 import {
   CTA,
+  Footer,
   Hero,
   HowItWorks,
   PowerfulFeatures,
@@ -26,6 +27,7 @@ export default function Home() {
       </div>
       <TechnicalHighlight />
       <CTA />
+      <Footer />
     </>
   );
 }

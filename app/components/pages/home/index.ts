@@ -7,3 +7,4 @@ export { default as VisualizationTypes } from "./visualization-types";
 export { default as UseCases } from "./use-cases";
 export { default as TechnicalHighlight } from "./technical-highlight";
 export { default as CTA } from "./CTA";
+export { default as Footer } from "./footer";
