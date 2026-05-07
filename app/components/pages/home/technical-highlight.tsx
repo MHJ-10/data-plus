@@ -28,12 +28,12 @@ const techFeatures = [
 
 const TechnicalHighlight = () => {
   return (
-    <div className="from-danger/50 via-accent to-danger/50 bg-linear-to-bl px-8 py-20">
+    <div className="from-warning/50 via-accent/50 to-success/50 bg-linear-to-bl px-4 py-20">
       <div className="container mx-auto flex flex-col gap-16">
-        <h3 className="text-background text-center text-5xl font-bold">
+        <h3 className="text-foreground text-center text-5xl font-bold">
           قدرت‌گرفته از فناوری هوشمند
           <br />
-          <span className="text-background/80 text-2xl font-normal">
+          <span className="text-foreground/80 text-2xl font-normal">
             یک موتور تحلیل پیشرفته برای توسعه‌دهندگان و تیم‌های داده
           </span>
         </h3>
@@ -42,9 +42,9 @@ const TechnicalHighlight = () => {
           {techFeatures.map((feature, index) => (
             <Card
               key={index}
-              className="text-background border-background/20 bg-background/10 rounded-2xl border p-6 backdrop-blur-lg"
+              className="text-foreground border-foreground/20 bg-foreground/10 rounded-2xl border p-6 backdrop-blur-lg"
             >
-              <div className="border-background/20 bg-background/10 flex size-12 items-center justify-center rounded-xl bg-linear-to-br backdrop-blur-lg">
+              <div className="border-foreground/20 bg-foreground/10 flex size-12 items-center justify-center rounded-xl bg-linear-to-br backdrop-blur-lg">
                 <feature.icon className="size-6" />
               </div>
               <h3 className="text-xl font-bold">{feature.title}</h3>
@@ -53,11 +53,11 @@ const TechnicalHighlight = () => {
           ))}
         </div>
 
-        <Card className="text-background border-background/20 bg-background/10 rounded-2xl border p-6 backdrop-blur-lg">
-          <h5 className="text-background text-center text-3xl font-bold">
+        <Card className="text-foreground border-foreground/20 bg-foreground/10 rounded-2xl border p-6 backdrop-blur-lg">
+          <h5 className="text-foreground text-center text-3xl font-bold">
             معماری سازگار با توسعه‌دهندگان
             <br />
-            <span className="text-background/80 text-lg font-normal">
+            <span className="text-foreground/80 text-lg font-normal">
               طراحی‌شده برای دیتاست‌های پویا با قابلیت تشخیص هوشمند نوع داده،
               شناسایی ارتباط بین داده‌ها و پیشنهاد خودکار نمودار مناسب. همچنین
               مشکلات رایج داده‌های واقعی مانند مقادیر ناقص، ناسازگاری نوع داده و

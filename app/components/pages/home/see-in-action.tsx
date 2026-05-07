@@ -64,7 +64,7 @@ const SeeInAction = () => {
           {items.map((item) => (
             <Surface
               key={item.title}
-              className="text-background from-accent/60 to-accent/80 flex flex-col gap-3 rounded-3xl bg-linear-to-l p-6 text-lg font-bold"
+              className="text-foreground from-accent/60 to-accent/80 flex flex-col gap-3 rounded-3xl bg-linear-to-l p-6 text-lg font-bold"
             >
               <div className="bg-accent/10 w-fit rounded-2xl p-2">
                 {item.icon}
