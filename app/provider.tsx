@@ -8,11 +8,12 @@ import {
   ToastIndicator,
   ToastTitle,
 } from "@heroui/react";
+import { ThemeProvider } from "next-themes";
 import { FC, PropsWithChildren } from "react";
 
 const Provider: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <>
+    <ThemeProvider>
       <Toast.Provider placement="top start">
         {({ toast: toastItem }) => {
           const content = toastItem.content as ToastContentValue;
@@ -43,7 +44,7 @@ const Provider: FC<PropsWithChildren> = ({ children }) => {
         }}
       </Toast.Provider>
       {children}
-    </>
+    </ThemeProvider>
   );
 };
 

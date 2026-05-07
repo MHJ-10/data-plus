@@ -1,3 +1,5 @@
+"use client";
+
 import { Card } from "@heroui/react";
 import { BarChart3Icon, SparklesIcon, UploadIcon } from "lucide-react";
 

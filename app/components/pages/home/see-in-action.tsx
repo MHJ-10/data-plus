@@ -1,3 +1,5 @@
+"use client";
+
 import ChartCard from "@/components/chart-card";
 import { ChartType } from "@/utils/chart-candidate";
 import { Card, Surface } from "@heroui/react";

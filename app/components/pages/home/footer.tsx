@@ -1,3 +1,5 @@
+"use client";
+
 import { GithubIcon } from "@/components/icons";
 import { CodeSquareIcon, MailIcon } from "lucide-react";
 import Image from "next/image";

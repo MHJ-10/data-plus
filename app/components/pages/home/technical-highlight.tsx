@@ -1,6 +1,7 @@
+"use client";
+
 import { Card } from "@heroui/react";
 import { CpuIcon, DatabaseIcon, GaugeIcon, ShieldIcon } from "lucide-react";
-import React from "react";
 
 const techFeatures = [
   {
