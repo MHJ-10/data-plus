@@ -10,8 +10,11 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const SignupForm = () => {
+  const router = useRouter();
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -21,7 +24,7 @@ export const SignupForm = () => {
       data[key] = value.toString();
     });
 
-    console.log(data);
+    router.push("/verify-email");
   };
 
   return (
