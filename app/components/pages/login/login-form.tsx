@@ -14,16 +14,22 @@ import { useRouter } from "next/navigation";
 export const LoginForm = () => {
   const router = useRouter();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const formData = new FormData(e.currentTarget);
     const data: Record<string, string> = {};
     formData.forEach((value, key) => {
       data[key] = value.toString();
     });
 
-    router.push("/verify-email");
+    const res = await fetch("/api/send", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    console.log(res);
+
+    // router.push("/verify-email");
   };
 
   return (
