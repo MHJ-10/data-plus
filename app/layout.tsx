@@ -27,7 +27,7 @@ export default function RootLayout({
       className={`${harmattan.className} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col bg-background">
         <Provider>{children}</Provider>
       </body>
     </html>
