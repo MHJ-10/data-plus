@@ -1,4 +1,15 @@
-import * as React from "react";
+import {
+  Body,
+  Container,
+  Head,
+  Heading,
+  Hr,
+  Html,
+  Preview,
+  Section,
+  Tailwind,
+  Text,
+} from "react-email";
 
 interface EmailTemplateProps {
   nickname: string;
@@ -7,117 +18,52 @@ interface EmailTemplateProps {
 
 const OTPEmailTemplate = ({ nickname, otp }: EmailTemplateProps) => {
   return (
-    <div
-      dir="rtl"
-      style={{
-        backgroundColor: "#f5f7fb",
-        padding: "40px 20px",
-        fontFamily:
-          "Tahoma, IRANSans, Vazirmatn, -apple-system, BlinkMacSystemFont, sans-serif",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "520px",
-          margin: "0 auto",
-          backgroundColor: "#ffffff",
-          borderRadius: "16px",
-          padding: "40px 32px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-        }}
-      >
-        <div style={{ marginBottom: "32px", textAlign: "center" }}>
-          <h1
-            style={{
-              margin: 0,
-              fontSize: "24px",
-              fontWeight: 700,
-              color: "#111827",
-            }}
-          >
-            Data Analyzer
-          </h1>
-        </div>
+    <Html lang="fa" dir="rtl">
+      <Head />
+      <Preview>{`کد تأیید ورود شما: ${otp}`}</Preview>
 
-        <h2
-          style={{
-            margin: "0 0 16px",
-            fontSize: "22px",
-            fontWeight: 700,
-            color: "#111827",
-          }}
-        >
-          تایید ایمیل
-        </h2>
+      <Tailwind>
+        <Body dir="rtl" className="bg-background">
+          <Container className="mx-auto max-w-130 rounded-2xl px-8 py-10 shadow-sm">
+            <Section className="mb-8 text-center">
+              <Heading className="m-0 text-center text-2xl font-bold text-gray-900">
+                دیتا پلاس
+              </Heading>
+            </Section>
 
-        <p
-          style={{
-            margin: "0 0 24px",
-            fontSize: "16px",
-            lineHeight: 1.9,
-            color: "#4b5563",
-          }}
-        >
-          {nickname} عزیز،
-          <br />
-          برای تکمیل ثبت‌نام، کد تایید زیر را وارد کنید.
-        </p>
+            <Heading className="m-0 mb-4 text-xl font-bold text-gray-700">
+              تأیید ایمیل
+            </Heading>
 
-        <div
-          style={{
-            margin: "32px 0",
-            textAlign: "center",
-          }}
-        >
-          <div
-            style={{
-              display: "inline-block",
-              backgroundColor: "#f3f4f6",
-              borderRadius: "12px",
-              padding: "18px 32px",
-              letterSpacing: "10px",
-              fontSize: "32px",
-              fontWeight: 700,
-              color: "#111827",
-              direction: "ltr",
-            }}
-          >
-            {otp}
-          </div>
-        </div>
+            <Text className="m-0 mb-6 text-base leading-8 text-gray-600">
+              {nickname} عزیز،
+              <br />
+              برای تکمیل ثبت‌نام، کد تأیید زیر را وارد کنید.
+            </Text>
 
-        <p
-          style={{
-            margin: "0 0 24px",
-            fontSize: "14px",
-            color: "#6b7280",
-            lineHeight: 1.8,
-          }}
-        >
-          این کد تا ۱۰ دقیقه معتبر است.
-        </p>
+            <Section className="my-8 text-center">
+              <div
+                className="inline-block rounded-xl bg-gray-100 px-8 py-4 text-[32px] font-bold tracking-[10px] text-gray-900"
+                style={{ direction: "ltr" }}
+              >
+                {`${otp}`}
+              </div>
+            </Section>
 
-        <div
-          style={{
-            borderTop: "1px solid #e5e7eb",
-            paddingTop: "24px",
-            marginTop: "32px",
-          }}
-        >
-          <p
-            style={{
-              margin: 0,
-              fontSize: "13px",
-              color: "#9ca3af",
-              lineHeight: 1.8,
-            }}
-          >
-            اگر شما این درخواست را ثبت نکرده‌اید، می‌توانید این ایمیل را نادیده
-            بگیرید.
-          </p>
-        </div>
-      </div>
-    </div>
+            <Text className="m-0 mb-6 text-sm leading-7 text-gray-500">
+              این کد تا ۱۰ دقیقه معتبر است.
+            </Text>
+
+            <Hr className="my-8 border-gray-200" />
+
+            <Text className="m-0 text-[13px] leading-7 text-gray-400">
+              اگر شما این درخواست را ثبت نکرده‌اید، می‌توانید این ایمیل را
+              نادیده بگیرید.
+            </Text>
+          </Container>
+        </Body>
+      </Tailwind>
+    </Html>
   );
 };
 

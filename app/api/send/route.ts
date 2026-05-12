@@ -1,5 +1,5 @@
-import { OTPEmailTemplate } from "@/components";
-import { NextRequest, NextResponse } from "next/server";
+import { OTPEmailTemplate } from "../../components/email-template";
+import { NextRequest } from "next/server";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -9,12 +9,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "Data Plus <dataplus@gmail.com>",
-      to: ["mhj10mhj10jafari@gmail.com"],
+      from: "Data Plus <onboarding@resend.dev>",
+      to: [body.email],
       subject: "رمز یکبار مصرف برای ورود",
       react: OTPEmailTemplate({
-        nickname: "MHJ10",
-        otp: 223242,
+        nickname: body.nickname,
+        otp: body.otp,
       }),
     });
 

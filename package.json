@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "email": "email dev --dir app/components/email-template -p 3030"
   },
   "dependencies": {
     "@heroui/react": "^3.0.1",
@@ -30,12 +31,14 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-dropzone": "^15.0.0",
+    "react-email": "^6.1.1",
     "recharts": "^3.8.0",
     "resend": "^6.12.3",
     "tailwind-merge": "^3.5.0",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
+    "@react-email/ui": "6.1.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/papaparse": "^5.5.2",
@@ -48,5 +51,6 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "pnpm@11.1.0+sha512.0c44e842e5686b2c061a81adda8b2258bd8818e9704b2cf2c63d56b931a7b2e910092e085027003b96ca3911ab56a07f6df5abaed2be9925034cdd686a535b14"
 }

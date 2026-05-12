@@ -24,12 +24,14 @@ export const LoginForm = () => {
 
     const res = await fetch("/api/send", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        email: "mhj10mhj10jafari@gmail.com",
+        otp: 204642,
+      }),
     });
 
     console.log(res);
 
-    // router.push("/verify-email");
   };
 
   return (
