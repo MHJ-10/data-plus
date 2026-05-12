@@ -5,28 +5,34 @@ import { MailIcon, MoveRightIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useVerifyEmail } from "@/services";
+import { decrypt } from "@/lib/encrypt";
 
 const VerifyEmail = () => {
   const searchParams = useSearchParams();
-  const email = searchParams.get("email") ?? "";
+  const encrypted = searchParams.get("data");
+
+  const decrypted = decrypt(decodeURIComponent(encrypted));
+
+  console.log(decrypted);
+
   const router = useRouter();
 
   const { mutate, isPending } = useVerifyEmail();
 
   const verifyCode = async (otp: string) => {
-    mutate(
-      { email, otp },
-      {
-        onError: (error) => {
-          console.log(error);
-          toast.danger("کد تأیید نامعتبر است.");
-        },
-        onSuccess: () => {
-          toast.success("ثبت نام با موفقیت انجام شد.");
-          router.push("/dashboard");
-        },
-      },
-    );
+    // mutate(
+    //   { email, otp },
+    //   {
+    //     onError: (error) => {
+    //       console.log(error);
+    //       toast.danger("کد تأیید نامعتبر است.");
+    //     },
+    //     onSuccess: () => {
+    //       toast.success("ثبت نام با موفقیت انجام شد.");
+    //       router.push("/dashboard");
+    //     },
+    //   },
+    // );
   };
 
   return (

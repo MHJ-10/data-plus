@@ -1,6 +1,6 @@
 "use client";
 
-import { useSignup } from "@/services";
+import { SignupRequest, useSignup } from "@/services";
 import {
   Button,
   Description,
@@ -11,6 +11,7 @@ import {
   TextField,
   toast,
 } from "@heroui/react";
+import { hash } from "bcryptjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -28,22 +29,23 @@ export const SignupForm = () => {
       data[key] = value.toString();
     });
 
-    mutate(
-      {
-        nickname: data.nickname,
-        email: data.email,
-        password: data.password,
+    const userData: SignupRequest = {
+      nickname: data.nickname,
+      email: data.email,
+      password: data.password,
+    };
+
+    mutate(userData, {
+      onError: (error) => {
+        console.log(error);
+        toast.danger("خطایی رخ داده است. دوباره تلاش کنید.");
       },
-      {
-        onError: (error) => {
-          console.log(error);
-          toast.danger("خطایی رخ داده است. دوباره تلاش کنید.");
-        },
-        onSuccess: () => {
-          router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
-        },
+      onSuccess: () => {
+        router.push(
+          `/verify-email?data=${encodeURIComponent(JSON.stringify(userData))}`,
+        );
       },
-    );
+    });
   };
 
   return (
