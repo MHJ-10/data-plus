@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { VerifyEmailRequest } from "@/services";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { email, otp } = body as { email?: string; otp?: string };
+  const { body } = await req.json();
+  const { email, otp } = body as VerifyEmailRequest;
 
   if (!email || !otp) {
     return NextResponse.json(

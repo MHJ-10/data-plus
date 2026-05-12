@@ -1,44 +1,32 @@
 "use client";
 
-import { useState } from "react";
-import { Button, Card, InputOTP } from "@heroui/react";
+import { Button, Card, InputOTP, toast } from "@heroui/react";
 import { MailIcon, MoveRightIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useVerifyEmail } from "@/services";
 
 const VerifyEmail = () => {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const email = searchParams.get("email") ?? "";
+  const router = useRouter();
 
-  
+  const { mutate, isPending } = useVerifyEmail();
 
-  const verifyCode = async (value: string) => {
-    if (!email) {
-      setError("آدرس ایمیل یافت نشد. لطفاً دوباره ثبت‌نام کنید.");
-      return;
-    }
-
-    setError(null);
-    setIsLoading(true);
-
-    const response = await fetch("/api/verify-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, otp: value }),
-    });
-
-    const result = await response.json();
-    setIsLoading(false);
-
-    if (!response.ok) {
-      setError(result.error || "کد تأیید نامعتبر است.");
-      return;
-    }
-
-    router.push("/dashboard");
+  const verifyCode = async (otp: string) => {
+    mutate(
+      { email, otp },
+      {
+        onError: (error) => {
+          console.log(error);
+          toast.danger("کد تأیید نامعتبر است.");
+        },
+        onSuccess: () => {
+          toast.success("ثبت نام با موفقیت انجام شد.");
+          router.push("/dashboard");
+        },
+      },
+    );
   };
 
   return (
@@ -57,7 +45,12 @@ const VerifyEmail = () => {
           <p className="text-foreground text-xl font-semibold break-all">
             {email || "ایمیل یافت نشد"}
           </p>
-          <InputOTP maxLength={6} variant="secondary" onComplete={verifyCode}>
+          <InputOTP
+            maxLength={6}
+            variant="secondary"
+            onComplete={verifyCode}
+            isDisabled={isPending}
+          >
             <InputOTP.Group dir="ltr">
               <InputOTP.Slot index={0} />
               <InputOTP.Slot index={1} />
@@ -68,24 +61,24 @@ const VerifyEmail = () => {
             </InputOTP.Group>
           </InputOTP>
 
-          {error && (
-            <p className="text-danger text-lg font-semibold">{error}</p>
-          )}
-          {isLoading && (
-            <p className="text-muted text-lg font-semibold">
-              در حال بررسی کد...
-            </p>
-          )}
-
           <p className="text-muted mt-2 text-xl font-semibold">
             کد را دریافت نکرده‌اید؟
           </p>
-          <Button className="mx-auto font-bold" variant="ghost" size="lg">
+          <Button
+            className="mx-auto font-bold"
+            variant="ghost"
+            size="lg"
+            isPending={isPending}
+          >
             ارسال مجدد
           </Button>
         </Card.Content>
         <Card.Footer className="border-border w-full border-t">
-          <Button variant="ghost" className="mx-auto mt-2 font-bold">
+          <Button
+            variant="ghost"
+            className="mx-auto mt-2 font-bold"
+            isPending={isPending}
+          >
             <Link href="/signup" replace className="flex items-center gap-2">
               <MoveRightIcon /> بازگشت به صفحه ثبت‌نام
             </Link>

@@ -27,10 +27,6 @@ export default function RootLayout({
       className={`${harmattan.className} h-full antialiased`}
       suppressHydrationWarning
     >
-      {/* <body className="bg-background flex min-h-full flex-col">
-        <Provider>{children}</Provider>
-      </body> */}
-
       <body className="bg-background relative flex min-h-full flex-col">
         <div className="pointer-events-none fixed inset-0 z-5">
           <div className="from-accent/10 via-background to-accent/10 absolute inset-0 bg-linear-to-r" />

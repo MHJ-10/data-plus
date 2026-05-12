@@ -3,3 +3,8 @@ export interface SignupRequest {
   email: string;
   password: string;
 }
+
+export interface VerifyEmailRequest {
+  email: string;
+  otp: string;
+}
