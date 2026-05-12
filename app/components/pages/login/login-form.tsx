@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Button,
   FieldError,
@@ -8,30 +9,40 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
+
     const formData = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
+    const email = formData.get("email")?.toString() ?? "";
+    const password = formData.get("password")?.toString() ?? "";
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
     });
 
-    const res = await fetch("/api/send", {
-      method: "POST",
-      body: JSON.stringify({
-        email: "mhj10mhj10jafari@gmail.com",
-        otp: 204642,
-      }),
-    });
+    if (result?.error) {
+      setError(
+        result.error === "EMAIL_NOT_VERIFIED"
+          ? "ایمیل شما هنوز تأیید نشده است. ابتدا ایمیل خود را تأیید کنید."
+          : result.error || "نام کاربری یا رمز عبور اشتباه است",
+      );
+      return;
+    }
 
-    console.log(res);
-
+    if (result?.ok) {
+      router.push("/dashboard");
+    }
   };
 
   return (
@@ -100,6 +111,10 @@ export const LoginForm = () => {
       >
         ورود
       </Button>
+
+      {error && (
+        <p className="text-danger text-center text-lg font-semibold">{error}</p>
+      )}
 
       <p className="text-muted text-center text-lg">
         حساب کاربری ندارید؟

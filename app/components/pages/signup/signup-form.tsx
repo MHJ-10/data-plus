@@ -1,5 +1,6 @@
 "use client";
 
+import { useSignup } from "@/services";
 import {
   Button,
   Description,
@@ -8,6 +9,7 @@ import {
   Input,
   Label,
   TextField,
+  toast,
 } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,7 +17,9 @@ import { useRouter } from "next/navigation";
 export const SignupForm = () => {
   const router = useRouter();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { mutate, isPending } = useSignup();
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -24,7 +28,22 @@ export const SignupForm = () => {
       data[key] = value.toString();
     });
 
-    router.push("/verify-email");
+    mutate(
+      {
+        nickname: data.nickname,
+        email: data.email,
+        password: data.password,
+      },
+      {
+        onError: (error) => {
+          console.log(error);
+          toast.danger("خطایی رخ داده است. دوباره تلاش کنید.");
+        },
+        onSuccess: () => {
+          router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
+        },
+      },
+    );
   };
 
   return (
@@ -126,6 +145,7 @@ export const SignupForm = () => {
         className="bg-foreground hover:bg-foreground/90 w-full shadow-sm transition-colors"
         size="lg"
         type="submit"
+        isPending={isPending}
       >
         ایجاد حساب
       </Button>
