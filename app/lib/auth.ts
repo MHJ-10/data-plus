@@ -21,7 +21,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         const email = credentials?.email as string | undefined;
         const password = credentials?.password as string | undefined;
-        if (!email || !password) return null;
+        if (!email || !password) {
+          throw new Error("Missing email or password");
+        }
 
         const user = (await prisma.user.findUnique({
           where: { email },
@@ -33,14 +35,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           emailVerified: Date | null;
         } | null;
 
-        if (!user || !user.password) return null;
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        if (!user.password) {
+          throw new Error("No password set for user");
+        }
 
         if (!user.emailVerified) {
           throw new Error("EMAIL_NOT_VERIFIED");
         }
 
         const isValid = await compare(password, user.password);
-        if (!isValid) return null;
+        if (!isValid) {
+          throw new Error("Invalid password");
+        }
 
         return {
           id: user.id,

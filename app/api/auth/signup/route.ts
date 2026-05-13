@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { OTPEmailTemplate } from "../../../components/email-template";
 import { SignupRequest } from "@/services";
+import { hash } from "bcryptjs";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -28,11 +29,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const hashedPassword = await hash(password, 12);
   await prisma.user.create({
     data: {
       name: nickname,
       email,
-      password,
+      password: hashedPassword,
     },
   });
 
