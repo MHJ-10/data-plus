@@ -8,6 +8,7 @@ import {
   Input,
   Label,
   TextField,
+  toast,
 } from "@heroui/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -15,11 +16,9 @@ import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email")?.toString() ?? "";
@@ -32,7 +31,7 @@ export const LoginForm = () => {
     });
 
     if (result?.error) {
-      setError(
+      toast.danger(
         result.error === "EMAIL_NOT_VERIFIED"
           ? "ایمیل شما هنوز تأیید نشده است. ابتدا ایمیل خود را تأیید کنید."
           : result.error || "نام کاربری یا رمز عبور اشتباه است",
@@ -111,10 +110,6 @@ export const LoginForm = () => {
       >
         ورود
       </Button>
-
-      {error && (
-        <p className="text-danger text-center text-lg font-semibold">{error}</p>
-      )}
 
       <p className="text-muted text-center text-lg">
         حساب کاربری ندارید؟

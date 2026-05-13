@@ -57,5 +57,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return session;
     },
+    async authorized({ auth, request }) {
+      if (request.nextUrl.pathname.startsWith("/dashboard") && !auth) {
+        return false;
+      }
+      return true;
+    },
+  },
+  pages: {
+    signIn: "/login",
+    signOut: "/login",
   },
 });

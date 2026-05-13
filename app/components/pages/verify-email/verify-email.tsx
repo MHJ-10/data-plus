@@ -4,35 +4,101 @@ import { Button, Card, InputOTP, toast } from "@heroui/react";
 import { MailIcon, MoveRightIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useVerifyEmail } from "@/services";
+import { SignupRequest, useResendOTP, useVerifyEmail } from "@/services";
 import { decrypt } from "@/lib/encrypt";
+import { signIn } from "next-auth/react";
+import { useEffect, useRef, useState } from "react";
 
 const VerifyEmail = () => {
+  const [userData, setUserData] = useState<SignupRequest | null>(null);
+  const [timer, setTimer] = useState(120);
   const searchParams = useSearchParams();
-  const encrypted = searchParams.get("data");
-
-  const decrypted = decrypt(decodeURIComponent(encrypted));
-
-  console.log(decrypted);
+  const otpRef = useRef<HTMLInputElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const router = useRouter();
 
   const { mutate, isPending } = useVerifyEmail();
+  const { mutate: resendOTP, isPending: isResending } = useResendOTP();
+
+  const startTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+          }
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const encrypted = searchParams.get("data");
+      if (encrypted) {
+        const stringifedData = await decrypt(decodeURIComponent(encrypted));
+        setUserData(JSON.parse(stringifedData) as SignupRequest);
+      }
+    };
+    getUserData();
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (otpRef.current) {
+      otpRef.current.focus();
+    }
+    startTimer();
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   const verifyCode = async (otp: string) => {
-    // mutate(
-    //   { email, otp },
-    //   {
-    //     onError: (error) => {
-    //       console.log(error);
-    //       toast.danger("کد تأیید نامعتبر است.");
-    //     },
-    //     onSuccess: () => {
-    //       toast.success("ثبت نام با موفقیت انجام شد.");
-    //       router.push("/dashboard");
-    //     },
-    //   },
-    // );
+    if (userData) {
+      mutate(
+        { email: userData.email, otp },
+        {
+          onSuccess: async () => {
+            await signIn("credentials", {
+              redirect: false,
+              email: userData.email,
+              password: userData.password,
+            });
+            toast.success("ثبت نام با موفقیت انجام شد.");
+            router.push("/dashboard");
+          },
+        },
+      );
+    }
+  };
+
+  const handleResendOTP = () => {
+    if (userData && timer === 0) {
+      resendOTP(
+        { email: userData.email, nickname: userData.nickname },
+        {
+          onError: (error: any) => {
+            const message = error?.response?.data?.error || "خطا در ارسال کد.";
+            toast.danger(message);
+          },
+          onSuccess: () => {
+            toast.success("کد جدید ارسال شد.");
+            setTimer(120);
+            startTimer();
+          },
+        },
+      );
+    }
   };
 
   return (
@@ -48,14 +114,15 @@ const VerifyEmail = () => {
           <p className="text-muted text-xl font-semibold">
             کد تأیید ۶ رقمی به این ایمیل ارسال شد:
           </p>
-          <p className="text-foreground text-xl font-semibold break-all">
-            {email || "ایمیل یافت نشد"}
+          <p className="text-foreground min-h-7 text-xl font-semibold break-all">
+            {userData?.email}
           </p>
           <InputOTP
             maxLength={6}
             variant="secondary"
             onComplete={verifyCode}
             isDisabled={isPending}
+            ref={otpRef}
           >
             <InputOTP.Group dir="ltr">
               <InputOTP.Slot index={0} />
@@ -74,9 +141,11 @@ const VerifyEmail = () => {
             className="mx-auto font-bold"
             variant="ghost"
             size="lg"
-            isPending={isPending}
+            isPending={isResending}
+            isDisabled={timer > 0 || isResending}
+            onPress={handleResendOTP}
           >
-            ارسال مجدد
+            {timer > 0 ? `ارسال مجدد (${timer}s)` : "ارسال مجدد"}
           </Button>
         </Card.Content>
         <Card.Footer className="border-border w-full border-t">

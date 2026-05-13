@@ -1,5 +1,6 @@
 "use client";
 
+import { encrypt } from "@/lib/encrypt";
 import { SignupRequest, useSignup } from "@/services";
 import {
   Button,
@@ -9,9 +10,7 @@ import {
   Input,
   Label,
   TextField,
-  toast,
 } from "@heroui/react";
-import { hash } from "bcryptjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -35,15 +34,11 @@ export const SignupForm = () => {
       password: data.password,
     };
 
+    const encryptedData = await encrypt(JSON.stringify(userData));
+
     mutate(userData, {
-      onError: (error) => {
-        console.log(error);
-        toast.danger("خطایی رخ داده است. دوباره تلاش کنید.");
-      },
       onSuccess: () => {
-        router.push(
-          `/verify-email?data=${encodeURIComponent(JSON.stringify(userData))}`,
-        );
+        router.push(`/verify-email?data=${encodeURIComponent(encryptedData)}`);
       },
     });
   };

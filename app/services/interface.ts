@@ -8,3 +8,8 @@ export interface VerifyEmailRequest {
   email: string;
   otp: string;
 }
+
+export interface ResendOTPRequest {
+  email: string;
+  nickname: string;
+}

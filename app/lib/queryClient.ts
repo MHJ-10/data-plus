@@ -1,4 +1,16 @@
-import { QueryClient } from "@tanstack/react-query";
+import { toast } from "@heroui/react";
+import { MutationCache, QueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+
+export type CustomError = AxiosError<{
+  error?: string;
+}>;
+
+declare module "@tanstack/react-query" {
+  interface Register {
+    defaultError: CustomError;
+  }
+}
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -7,4 +19,10 @@ export const queryClient = new QueryClient({
       retry: 1,
     },
   },
+  mutationCache: new MutationCache({
+    onError: (error) => {
+      const errorMessage = error.response?.data.error || "خطا در انجام عملیات";
+      toast.danger(errorMessage);
+    },
+  }),
 });
