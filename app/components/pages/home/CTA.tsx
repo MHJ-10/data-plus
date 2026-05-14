@@ -18,7 +18,7 @@ const CTA = () => {
         </h3>
 
         <Button size="lg" variant="secondary">
-          <Link href="/dashabord/upload" className="flex gap-2 text-2xl">
+          <Link href="/dashboard/upload" className="flex gap-2 text-2xl">
             دیتاست را آپلود کنید <UploadIcon className="animate-bounce" />
           </Link>
         </Button>

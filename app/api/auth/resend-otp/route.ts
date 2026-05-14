@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
       expires,
     },
   });
+  console.log(otp);
 
   // Send email
   await resend.emails.send({

@@ -5,6 +5,7 @@ import { cn, SidebarPath } from "@/utils";
 import { Button, Drawer } from "@heroui/react";
 import clsx from "clsx";
 import { LogOut, MenuIcon } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -36,7 +37,13 @@ const LogoHeader = ({ isSmall = false }: LogoHeaderProps) => (
 );
 
 const LogoutButton = () => (
-  <Button className="w-full" variant="primary">
+  <Button
+    className="w-full"
+    variant="primary"
+    onClick={() => {
+      signOut({ redirectTo: "/login" });
+    }}
+  >
     <LogOut />
     خروج از حساب کاربری
   </Button>

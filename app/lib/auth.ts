@@ -7,6 +7,9 @@ import { compare } from "bcryptjs";
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   secret: process.env.AUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -52,30 +55,38 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           throw new Error("Invalid password");
         }
 
-        return {
-          id: user.id,
-          name: user.name ?? undefined,
-          email: user.email ?? undefined,
-        };
+        return user;
       },
     }),
   ],
   callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return { ...token, id: user.id };
+      }
+      return token;
+    },
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub;
       }
       return session;
     },
-    async authorized({ auth, request }) {
-      if (request.nextUrl.pathname.startsWith("/dashboard") && !auth) {
+    async authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
+      const isOnLanding = nextUrl.pathname === "/";
+      if (isOnDashboard) {
+        if (isLoggedIn) return true;
         return false;
+      } else if (isLoggedIn) {
+        if (isOnLanding) return true;
+        return Response.redirect(new URL("/dashboard", nextUrl));
       }
       return true;
     },
   },
   pages: {
     signIn: "/login",
-    signOut: "/login",
   },
 });
