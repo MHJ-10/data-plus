@@ -13,9 +13,11 @@ import {
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { EyeOffIcon, EyeIcon } from "lucide-react";
 
 export const LoginForm = () => {
   const router = useRouter();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,12 +36,13 @@ export const LoginForm = () => {
       toast.danger(
         result.error === "EMAIL_NOT_VERIFIED"
           ? "ایمیل شما هنوز تأیید نشده است. ابتدا ایمیل خود را تأیید کنید."
-          : result.error || "نام کاربری یا رمز عبور اشتباه است",
+          : "نام کاربری یا رمز عبور اشتباه است",
       );
       return;
     }
 
     if (result?.ok) {
+      toast.success("ورود با موفقیت انجام شد.");
       router.push("/dashboard");
     }
   };
@@ -71,6 +74,7 @@ export const LoginForm = () => {
       </TextField>
 
       <TextField
+        className="relative"
         isRequired
         name="password"
         type="password"
@@ -99,7 +103,17 @@ export const LoginForm = () => {
           placeholder="رمز عبور را وارد کنید"
           className="border text-lg"
           variant="secondary"
+          type={isPasswordVisible ? "text" : "password"}
         />
+        <Button
+          isIconOnly
+          variant="ghost"
+          size="lg"
+          className="text-muted absolute top-9 left-1"
+          onClick={() => setIsPasswordVisible((prev) => !prev)}
+        >
+          {isPasswordVisible ? <EyeOffIcon /> : <EyeIcon />}
+        </Button>
         <FieldError />
       </TextField>
 

@@ -11,11 +11,15 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const SignupForm = () => {
   const router = useRouter();
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const { mutate, isPending } = useSignup();
 
@@ -103,6 +107,7 @@ export const SignupForm = () => {
       </TextField>
 
       <TextField
+        className="relative"
         isRequired
         name="password"
         type="password"
@@ -131,7 +136,17 @@ export const SignupForm = () => {
           placeholder="یک رمز عبور قوی ایجاد کنید"
           className="border text-lg"
           variant="secondary"
+          type={isPasswordVisible ? "text" : "password"}
         />
+        <Button
+          isIconOnly
+          variant="ghost"
+          size="lg"
+          className="text-muted absolute top-9 left-1"
+          onClick={() => setIsPasswordVisible((prev) => !prev)}
+        >
+          {isPasswordVisible ? <EyeOffIcon /> : <EyeIcon />}
+        </Button>
         <FieldError />
         <Description>
           رمز عبور باید حداقل ۸ کاراکتر باشد و شامل یک حرف بزرگ و یک عدد باشد
