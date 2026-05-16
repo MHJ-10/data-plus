@@ -138,7 +138,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
                       تأیید خروج
                     </Modal.Heading>
                   </Modal.Header>
-                  <Modal.Body className="text-muted text-lg font-semibold">
+                  <Modal.Body className="text-muted overflow-hidden text-lg font-semibold">
                     آیا مطمئن هستید که می‌خواهید از حساب خود خارج شوید؟ برای
                     دسترسی دوباره باید مجدداً وارد شوید.
                   </Modal.Body>
@@ -200,9 +200,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto px-4 pt-4 pb-20 md:pb-0">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto p-5">{children}</main>
 
         {/* Mobile Bottom Navigation */}
         <nav className="bg-background border-border fixed right-0 bottom-0 left-0 z-30 rounded-t-3xl border-t md:hidden">
