@@ -107,4 +107,14 @@
 
 @theme inline {
   --font-harmattan: var(--font-harmattan);
+  --animate-fadeIn: fadeIn linear;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 }

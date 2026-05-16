@@ -35,7 +35,7 @@ const data = [
 
 const SeeInAction = () => {
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="animate-fadeIn flex flex-col items-center gap-8 [animation-range:entry] [animation-timeline:view()]">
       <h3 className="text-center text-4xl font-bold">
         ببینید در عمل چگونه کار می‌کند <br />
         <span className="text-muted text-2xl font-normal">

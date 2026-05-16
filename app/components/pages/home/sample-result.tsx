@@ -2,7 +2,7 @@ import { Card } from "@heroui/react";
 
 const SampleResult = () => {
   return (
-    <Card className="border">
+    <Card className="animate-fadeIn border [animation-range:entry] [animation-timeline:view()] lg:animate-none">
       <div className="border-border from-accent/5 to-accent/10 flex items-center gap-2 rounded-sm border-b bg-linear-to-r p-3">
         <div className="flex gap-2">
           <div className="bg-danger size-3 rounded-full" />

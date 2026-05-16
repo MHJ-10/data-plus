@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const CTA = () => {
   return (
-    <div className="from-success/50 via-accent/50 to-warning/50 bg-linear-to-br px-4 py-20">
+    <div className="from-success/50 animate-fadeIn via-accent/50 to-warning/50 bg-linear-to-br px-4 py-20 [animation-range:entry] [animation-timeline:view()]">
       <div className="container mx-auto flex flex-col items-center justify-center gap-16">
         <h3 className="text-foreground text-center text-6xl font-bold">
           همین حالا تحلیل داده‌های خود را شروع کنید

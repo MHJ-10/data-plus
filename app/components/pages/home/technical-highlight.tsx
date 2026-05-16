@@ -28,7 +28,7 @@ const techFeatures = [
 
 const TechnicalHighlight = () => {
   return (
-    <div className="from-warning/50 via-accent/50 to-success/50 bg-linear-to-bl px-4 py-20">
+    <div className="from-warning/50 animate-fadeIn via-accent/50 to-success/50 bg-linear-to-bl px-4 py-20 [animation-range:entry] [animation-timeline:view()]">
       <div className="container mx-auto flex flex-col gap-16">
         <h3 className="text-foreground text-center text-5xl font-bold">
           قدرت‌گرفته از فناوری هوشمند

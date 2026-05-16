@@ -9,16 +9,16 @@ const Hero = () => {
     <div className="mx-auto flex flex-col gap-8">
       <h1 className="text-center text-5xl font-bold md:text-6xl">
         تبدیل داده‌های خام به بینش‌های قابل‌استفاده{" "}
-        <span className="from-accent/50 to-accent/70 bg-linear-to-l bg-clip-text text-transparent">
+        <span className="from-accent/50 to-accent/70 animate-pulse bg-linear-to-l bg-clip-text text-transparent">
           در
         </span>
         <br className="hidden lg:block" />
-        <span className="from-accent/70 to-accent bg-linear-to-l bg-clip-text text-transparent">
+        <span className="from-accent/70 to-accent animate-pulse bg-linear-to-l bg-clip-text text-transparent">
           چند ثانیه
         </span>
       </h1>
 
-      <p className="text-center text-xl text-muted md:text-2xl">
+      <p className="text-muted text-center text-xl md:text-2xl">
         فایل‌های CSV را آپلود کنید و بلافاصله نمودارها و تحلیل‌های کاربردی
         دریافت کنید. <br /> بدون کدنویسی، بدون دردسر—فقط بکشید، رها کنید و شروع
         به کشف کنید.

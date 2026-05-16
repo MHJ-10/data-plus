@@ -42,7 +42,7 @@ const Footer = () => {
         </div>
 
         <span className="text-muted text-center md:col-span-full lg:col-span-1 lg:justify-self-end">
-          © توسعه شده در سال ۱۴۰۵ برای پروژه دانشگاه
+          © توسعه یافته در سال ۱۴۰۵ برای پروژه دانشگاه
         </span>
       </div>
     </footer>
