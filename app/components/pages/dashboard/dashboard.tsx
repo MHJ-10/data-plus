@@ -100,8 +100,8 @@ const Dashboard = () => {
   return (
     <div className="space-y-8">
       <div>
-        <p className="text-4xl/12 font-bold">خوش اومدی، {data?.user?.name}</p>
-        <p className="text-muted text-2xl font-semibold">
+        <p className="text-3xl font-bold">خوش اومدی، {data?.user?.name}</p>
+        <p className="text-muted text-xl font-semibold">
           تحلیل داده‌ها و insightهای خودت رو ادامه بده
         </p>
       </div>
