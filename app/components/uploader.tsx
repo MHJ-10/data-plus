@@ -2,7 +2,7 @@
 
 import { cn } from "@/utils";
 import { Card } from "@heroui/react";
-import { File, Upload } from "lucide-react";
+import { CheckIcon, UploadIcon } from "lucide-react";
 import { useCallback } from "react";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 
@@ -28,34 +28,45 @@ const Uploader = ({ onDrop, options, className }: UploaderProps) => {
   return (
     <Card
       {...getRootProps()}
+      variant="transparent"
       className={cn("flex cursor-pointer flex-col items-center", className)}
     >
-      <div className="flex w-full flex-col items-center gap-4 rounded-xl border-2 border-dashed p-2">
+      <div className="flex w-full flex-col items-center gap-4 rounded-xl border p-4">
         <input {...getInputProps()} />
-        <Upload />
-        <Card.Header>
-          <Card.Title className="text-center text-base sm:text-lg">
-            فایل خود را بکشید و رها کنید یا برای آپلود کلیک کنید
-          </Card.Title>
+        <Card.Header className="flex flex-col items-center gap-4">
+          {!acceptedFiles.length ? (
+            <>
+              <div className="bg-muted/30 flex size-20 items-center justify-center rounded-2xl">
+                <UploadIcon className="size-10" />
+              </div>
+              <Card.Title className="text-center font-bold sm:text-2xl/8">
+                فایل خود را اینجا رها کنید
+                <br />
+                <span className="text-muted text-lg">
+                  یا برای انتخاب فایل کلیک کنید
+                </span>
+                <br />
+                <span className="text-muted text-base">
+                  پشتیبانی از فایل های CSV (تا ۱۰ مگابایت)
+                </span>
+              </Card.Title>
+            </>
+          ) : (
+            <>
+              <div className="bg-success flex size-20 items-center justify-center rounded-2xl">
+                <CheckIcon className="text-background size-10" />
+              </div>
+              <Card.Title className="text-center font-bold sm:text-2xl/8">
+                <span className="text-foreground text-2xl">آپلود تکمیل شد</span>
+                <br />
+                <span className="text-muted text-base">
+                  {acceptedFiles[0].name}
+                </span>
+              </Card.Title>
+            </>
+          )}
         </Card.Header>
       </div>
-
-      <Card.Footer className="w-full">
-        {acceptedFiles.map((file) => (
-          <Card
-            key={file.name}
-            variant="secondary"
-            className="flex w-full flex-row items-center justify-between gap-2 border p-4"
-          >
-            <div className="flex items-center gap-2">
-              <File className="size-4" />
-              <p>{file.name}</p>
-            </div>
-            <p>{(file.size / 1000 / 1000).toPrecision(2)} مگابایت</p>
-          </Card>
-        ))}
-        <Card.Description></Card.Description>
-      </Card.Footer>
     </Card>
   );
 };
