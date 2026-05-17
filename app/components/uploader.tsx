@@ -1,27 +1,34 @@
 "use client";
 
 import { cn } from "@/utils";
-import { Card } from "@heroui/react";
+import { Card, toast } from "@heroui/react";
 import { CheckIcon, UploadIcon } from "lucide-react";
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 
 interface UploaderProps {
   className?: string;
-  onDrop: (files: File[]) => void;
+  file: File | null;
+  setFile: React.Dispatch<React.SetStateAction<File | null>>;
   options?: DropzoneOptions;
 }
 
-const Uploader = ({ onDrop, options, className }: UploaderProps) => {
+const Uploader = (props: UploaderProps) => {
+  const { file, setFile, options, className } = props;
+
   const onDropFiles = useCallback(
     (acceptedFiles: File[]) => {
-      onDrop(acceptedFiles);
+      setFile(acceptedFiles[0]);
     },
-    [onDrop],
+    [setFile],
   );
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop: onDropFiles,
+    onDropRejected: () => toast.danger("خطا، آپلود فایل ناموفق بود."),
+    accept: {
+      "text/csv": [".csv"],
+    },
     ...options,
   });
 
@@ -34,7 +41,7 @@ const Uploader = ({ onDrop, options, className }: UploaderProps) => {
       <div className="flex w-full flex-col items-center gap-4 rounded-xl border p-4">
         <input {...getInputProps()} />
         <Card.Header className="flex flex-col items-center gap-4">
-          {!acceptedFiles.length ? (
+          {!file ? (
             <>
               <div className="bg-muted/30 flex size-20 items-center justify-center rounded-2xl">
                 <UploadIcon className="size-10" />
@@ -59,9 +66,7 @@ const Uploader = ({ onDrop, options, className }: UploaderProps) => {
               <Card.Title className="text-center font-bold sm:text-2xl/8">
                 <span className="text-foreground text-2xl">آپلود تکمیل شد</span>
                 <br />
-                <span className="text-muted text-base">
-                  {acceptedFiles[0].name}
-                </span>
+                <span className="text-muted text-base">{file.name}</span>
               </Card.Title>
             </>
           )}
