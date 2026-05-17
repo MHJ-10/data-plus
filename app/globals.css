@@ -118,3 +118,21 @@
     }
   }
 }
+
+@layer base {
+  * {
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-muted);
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    scrollbar-color: var(--color-muted) transparent;
+  }
+}
