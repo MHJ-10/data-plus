@@ -100,7 +100,9 @@ const Dashboard = () => {
   return (
     <div className="space-y-8">
       <div>
-        <p className="text-3xl font-bold">خوش اومدی، {data?.user?.name}</p>
+        <p className="text-foreground text-3xl font-bold">
+          خوش اومدی، {data?.user?.name}
+        </p>
         <p className="text-muted text-xl font-semibold">
           تحلیل داده‌ها و insightهای خودت رو ادامه بده
         </p>
@@ -115,7 +117,7 @@ const Dashboard = () => {
               <Icon className="text-background size-6" />
             </Card.Header>
             <Card.Content>
-              <p className="text-4xl font-bold">{value}</p>
+              <p className="text-foreground text-4xl font-bold">{value}</p>
               <p className="text-muted text-xl font-semibold">{title}</p>
             </Card.Content>
           </Card>
@@ -135,7 +137,11 @@ const Dashboard = () => {
             بارگذاری دیتاست <UploadIcon />
           </Link>
         </Button>
-        <Button size="lg" variant="tertiary" className="text-xl">
+        <Button
+          size="lg"
+          variant="tertiary"
+          className="text-foreground text-xl"
+        >
           <Link
             href="dashboard/analysis"
             className="flex flex-row items-center gap-2"
@@ -147,8 +153,13 @@ const Dashboard = () => {
 
       <Card className="border p-6">
         <Card.Header className="flex flex-row items-center justify-between">
-          <p className="text-2xl font-semibold">تحلیل های‌اخیر</p>
-          <Link href="/dashboard/analysis" className="text-lg hover:underline">
+          <p className="text-foreground text-2xl font-semibold">
+            تحلیل های‌اخیر
+          </p>
+          <Link
+            href="/dashboard/analysis"
+            className="text-foreground text-lg hover:underline"
+          >
             مشاهده همه
           </Link>
         </Card.Header>
@@ -159,8 +170,10 @@ const Dashboard = () => {
               className="hover:bg-background/70 group flex items-center justify-between rounded-2xl p-4 transition-colors"
             >
               <div className="flex-1">
-                <p className="text-lg font-medium">{analysis.name}</p>
-                <div className="text-muted-foreground flex items-center gap-4 text-sm">
+                <p className="text-foreground text-lg font-medium">
+                  {analysis.name}
+                </p>
+                <div className="text-muted flex items-center gap-4 text-sm">
                   <span className="text-muted">
                     {new Date(analysis.date).toLocaleString("fa-IR", {
                       day: "numeric",
@@ -181,7 +194,7 @@ const Dashboard = () => {
 
                 <Link
                   href={`dashboard/analysis/${analysis.name}`}
-                  className="opacity-0 transition-opacity group-hover:opacity-100"
+                  className="text-foreground opacity-0 transition-opacity group-hover:opacity-100"
                 >
                   <ArrowLeftIcon className="size-5" />
                 </Link>
@@ -192,7 +205,7 @@ const Dashboard = () => {
       </Card>
 
       <Card className="space-y-2 border">
-        <p className="text-2xl font-semibold">چارت‌های اخیر</p>
+        <p className="text-foreground text-2xl font-semibold">چارت‌های اخیر</p>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {["line", "bar", "pie"].map((type) => (
@@ -209,7 +222,9 @@ const Dashboard = () => {
 
       <Card className="border">
         <Card.Header>
-          <p className="text-2xl font-semibold">تحلیل‌های هوشمند</p>
+          <p className="text-foreground text-2xl font-semibold">
+            تحلیل‌های هوشمند
+          </p>
         </Card.Header>
         <Card.Content className="grid gap-8 md:grid-cols-3">
           {aiInsights.map((insight) => (
@@ -219,8 +234,10 @@ const Dashboard = () => {
                   <LightbulbIcon className="text-foreground size-5" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold">{insight.title}</h3>
-                  <p className="text-lg">{insight.description}</p>
+                  <h3 className="text-foreground text-xl font-semibold">
+                    {insight.title}
+                  </h3>
+                  <p className="text-muted text-lg">{insight.description}</p>
                 </div>
               </div>
             </Card>

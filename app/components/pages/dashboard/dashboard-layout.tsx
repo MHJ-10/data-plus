@@ -147,7 +147,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
                       className="w-fit"
                       size="lg"
                       slot="close"
-                      variant="tertiary"
+                      variant="secondary"
                     >
                       انصراف
                     </Button>
