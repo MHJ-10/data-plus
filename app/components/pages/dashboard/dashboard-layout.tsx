@@ -200,7 +200,9 @@ const DashboardLayout = ({ children }: LayoutProps) => {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-5">{children}</main>
+        <main className="flex-1 overflow-y-auto px-5 pt-5 pb-20 md:pb-5">
+          {children}
+        </main>
 
         {/* Mobile Bottom Navigation */}
         <nav className="bg-background border-border fixed right-0 bottom-0 left-0 z-30 rounded-t-3xl border-t md:hidden">
