@@ -36,13 +36,12 @@ export function buildChartData(data: any, chart: ChartCandidate) {
     }
 
     if (chart.category === "trend") {
-      const chartData = table
-        .orderby(chart.x)
-        .objects()
-        .map((d) => ({
-          x: d[chart.x],
-          y: d[chart.y],
-        }));
+      const chartData = (
+        table.orderby(chart.x).objects() as Array<Record<string, any>>
+      ).map((d) => ({
+        x: d[chart.x as string],
+        y: d[chart.y as string],
+      }));
 
       return {
         typs: ["line", "area"],

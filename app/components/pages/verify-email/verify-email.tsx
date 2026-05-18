@@ -3,16 +3,15 @@
 import { Button, Card, InputOTP, toast } from "@heroui/react";
 import { MailIcon, MoveRightIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { SignupRequest, useResendOTP, useVerifyEmail } from "@/services";
 import { decrypt } from "@/lib/encrypt";
 import { signIn } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 
-const VerifyEmail = () => {
+const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
   const [userData, setUserData] = useState<SignupRequest | null>(null);
   const [timer, setTimer] = useState(120);
-  const searchParams = useSearchParams();
   const otpRef = useRef<HTMLInputElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -41,14 +40,13 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     const getUserData = async () => {
-      const encrypted = searchParams.get("data");
-      if (encrypted) {
-        const stringifedData = await decrypt(decodeURIComponent(encrypted));
+      if (encryptedData) {
+        const stringifedData = await decrypt(decodeURIComponent(encryptedData));
         setUserData(JSON.parse(stringifedData) as SignupRequest);
       }
     };
     getUserData();
-  }, [searchParams]);
+  }, [encryptedData]);
 
   useEffect(() => {
     if (otpRef.current) {

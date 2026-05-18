@@ -91,12 +91,14 @@ function getRandomSample(arr: any[], size: number = 100) {
   return shuffled.slice(0, size);
 }
 
-export function detectAllColumns(data: any[]) {
-  if (!data.length) return {};
+export function detectAllColumns(
+  data: any[],
+): Record<string, DetectColumnTypeResponse> {
+  if (!data.length) return {} as Record<string, DetectColumnTypeResponse>;
 
   const columns = Object.keys(data[0]);
 
-  const result: Record<string, ColumnType> = {};
+  const result: Record<string, DetectColumnTypeResponse> = {};
 
   const sampleData = getRandomSample(data, Math.min(data.length, 200));
 
