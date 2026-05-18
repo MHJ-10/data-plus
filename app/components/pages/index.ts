@@ -4,3 +4,4 @@ export * from "./signup";
 export * from "./verify-email";
 export * from "./login";
 export * from "./dashboard";
+export * from "./settings";
