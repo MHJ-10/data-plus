@@ -35,6 +35,8 @@ export async function POST(req: NextRequest) {
   const otp = Math.floor(100000 + Math.random() * 900000);
   const expires = new Date(Date.now() + 10 * 60 * 1000);
 
+  console.log(otp);
+
   await prisma.verificationToken.create({
     data: {
       identifier: email,

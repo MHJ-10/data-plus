@@ -1,5 +1,6 @@
 "use client";
 
+import { useCheckPassword, useUpdateUser } from "@/services";
 import {
   Button,
   Card,
@@ -10,6 +11,7 @@ import {
   Label,
   Modal,
   TextField,
+  toast,
 } from "@heroui/react";
 import {
   CircleCheckBigIcon,
@@ -29,7 +31,7 @@ interface ProfileForm {
 }
 
 export const ProfileInfo = () => {
-  const { data } = useSession();
+  const { data: session } = useSession();
   const [isPasswordVisible, setIsPasswordVisible] = useState<
     [boolean, boolean]
   >([false, false]);
@@ -40,8 +42,11 @@ export const ProfileInfo = () => {
     newPassword: "",
   });
 
+  const { mutate: checkPassword, isPending: isCheckPending } =
+    useCheckPassword();
+  const { mutate: updateUser, isPending: isUpdatePending } = useUpdateUser();
+
   const onConfirmPassword = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.stopPropagation();
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data: Partial<Record<keyof ProfileForm, string>> = {};
@@ -49,23 +54,46 @@ export const ProfileInfo = () => {
       data[key as keyof ProfileForm] = value.toString();
     });
 
-    setFormData((prev) => ({ ...prev, ...data }));
+    checkPassword(
+      {
+        id: session?.user?.id || "",
+        password: data.password || "",
+      },
+      {
+        onSuccess: () => {
+          toast.info("پس از اعمال تغییرات، آن‌ها را ذخیره کنید");
+          setFormData((prev) => ({ ...prev, ...data }));
+        },
+      },
+    );
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(formData);
+    updateUser(
+      {
+        id: session?.user?.id || "",
+        nickName: formData.nickname || "",
+        newPassword: formData.newPassword,
+      },
+      {
+        onSuccess: () => toast.success("اطلاعات حساب با موفقیت بروزرسانی شد."),
+      },
+    );
   };
 
   useEffect(() => {
     const setNickname = () => {
-      if (data?.user)
-        setFormData((prev) => ({ ...prev, nickname: data.user?.name || "" }));
+      if (session?.user)
+        setFormData((prev) => ({
+          ...prev,
+          nickname: session.user?.name || "",
+        }));
     };
 
     setNickname();
-  }, [data]);
+  }, [session]);
 
   return (
     <Card className="border">
@@ -120,7 +148,7 @@ export const ProfileInfo = () => {
               variant="secondary"
               dir="ltr"
               disabled
-              value={data?.user?.email || ""}
+              value={session?.user?.email || ""}
             />
             <Description className="text-success flex items-center gap-2 text-lg">
               <CircleCheckBigIcon className="size-4" /> ایمیل تأیید شده است
@@ -180,10 +208,6 @@ export const ProfileInfo = () => {
                               <EyeIcon />
                             )}
                           </Button>
-                          <Description>
-                            رمز عبور باید حداقل ۸ کاراکتر باشد و شامل یک حرف
-                            بزرگ و یک عدد باشد
-                          </Description>
                           <FieldError />
                         </TextField>
                         <TextField
@@ -224,6 +248,10 @@ export const ProfileInfo = () => {
                               <EyeIcon />
                             )}
                           </Button>
+                          <Description>
+                            رمز عبور باید حداقل ۸ کاراکتر باشد و شامل یک حرف
+                            بزرگ و یک عدد باشد
+                          </Description>
                           <FieldError />
                         </TextField>
                       </Modal.Body>
@@ -247,8 +275,8 @@ export const ProfileInfo = () => {
                           className="w-fit"
                           size="lg"
                           variant="primary"
-                          slot="close"
                           type="submit"
+                          isPending={isCheckPending}
                         >
                           تأیید
                         </Button>
@@ -266,6 +294,7 @@ export const ProfileInfo = () => {
             size="lg"
             className="text-background bg-foreground text-lg transition-colors hover:opacity-90"
             type="submit"
+            isPending={isUpdatePending}
           >
             ذخیره تغییرات
           </Button>
