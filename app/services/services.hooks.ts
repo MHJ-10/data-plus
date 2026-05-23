@@ -1,8 +1,10 @@
 import { apiClient } from "@/lib/apiClient";
 import { useMutation } from "@tanstack/react-query";
 import {
+  CheckPasswordRequest,
   ResendOTPRequest,
   SignupRequest,
+  UpdateUserRequest,
   VerifyEmailRequest,
 } from "./interface";
 
@@ -29,4 +31,18 @@ export const useResendOTP = () =>
     mutationKey: ["resendOTP"],
     mutationFn: (body: ResendOTPRequest) =>
       apiClient.post("/auth/resend-otp", { body }),
+  });
+
+export const useCheckPassword = () =>
+  useMutation({
+    mutationKey: ["checkPassword"],
+    mutationFn: (body: CheckPasswordRequest) =>
+      apiClient.post("/auth/check-password", { body }),
+  });
+
+export const useUpdateUser = () =>
+  useMutation({
+    mutationKey: ["updateUser"],
+    mutationFn: (body: UpdateUserRequest) =>
+      apiClient.post("/auth/update-user", { body }),
   });

@@ -13,3 +13,14 @@ export interface ResendOTPRequest {
   email: string;
   nickname: string;
 }
+
+export interface CheckPasswordRequest {
+  id: string;
+  password: string;
+}
+
+export interface UpdateUserRequest {
+  id: string;
+  nickName: string;
+  newPassword?: string;
+}
