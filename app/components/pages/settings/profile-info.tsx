@@ -48,6 +48,7 @@ export const ProfileInfo = () => {
 
   const onConfirmPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     const formData = new FormData(e.currentTarget);
     const data: Partial<Record<keyof ProfileForm, string>> = {};
     formData.forEach((value, key) => {
@@ -173,7 +174,7 @@ export const ProfileInfo = () => {
               </Button>
               <Modal.Backdrop variant="opaque">
                 <Form onSubmit={onConfirmPassword}>
-                  <Modal.Container size="lg" className="overflow-hidden">
+                  <Modal.Container size="lg">
                     <Modal.Dialog>
                       <Modal.Body className="space-y-4 overflow-hidden p-2">
                         <TextField

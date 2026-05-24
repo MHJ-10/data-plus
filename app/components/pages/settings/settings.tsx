@@ -1,4 +1,7 @@
+import { Appearance } from "./appearance";
+import { DangerZone } from "./danger-zone";
 import { ProfileInfo } from "./profile-info";
+import { Session } from "./session";
 
 const Settings = () => {
   return (
@@ -10,6 +13,9 @@ const Settings = () => {
         </p>
       </div>
       <ProfileInfo />
+      <Appearance />
+      <Session />
+      <DangerZone />
     </div>
   );
 };

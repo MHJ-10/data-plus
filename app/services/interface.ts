@@ -24,3 +24,7 @@ export interface UpdateUserRequest {
   nickName: string;
   newPassword?: string;
 }
+
+export interface DeleteAccountRequest {
+  id: string;
+} 

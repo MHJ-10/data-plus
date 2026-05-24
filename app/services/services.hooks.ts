@@ -2,6 +2,7 @@ import { apiClient } from "@/lib/apiClient";
 import { useMutation } from "@tanstack/react-query";
 import {
   CheckPasswordRequest,
+  DeleteAccountRequest,
   ResendOTPRequest,
   SignupRequest,
   UpdateUserRequest,
@@ -45,4 +46,11 @@ export const useUpdateUser = () =>
     mutationKey: ["updateUser"],
     mutationFn: (body: UpdateUserRequest) =>
       apiClient.post("/auth/update-user", { body }),
+  });
+
+export const useDeleteAccount = () =>
+  useMutation({
+    mutationKey: ["deleteAccount"],
+    mutationFn: (body: DeleteAccountRequest) =>
+      apiClient.post("/auth/delete-account", { body }),
   });
