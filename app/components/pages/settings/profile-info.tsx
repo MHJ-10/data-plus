@@ -48,7 +48,6 @@ export const ProfileInfo = () => {
 
   const onConfirmPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    e.stopPropagation();
     const formData = new FormData(e.currentTarget);
     const data: Partial<Record<keyof ProfileForm, string>> = {};
     formData.forEach((value, key) => {
@@ -69,9 +68,7 @@ export const ProfileInfo = () => {
     );
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async () => {
     updateUser(
       {
         id: session?.user?.id || "",
@@ -107,7 +104,7 @@ export const ProfileInfo = () => {
       <Card.Header className="text-2xl">اطلاعات پروفایل</Card.Header>
 
       <Card.Content>
-        <Form className="space-y-4" onSubmit={onSubmit}>
+        <Form className="space-y-4">
           <TextField
             value={formData.nickname}
             onChange={(value) =>
@@ -283,6 +280,7 @@ export const ProfileInfo = () => {
                           size="lg"
                           variant="primary"
                           type="submit"
+                          slot="close"
                           isPending={isCheckPending}
                         >
                           تأیید
@@ -300,8 +298,9 @@ export const ProfileInfo = () => {
           <Button
             size="lg"
             className="text-background bg-foreground text-lg transition-colors hover:opacity-90"
-            type="submit"
             isPending={isUpdatePending}
+            type="button"
+            onClick={onSubmit}
           >
             ذخیره تغییرات
           </Button>
