@@ -31,7 +31,7 @@ interface ProfileForm {
 }
 
 export const ProfileInfo = () => {
-  const { data: session } = useSession();
+  const { data: session, update: updateSession } = useSession();
   const [isPasswordVisible, setIsPasswordVisible] = useState<
     [boolean, boolean]
   >([false, false]);
@@ -78,7 +78,13 @@ export const ProfileInfo = () => {
         newPassword: formData.newPassword,
       },
       {
-        onSuccess: () => toast.success("اطلاعات حساب با موفقیت بروزرسانی شد."),
+        onSuccess: async () => {
+          await updateSession({
+            name: formData.nickname,
+          });
+
+          toast.success("اطلاعات حساب با موفقیت بروزرسانی شد.");
+        },
       },
     );
   };
