@@ -143,7 +143,7 @@ const Dashboard = () => {
           className="text-foreground text-xl"
         >
           <Link
-            href="dashboard/analysis"
+            href="dashboard/analyses"
             className="flex flex-row items-center gap-2"
           >
             شروع تحلیل جدید <PlusIcon />
@@ -157,7 +157,7 @@ const Dashboard = () => {
             تحلیل های‌اخیر
           </p>
           <Link
-            href="/dashboard/analysis"
+            href="/dashboard/analyses"
             className="text-foreground text-lg hover:underline"
           >
             مشاهده همه

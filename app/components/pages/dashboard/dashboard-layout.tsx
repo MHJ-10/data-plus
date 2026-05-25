@@ -26,7 +26,7 @@ interface LayoutProps {
 const menuItems = [
   { href: "", label: "پیشخوان", icon: LayoutDashboard },
   { href: "upload", label: "آپلود دیتاست", icon: Upload },
-  { href: "analysis", label: "آنالیز ها", icon: FolderOpen },
+  { href: "analyses", label: "تحلیل‌ها", icon: FolderOpen },
   { href: "settings", label: "تنظیمات", icon: Settings },
 ];
 

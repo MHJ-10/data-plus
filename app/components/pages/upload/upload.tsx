@@ -209,7 +209,7 @@ const Upload = () => {
               variant="tertiary"
               className="bg-foreground text-background"
             >
-              شروع آنالیز
+              شروع تحلیل
             </Button>
             <Button
               size="lg"
