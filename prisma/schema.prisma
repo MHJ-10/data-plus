@@ -13,13 +13,59 @@ datasource db {
   provider = "postgresql"
 }
 
+enum AnalysisStatus {
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum ColumnType {
+  NUMBER
+  BOOLEAN
+  DATE
+  TEXT
+  CATEGORY
+  ID_LIKE
+}
+
+enum ColumnRole {
+  DIMENSION
+  MEASURE
+  TEMPORAL
+  IGNORE
+}
+
+enum ChartCategory {
+  RECTANGULAR
+  TREND
+  CIRCULAR
+  DISTRIBUTION
+}
+
+enum ChartType {
+  BAR
+  LINE
+  AREA
+  PIE
+  TREEMAP
+  SCATTER
+}
+
+enum InsightType {
+  TREND
+  INSIGHT
+  WARNING
+  CORRELATION
+}
+
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   password      String?
-  emailVerified DateTime? @map("email_verified")
+  emailVerified DateTime?  @map("email_verified")
   image         String?
+  analyses      Analysis[]
 
   @@map("users")
 }
@@ -31,4 +77,109 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Analysis {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  datasetName String
+
+  rowsCount    Int
+  columnsCount Int
+
+  status AnalysisStatus
+
+  isFavorite Boolean @default(false)
+
+  datasetPreview Json?
+
+  originalFileName String?
+  originalFileSize Int?
+
+  analysisTimeMs Int?
+
+  errorMessage String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  charts         Chart[]
+  insights       Insight[]
+  columnMetadata ColumnMetadata[]
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Chart {
+  id String @id @default(cuid())
+
+  analysisId String
+  analysis   Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  title String
+
+  category ChartCategory
+
+  defaultType ChartType
+
+  availableTypes Json
+
+  xField String?
+  yField String?
+
+  score Float?
+
+  chartData Json
+
+  createdAt DateTime @default(now())
+
+  @@index([analysisId])
+}
+
+model Insight {
+  id String @id @default(cuid())
+
+  analysisId String
+  analysis   Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  title String
+
+  description String
+
+  type InsightType
+
+  score Float?
+
+  createdAt DateTime @default(now())
+
+  @@index([analysisId])
+}
+
+model ColumnMetadata {
+  id String @id @default(cuid())
+
+  analysisId String
+  analysis   Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  columnName String
+
+  type ColumnType
+
+  role ColumnRole
+
+  missingCount Int
+
+  uniqueCount Int
+
+  uniqueRatio Float?
+
+  averageLength Float?
+
+  createdAt DateTime @default(now())
+
+  @@index([analysisId])
 }
