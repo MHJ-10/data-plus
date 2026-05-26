@@ -27,4 +27,4 @@ export interface UpdateUserRequest {
 
 export interface DeleteAccountRequest {
   id: string;
-} 
+}

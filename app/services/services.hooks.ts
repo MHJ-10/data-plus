@@ -54,3 +54,14 @@ export const useDeleteAccount = () =>
     mutationFn: (body: DeleteAccountRequest) =>
       apiClient.post("/auth/delete-account", { body }),
   });
+
+export const usePostAnalyze = () =>
+  useMutation({
+    mutationKey: ["postAnalyze"],
+    mutationFn: (body: FormData) =>
+      apiClient.post("/analyze", body, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+  });
