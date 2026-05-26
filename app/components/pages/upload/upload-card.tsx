@@ -2,7 +2,8 @@
 
 import Uploader from "@/components/uploader";
 import { usePostAnalyze } from "@/services";
-import { Button, Card, Chip, Table } from "@heroui/react";
+import { Button, Card, Chip, Table, toast } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import Papa from "papaparse";
 import { useState } from "react";
 
@@ -20,6 +21,8 @@ export const UploadCard = () => {
   const [file, setFile] = useState<File | null>(null);
 
   const { mutate: analyze, isPending } = usePostAnalyze();
+
+  const router = useRouter();
 
   const onDropFiles = async ([file]: File[]) => {
     setFile(file);
@@ -47,7 +50,13 @@ export const UploadCard = () => {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      analyze(formData);
+      analyze(formData, {
+        onSuccess: (res) => {
+          console.log(res.data);
+          toast.info("در حال انتقال به صفحه تحلیل");
+          router.push(`/dashboard/analyses/${res.data.analysisId}`);
+        },
+      });
     }
   };
 
