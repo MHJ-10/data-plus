@@ -2,6 +2,7 @@
 
 import { Line, LineChart as RLineChart, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartBaseProps } from "./interface";
+import { CHART_COLORS } from "@/constants";
 
 const LineChart = (props: ChartBaseProps) => {
   const { data, dataKey = "value", nameKey = "name" } = props;
@@ -18,10 +19,10 @@ const LineChart = (props: ChartBaseProps) => {
       <Line
         type="monotone"
         dataKey={dataKey}
-        stroke="var(--color-link)"
+        stroke={CHART_COLORS[4]}
         strokeWidth={2}
-        dot={{ fill: "var(--color-accent)" }}
-        activeDot={{ stroke: "var(--color-link)" }}
+        dot={{ fill: CHART_COLORS[5] }}
+        activeDot={{ stroke: CHART_COLORS[5] }}
       />
       <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
     </RLineChart>

@@ -1,34 +1,34 @@
 export const CHART_COLORS = [
-  "#8b5cf6", // violet
-  "#3b82f6", // blue
-  "#10b981", // emerald
-  "#f59e0b", // amber
-  "#ef4444", // red
-  "#ec4899", // pink
-  "#06b6d4", // cyan
-  "#84cc16", // lime
-  "#f97316", // orange
-  "#6366f1", // indigo
+  "#A5B4FC", // soft indigo
+  "#93C5FD", // soft blue
+  "#6EE7B7", // soft emerald
+  "#FDE68A", // soft yellow
+  "#FCA5A5", // soft red
+  "#F9A8D4", // soft pink
+  "#67E8F9", // soft cyan
+  "#C4B5FD", // soft violet
+  "#FDBA74", // soft orange
+  "#A7F3D0", // mint
 
-  "#14b8a6", // teal
-  "#a855f7", // purple
-  "#eab308", // yellow
-  "#22c55e", // green
-  "#0ea5e9", // sky
-  "#d946ef", // fuchsia
-  "#f43f5e", // rose
-  "#8b5e3c", // brown
-  "#64748b", // slate
-  "#78716c", // stone
+  "#BFDBFE", // light blue
+  "#DDD6FE", // light violet
+  "#FBCFE8", // light pink
+  "#FDE047", // mellow yellow
+  "#86EFAC", // light green
+  "#FECACA", // light coral
+  "#BAE6FD", // sky light
+  "#E9D5FF", // lavender
+  "#FED7AA", // peach
+  "#D1FAE5", // pale mint
 
-  "#2563eb", // blue dark
-  "#7c3aed", // violet dark
-  "#059669", // emerald dark
-  "#dc2626", // red dark
-  "#ca8a04", // yellow dark
-  "#9333ea", // purple dark
-  "#0891b2", // cyan dark
-  "#65a30d", // lime dark
-  "#ea580c", // orange dark
-  "#be123c", // rose dark
+  "#E0E7FF", // icy indigo
+  "#E0F2FE", // icy blue
+  "#ECFCCB", // lime soft
+  "#FFF7ED", // warm cream
+  "#FEF3C7", // soft amber
+  "#FFE4E6", // blush
+  "#EDE9FE", // soft purple
+  "#CCFBF1", // aqua soft
+  "#FDF2F8", // rose mist
+  "#F1F5F9", // cool gray
 ];

@@ -2,6 +2,7 @@
 
 import { ResponsiveContainer, Tooltip, Treemap } from "recharts";
 import { ChartBaseProps } from "./interface";
+import { CHART_COLORS } from "@/constants";
 
 const CustomizedContent = (props: any) => {
   const { x, y, width, height, value, name, data, dataKey } = props;
@@ -11,7 +12,7 @@ const CustomizedContent = (props: any) => {
 
     const intensity = Math.round(30 + ratio * 70);
 
-    return `color-mix(in srgb, var(--color-link) ${intensity}%, white)`;
+    return `color-mix(in srgb, ${CHART_COLORS[0]} ${intensity}%, white)`;
   };
 
   const truncateText = (text: string, maxWidth: number) => {
@@ -42,7 +43,7 @@ const CustomizedContent = (props: any) => {
           x={x + width / 2}
           y={y + height / 2 + 7}
           textAnchor="middle"
-          className="fill-background text-sm"
+          className="fill-black text-sm"
         >
           {truncateText(name, width)}
         </text>
