@@ -1,7 +1,8 @@
 "use client";
 
-import { Pie, PieChart as RPieChart, Tooltip } from "recharts";
+import { Cell, Pie, PieChart as RPieChart, Tooltip } from "recharts";
 import { ChartBaseProps } from "./interface";
+import { CHART_COLORS } from "@/constants";
 
 const PieChart = (props: ChartBaseProps) => {
   const { data, dataKey = "value", nameKey = "name" } = props;
@@ -17,7 +18,14 @@ const PieChart = (props: ChartBaseProps) => {
         outerRadius="100%"
         fill="var(--color-link)"
         stroke="var(--color-background)"
-      />
+      >
+        {data.map((_, index) => (
+          <Cell
+            key={`cell-${index}`}
+            fill={CHART_COLORS[index % CHART_COLORS.length]}
+          />
+        ))}
+      </Pie>
       <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
     </RPieChart>
   );
