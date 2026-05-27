@@ -42,15 +42,6 @@ enum ChartCategory {
   DISTRIBUTION
 }
 
-enum ChartType {
-  BAR
-  LINE
-  AREA
-  PIE
-  TREEMAP
-  SCATTER
-}
-
 enum InsightType {
   TREND
   INSIGHT
@@ -123,8 +114,6 @@ model Chart {
   title String
 
   category ChartCategory
-
-  defaultType ChartType
 
   availableTypes Json
 

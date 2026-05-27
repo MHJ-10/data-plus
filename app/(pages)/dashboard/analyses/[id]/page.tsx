@@ -1,4 +1,6 @@
+import { AnalysisDetail } from "@/components";
 import prisma from "@/lib/prisma";
+import { notFound } from "next/navigation";
 
 const AnalysisDetailPage = async ({
   params,
@@ -18,7 +20,9 @@ const AnalysisDetailPage = async ({
     },
   });
 
-  return <h2 className="text-3xl font-bold">{JSON.stringify(analysis)}</h2>;
+  if (!analysis) notFound();
+
+  return <AnalysisDetail analysis={analysis} />;
 };
 
 export default AnalysisDetailPage;
