@@ -1,4 +1,9 @@
-import { Prisma } from "@/generated/prisma/client";
+import {
+  ChartCategory,
+  ColumnRole,
+  ColumnType,
+  Prisma,
+} from "@/generated/prisma/client";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { buildChartData } from "@/utils/chart-builder";
@@ -18,11 +23,53 @@ const runAnalysis = async ({ data, analysisId }: RunAnalysisParams) => {
     const start = Date.now();
 
     const types = detectAllColumns(data);
-    const roles = mapAllRoles(types);
-    const charts = generateCharts(roles);
-    const chartData = charts.map((chart) => buildChartData(data, chart));
 
-    console.log(chartData);
+    const roles = mapAllRoles(types);
+
+    roles.forEach(async (role) => {
+      await prisma.columnMetadata.create({
+        data: {
+          analysisId,
+          columnName: role.column,
+          role: role.role.toUpperCase() as ColumnRole,
+          type: role.type.toUpperCase().replaceAll("-", "_") as ColumnType,
+          missingCount: role.missingCount,
+          uniqueCount: role.uniqueCount,
+          averageLength: role.stats.avgStringLength,
+          uniqueRatio: role.stats.uniqueRatio,
+        },
+      });
+    });
+
+    const charts = generateCharts(roles);
+
+    charts.forEach(async (chart) => {
+      const generatedChart = await prisma.chart.create({
+        data: {
+          analysisId,
+          category: chart.category.toUpperCase() as ChartCategory,
+          xField: chart.x || null,
+          yField: chart.y || null,
+          score: chart.score,
+          title: "",
+          chartData: [],
+          availableTypes: [],
+        },
+      });
+
+      const builtChart = buildChartData(data, chart);
+
+      await prisma.chart.update({
+        where: {
+          id: generatedChart.id,
+        },
+        data: {
+          title: builtChart?.title,
+          chartData: builtChart?.data,
+          availableTypes: builtChart?.types,
+        },
+      });
+    });
 
     const end = Date.now();
 

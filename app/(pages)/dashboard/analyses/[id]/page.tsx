@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-const AnalyzeDetail = async ({
+const AnalysisDetailPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -11,9 +11,14 @@ const AnalyzeDetail = async ({
     where: {
       id: analysisId,
     },
+    include: {
+      charts: true,
+      columnMetadata: true,
+      insights: true,
+    },
   });
 
   return <h2 className="text-3xl font-bold">{JSON.stringify(analysis)}</h2>;
 };
 
-export default AnalyzeDetail;
+export default AnalysisDetailPage;

@@ -10,6 +10,8 @@ export interface DetectColumnTypeResponse {
   type: ColumnType;
   uniqueRatio: number;
   avgStringLength: number;
+  uniqueCount: number;
+  missingCount: number;
 }
 
 function isBoolean(val: any) {
@@ -38,6 +40,10 @@ function isDate(val: any) {
 }
 
 function detectColumnType(arr: any, colName: string): DetectColumnTypeResponse {
+  const missingCount = arr.filter(
+    (v: any) => v === null || v === undefined || v === "",
+  ).length;
+
   const clean = arr.filter(
     (v: any) => v !== null && v !== undefined && v !== "",
   );
@@ -83,7 +89,7 @@ function detectColumnType(arr: any, colName: string): DetectColumnTypeResponse {
   else if (avgStringLength > 20 && uniqueRatio > 0.5) type = "text";
   else type = "category";
 
-  return { avgStringLength, uniqueRatio, type };
+  return { avgStringLength, uniqueRatio, type, uniqueCount, missingCount };
 }
 
 function getRandomSample(arr: any[], size: number = 100) {

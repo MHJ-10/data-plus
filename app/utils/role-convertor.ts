@@ -11,6 +11,9 @@ export interface MapAllRolesResponse {
   column: string;
   role: ColumnRole;
   stats: ColumnStat;
+  type: string;
+  uniqueCount: number;
+  missingCount: number;
 }
 
 export function mapTypeToRole(type: ColumnType, stats: ColumnStat): ColumnRole {
@@ -45,8 +48,14 @@ export function mapTypeToRole(type: ColumnType, stats: ColumnStat): ColumnRole {
 
 export function mapAllRoles(data: Record<string, any>): MapAllRolesResponse[] {
   return Object.entries(data).map(
-    ([column, { type, avgStringLength, uniqueRatio }]) => ({
+    ([
       column,
+      { type, avgStringLength, uniqueRatio, uniqueCount, missingCount },
+    ]) => ({
+      column,
+      type,
+      uniqueCount,
+      missingCount,
       stats: { avgStringLength, uniqueRatio },
       role: mapTypeToRole(type, {
         avgStringLength,
