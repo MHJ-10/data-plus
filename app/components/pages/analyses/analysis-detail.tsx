@@ -13,6 +13,8 @@ import {
   StarIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { ColumnsMetadataTable } from "./columns-metadata-table";
+import { PreviewTable } from "./preview-table";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -86,6 +88,14 @@ const AnalysisDetail = ({ analysis }: AnalysisDetailProps) => {
           />
         ))}
       </div>
+
+      <PreviewTable
+        data={
+          (analysis.datasetPreview as Record<string, string | number>[]) || []
+        }
+      />
+
+      <ColumnsMetadataTable data={analysis.columnMetadata} />
     </div>
   );
 };
