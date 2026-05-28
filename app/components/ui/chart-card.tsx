@@ -12,14 +12,14 @@ import {
   ScatterChartIcon,
   SheetIcon,
 } from "lucide-react";
-import BarChart from "./chart/bar-chart";
+import BarChart from "../chart/bar-chart";
 import { ChartType } from "@/utils/chart-candidate";
 import { ReactNode, useRef, useState } from "react";
-import AreaChart from "./chart/area-chart";
-import PieChart from "./chart/pie-chart";
-import TreemapChart from "./chart/treemap-chart";
-import LineChart from "./chart/line-chart";
-import ScatterChart from "./chart/scatter-chart";
+import AreaChart from "../chart/area-chart";
+import PieChart from "../chart/pie-chart";
+import TreemapChart from "../chart/treemap-chart";
+import LineChart from "../chart/line-chart";
+import ScatterChart from "../chart/scatter-chart";
 import { useDownloadPNG } from "@/hooks";
 import { cn, downloadCSVFile } from "@/utils";
 

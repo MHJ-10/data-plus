@@ -1,6 +1,6 @@
 "use client";
 
-import Uploader from "@/components/uploader";
+import { Uploader } from "@/components";
 import { usePostAnalyze } from "@/services";
 import { Button, Card, Chip, Table, toast } from "@heroui/react";
 import { useRouter } from "next/navigation";

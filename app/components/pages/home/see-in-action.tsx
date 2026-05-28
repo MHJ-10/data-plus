@@ -1,6 +1,6 @@
 "use client";
 
-import ChartCard from "@/components/chart-card";
+import { ChartCard } from "@/components";
 import { ChartType } from "@/utils/chart-candidate";
 import { Card, Surface } from "@heroui/react";
 import { DatabaseIcon, InfoIcon, TrendingUpIcon } from "lucide-react";

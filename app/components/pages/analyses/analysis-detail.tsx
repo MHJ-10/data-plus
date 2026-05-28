@@ -1,6 +1,6 @@
 "use client";
 
-import ChartCard from "@/components/chart-card";
+import ChartCard from "@/components/ui/chart-card";
 import { Prisma } from "@/generated/prisma/client";
 import { ChartType } from "@/utils/chart-candidate";
 import { Button, Card } from "@heroui/react";
@@ -12,9 +12,9 @@ import {
   DatabaseIcon,
   StarIcon,
 } from "lucide-react";
-import Link from "next/link";
 import { ColumnsMetadataTable } from "./columns-metadata-table";
 import { PreviewTable } from "./preview-table";
+import { useRouter } from "next/navigation";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -29,14 +29,19 @@ interface AnalysisDetailProps {
 }
 
 const AnalysisDetail = ({ analysis }: AnalysisDetailProps) => {
+  const router = useRouter();
+
   return (
     <div className="space-y-8">
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-4">
-          <Button size="sm" variant="ghost" isIconOnly>
-            <Link href="/dashboard/analyses" className="">
-              <ArrowRightIcon className="size-5" />
-            </Link>
+          <Button
+            size="sm"
+            variant="ghost"
+            isIconOnly
+            onClick={() => router.back()}
+          >
+            <ArrowRightIcon className="size-5" />
           </Button>
 
           <div>
