@@ -24,7 +24,7 @@ import { useTransition } from "react";
 import { AnalysesProps } from "./analyses";
 import { Pagination } from "@/components";
 
-const analysisStatusMap: Record<
+export const analysisStatusMap: Record<
   AnalysisStatus,
   { label: string; color: ChipVariants["color"] }
 > = {

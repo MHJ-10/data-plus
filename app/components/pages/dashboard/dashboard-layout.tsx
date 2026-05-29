@@ -76,7 +76,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
           </Button>
         </div>
 
-        <nav className="flex-1 space-y-1 px-3">
+        <nav className="flex-1 flex gap-1 flex-col items-center px-3">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
@@ -86,6 +86,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
                 variant="ghost"
                 size="lg"
                 fullWidth
+                isIconOnly={sidebarCollapsed}
                 className={clsx("", {
                   "bg-foreground text-background": active,
                 })}
