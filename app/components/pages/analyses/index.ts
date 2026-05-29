@@ -1,2 +1,3 @@
-export { default as AnalysisDetail } from "./analysis-detail";
+export { default as AnalysisDetail } from "./detail/analysis-detail";
 export { default as Analyses } from "./analyses";
+export * from "./detail";

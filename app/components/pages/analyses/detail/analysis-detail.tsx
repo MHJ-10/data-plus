@@ -15,6 +15,8 @@ import {
 import { ColumnsMetadataTable } from "./columns-metadata-table";
 import { PreviewTable } from "./preview-table";
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { toggleFavorite } from "@/data/actions";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -30,6 +32,14 @@ interface AnalysisDetailProps {
 
 const AnalysisDetail = ({ analysis }: AnalysisDetailProps) => {
   const router = useRouter();
+
+  const [isPending, startTransition] = useTransition();
+
+  const onFavoriteButtonClick = (id: string) => {
+    startTransition(async () => {
+      await toggleFavorite(id);
+    });
+  };
 
   return (
     <div className="space-y-8">
@@ -71,6 +81,8 @@ const AnalysisDetail = ({ analysis }: AnalysisDetailProps) => {
           isIconOnly
           variant="ghost"
           className="group hover:bg-transparent"
+          isPending={isPending}
+          onClick={() => onFavoriteButtonClick(analysis.id)}
         >
           <StarIcon
             className={clsx("group-hover:text-warning size-6", {

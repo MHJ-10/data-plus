@@ -45,7 +45,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
     <div className="bg-background flex h-screen overflow-hidden">
       {/* Desktop Sidebar */}
       <aside
-        className={`bg-foreground/5 border-border hidden flex-col border-l transition-all duration-[300] md:flex ${
+        className={`bg-foreground/10 border-border hidden flex-col border-l transition-all duration-[300] md:flex ${
           sidebarCollapsed ? "w-20" : "w-64"
         }`}
       >
