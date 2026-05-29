@@ -1,5 +1,7 @@
 import { Analyses } from "@/components";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 interface AnalysesPageParams {
   searchParams: Promise<{
@@ -11,6 +13,10 @@ interface AnalysesPageParams {
 
 const AnalysesPage = async ({ searchParams }: AnalysesPageParams) => {
   const params = await searchParams;
+
+  const session = await auth();
+
+  const userId = session?.user?.id;
 
   const pageNum = Number(params?.page ?? 1);
   const search = params?.search ?? "";
@@ -25,25 +31,27 @@ const AnalysesPage = async ({ searchParams }: AnalysesPageParams) => {
     },
     take: 10,
     skip: (pageNum - 1) * 10,
-    where: search
-      ? {
-          datasetName: {
-            contains: search,
-            mode: "insensitive",
-          },
-        }
-      : undefined,
+    where: {
+      userId,
+      ...(search && {
+        datasetName: {
+          contains: search,
+          mode: "insensitive",
+        },
+      }),
+    },
   });
 
   const totalAnalyses = await prisma.analysis.count({
-    where: search
-      ? {
-          datasetName: {
-            contains: search,
-            mode: "insensitive",
-          },
-        }
-      : undefined,
+    where: {
+      userId,
+      ...(search && {
+        datasetName: {
+          contains: search,
+          mode: "insensitive",
+        },
+      }),
+    },
   });
 
   return <Analyses analyses={analyses} total={totalAnalyses} />;
