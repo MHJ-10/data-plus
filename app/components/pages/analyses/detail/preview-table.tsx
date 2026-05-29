@@ -11,7 +11,7 @@ export const PreviewTable = ({
         پیش‌نمایش دیتاست
       </Card.Header>
       <Card.Content>
-        <Table dir="ltr">
+        <Table>
           <Table.ScrollContainer>
             <Table.Content>
               <Table.Header>
@@ -19,7 +19,7 @@ export const PreviewTable = ({
                   <Table.Column
                     key={header}
                     isRowHeader={i === 0}
-                    className="text-center text-lg font-bold"
+                    className="text-center text-lg font-bold first:after:w-0 last:after:w-px"
                   >
                     {header}
                   </Table.Column>
@@ -27,7 +27,10 @@ export const PreviewTable = ({
               </Table.Header>
               <Table.Body>
                 {data.map((row, i) => (
-                  <Table.Row key={i}>
+                  <Table.Row
+                    key={i}
+                    className="*:first:rounded-l-none *:first:rounded-r-2xl *:last:rounded-l-2xl *:last:rounded-r-none"
+                  >
                     {Object.keys(data[0]).map((header) => (
                       <Table.Cell
                         key={header}

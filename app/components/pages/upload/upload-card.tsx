@@ -86,7 +86,7 @@ export const UploadCard = () => {
             </div>
           </Card.Header>
           <Card.Content>
-            <Table dir="ltr" variant="secondary">
+            <Table variant="secondary">
               <Table.ScrollContainer>
                 <Table.Content>
                   <Table.Header>
@@ -94,7 +94,7 @@ export const UploadCard = () => {
                       <Table.Column
                         key={header}
                         isRowHeader={i === 0}
-                        className="text-center text-lg font-bold"
+                        className="text-center text-lg font-bold first:rounded-l-none first:rounded-r-2xl first:after:w-0 last:rounded-l-2xl last:rounded-r-none last:after:w-px"
                       >
                         {header}
                       </Table.Column>
@@ -102,10 +102,7 @@ export const UploadCard = () => {
                   </Table.Header>
                   <Table.Body>
                     {preview.rows.sample.map((row, i) => (
-                      <Table.Row
-                        key={i}
-                        className={`${i % 2 === 0 ? "bg-muted/30" : "bg-muted/10"}`}
-                      >
+                      <Table.Row key={i}>
                         {preview.columns.map((header) => (
                           <Table.Cell
                             key={header}

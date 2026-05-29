@@ -38,13 +38,13 @@ export const ColumnsMetadataTable = ({ data }: { data: ColumnMetadata[] }) => {
         اطلاعات ستون‌ها
       </Card.Header>
       <Card.Content>
-        <Table dir="ltr">
+        <Table>
           <TableScrollContainer>
             <Table.Content>
               <Table.Header>
                 <Table.Column
                   isRowHeader
-                  className="text-center text-lg font-bold"
+                  className="text-center text-lg font-bold after:w-0"
                 >
                   نام ستون
                 </Table.Column>
@@ -57,13 +57,16 @@ export const ColumnsMetadataTable = ({ data }: { data: ColumnMetadata[] }) => {
                 <Table.Column className="text-center text-lg font-bold">
                   مقادیر ناقص
                 </Table.Column>
-                <Table.Column className="text-center text-lg font-bold">
+                <Table.Column className="text-center text-lg font-bold after:w-px">
                   مقادیر یکتا
                 </Table.Column>
               </Table.Header>
               <Table.Body>
                 {data.map((metadata) => (
-                  <Table.Row key={metadata.id}>
+                  <Table.Row
+                    key={metadata.id}
+                    className="*:first:rounded-l-none *:first:rounded-r-2xl *:last:rounded-l-2xl *:last:rounded-r-none"
+                  >
                     <Table.Cell className="text-center font-semibold">
                       {metadata.columnName}
                     </Table.Cell>
