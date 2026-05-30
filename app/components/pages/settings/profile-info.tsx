@@ -197,8 +197,8 @@ export const ProfileInfo = () => {
                           <Button
                             isIconOnly
                             variant="ghost"
-                            size="md"
-                            className="text-muted absolute top-1 left-1"
+                            size="sm"
+                            className="text-muted absolute top-1.5 left-1"
                             onClick={() =>
                               setIsPasswordVisible((prev) => [
                                 !prev[0],
@@ -237,8 +237,8 @@ export const ProfileInfo = () => {
                           <Button
                             isIconOnly
                             variant="ghost"
-                            size="lg"
-                            className="text-muted absolute top-1 left-1"
+                            size="sm"
+                            className="text-muted absolute top-1.5 left-1"
                             onClick={() =>
                               setIsPasswordVisible((prev) => [
                                 prev[0],

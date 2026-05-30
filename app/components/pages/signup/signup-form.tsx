@@ -141,8 +141,8 @@ export const SignupForm = () => {
         <Button
           isIconOnly
           variant="ghost"
-          size="lg"
-          className="text-muted absolute top-9 left-1"
+          size="sm"
+          className="text-muted absolute top-9.5 left-1"
           onClick={() => setIsPasswordVisible((prev) => !prev)}
         >
           {isPasswordVisible ? <EyeOffIcon /> : <EyeIcon />}
