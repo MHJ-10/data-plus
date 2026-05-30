@@ -88,7 +88,7 @@ export const UploadCard = () => {
           <Card.Content>
             <Table variant="secondary">
               <Table.ScrollContainer>
-                <Table.Content>
+                <Table.Content aria-label="dataset-table">
                   <Table.Header>
                     {preview.columns.map((header, i) => (
                       <Table.Column

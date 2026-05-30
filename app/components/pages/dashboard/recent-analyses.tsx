@@ -68,7 +68,9 @@ export const RecentAnalyses = ({
                 >
                   <ArrowLeftIcon className="size-5" />
                 </Link>
-              ) : null}
+              ) : (
+                <p className="size-5"></p>
+              )}
             </div>
           </div>
         ))}

@@ -39,7 +39,7 @@ const uploadFeatures = [
 
 export const Features = () => {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {uploadFeatures.map(({ icon: Icon, title, description, color }) => (
         <Card key={title} className="border p-6">
           <Card.Header

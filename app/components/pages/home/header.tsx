@@ -4,9 +4,20 @@ import { Button, Card } from "@heroui/react";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const { theme, setTheme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const mount = () => {
+      setMounted(true);
+    };
+
+    mount();
+  }, []);
 
   return (
     <div className="flex w-full items-center justify-between py-4">
@@ -14,16 +25,18 @@ const Header = () => {
         <Image src="/logo.png" alt="data plus logo" width={24} height={24} />
         <span className="text-xl font-bold">دیتاپلاس</span>
       </Card>
-      <Button
-        isIconOnly
-        size="lg"
-        className="bg-background [&>svg]:text-muted border [&>svg]:size-6 [&>svg]:animate-pulse"
-        onClick={() => {
-          setTheme((prev) => (prev == "light" ? "dark" : "light"));
-        }}
-      >
-        {theme === "light" ? <SunIcon /> : <MoonIcon />}
-      </Button>
+      {mounted ? (
+        <Button
+          isIconOnly
+          size="lg"
+          className="bg-background [&>svg]:text-muted border [&>svg]:size-6 [&>svg]:animate-pulse"
+          onClick={() => {
+            setTheme((prev) => (prev == "light" ? "dark" : "light"));
+          }}
+        >
+          {theme === "light" ? <SunIcon /> : <MoonIcon />}
+        </Button>
+      ) : null}
     </div>
   );
 };

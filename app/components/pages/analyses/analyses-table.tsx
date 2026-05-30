@@ -54,7 +54,7 @@ export const AnalysesTable = ({ analyses, total }: AnalysesProps) => {
   return (
     <Table dir="rtl">
       <TableScrollContainer>
-        <Table.Content>
+        <Table.Content aria-label="analyses-table">
           <Table.Header>
             <Table.Column
               isRowHeader

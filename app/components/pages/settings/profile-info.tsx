@@ -179,6 +179,7 @@ export const ProfileInfo = () => {
                           name="password"
                           type="password"
                           autoComplete="off"
+                          aria-label="current-password"
                           validate={(value) => {
                             const passwordRegex =
                               /^(?=.*[A-Z])(?=.*[0-9])(?!.*[\u0600-\u06FF]).{8,20}$/;
@@ -219,6 +220,7 @@ export const ProfileInfo = () => {
                           name="newPassword"
                           type="password"
                           autoComplete="off"
+                          aria-label="new-password"
                           validate={(value) => {
                             const passwordRegex =
                               /^(?=.*[A-Z])(?=.*[0-9])(?!.*[\u0600-\u06FF]).{8,20}$/;
