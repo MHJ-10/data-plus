@@ -36,9 +36,9 @@ const DashboardLayout = ({ children }: LayoutProps) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const isActive = (path: string) => {
-    const currentPathname = pathname.split("/dashboard/")[1] || "";
+    if (path === "") return pathname === "/dashboard";
 
-    return currentPathname === path;
+    return pathname.startsWith(`/dashboard/${path}`);
   };
 
   return (
@@ -76,7 +76,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
           </Button>
         </div>
 
-        <nav className="flex-1 flex gap-1 flex-col items-center px-3">
+        <nav className="flex flex-1 flex-col items-center gap-1 px-3">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
