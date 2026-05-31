@@ -55,8 +55,8 @@ const DashboardLayout = ({ children }: LayoutProps) => {
               <Image
                 src="/logo.png"
                 alt="Data Plus Logo"
-                width={20}
-                height={20}
+                width={36}
+                height={36}
               />
               <h1 className="text-foreground text-xl font-semibold">
                 دیتاپلاس

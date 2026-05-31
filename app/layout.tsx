@@ -10,8 +10,9 @@ const harmattan = Harmattan({
 });
 
 export const metadata: Metadata = {
-  title: "Data Plus",
-  description: "Analyze and visualize your data with ease using Data Plus.",
+  title: "دیتا پلاس",
+  description:
+    "با دیتا پلاس داده‌های خود را به‌راحتی تحلیل کنید و با نمودارهای تعاملی به بینش‌های عمیق‌تری دست پیدا کنید.",
 };
 
 export default function RootLayout({

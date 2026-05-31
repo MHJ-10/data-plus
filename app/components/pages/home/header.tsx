@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <div className="flex w-full items-center justify-between py-4">
       <Card className="flex flex-row items-center gap-2 border p-2">
-        <Image src="/logo.png" alt="data plus logo" width={24} height={24} />
+        <Image src="/logo.png" alt="data plus logo" width={30} height={30} />
         <span className="text-xl font-bold">دیتاپلاس</span>
       </Card>
       {mounted ? (

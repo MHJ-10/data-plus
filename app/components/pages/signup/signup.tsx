@@ -14,8 +14,8 @@ const Signup = () => {
             <Image
               src="/logo.png"
               alt="data plus logo"
-              width={50}
-              height={50}
+              width={60}
+              height={60}
             />
             <h3 className="text-foreground text-center text-3xl font-bold">
               ایجاد حساب کاربری <br />

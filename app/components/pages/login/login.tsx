@@ -14,8 +14,8 @@ const Login = () => {
             <Image
               src="/logo.png"
               alt="data plus logo"
-              width={50}
-              height={50}
+              width={60}
+              height={60}
             />
             <h3 className="text-foreground text-center text-3xl font-bold">
               ورود به حساب کاربری
@@ -53,19 +53,19 @@ const Login = () => {
 
           <Card.Content className="flex flex-row gap-4">
             <Card className="h-fit">
-              <p className="text-2xl font-bold">تحلیل هوشمند</p>
+              <p className="text-2xl font-bold text-foreground">تحلیل هوشمند</p>
               <p className="text-muted text-lg font-semibold">
                 پردازش خودکار و سریع دیتاست‌ها
               </p>
             </Card>
             <Card className="mt-6 h-fit">
-              <p className="text-2xl font-bold">بصری‌سازی پیشرفته</p>
+              <p className="text-2xl font-bold text-foreground">بصری‌سازی پیشرفته</p>
               <p className="text-muted text-lg font-semibold">
                 تولید نمودارهای حرفه‌ای در لحظه
               </p>
             </Card>
             <Card className="mt-12 h-fit">
-              <p className="text-2xl font-bold">حریم خصوصی امن</p>
+              <p className="text-2xl font-bold text-foreground">حریم خصوصی امن</p>
               <p className="text-muted text-lg font-semibold">
                 داده‌های شما داخل مرورگر باقی می‌مانند
               </p>
