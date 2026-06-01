@@ -4,21 +4,23 @@ import { Button, Card, InputOTP, toast } from "@heroui/react";
 import { MailIcon, MoveRightIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SignupRequest, useResendOTP, useVerifyEmail } from "@/services";
+import { SignupRequest, useVerifyEmail } from "@/services";
 import { decrypt } from "@/lib/encrypt";
 import { signIn } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
+import { resendOTP } from "@/data";
 
 const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
   const [userData, setUserData] = useState<SignupRequest | null>(null);
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(20);
   const otpRef = useRef<HTMLInputElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const router = useRouter();
 
   const { mutate, isPending } = useVerifyEmail();
-  const { mutate: resendOTP, isPending: isResending } = useResendOTP();
+
+  const [isResendPending, startResendTransition] = useTransition();
 
   const startTimer = () => {
     if (intervalRef.current) {
@@ -82,20 +84,17 @@ const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
 
   const handleResendOTP = () => {
     if (userData && timer === 0) {
-      resendOTP(
-        { email: userData.email, nickname: userData.nickname },
-        {
-          onError: (error: any) => {
-            const message = error?.response?.data?.error || "خطا در ارسال کد.";
-            toast.danger(message);
-          },
-          onSuccess: () => {
-            toast.success("کد جدید ارسال شد.");
+      const { email, nickname } = userData;
+
+      startResendTransition(async () => {
+        await resendOTP({ email, nickname })
+          .then((res) => {
+            toast.success(res.message);
             setTimer(120);
             startTimer();
-          },
-        },
-      );
+          })
+          .catch((err) => toast.danger(err.message));
+      });
     }
   };
 
@@ -139,8 +138,8 @@ const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
             className="mx-auto font-bold"
             variant="ghost"
             size="lg"
-            isPending={isResending}
-            isDisabled={timer > 0 || isResending}
+            isPending={isResendPending}
+            isDisabled={timer > 0 || isResendPending}
             onPress={handleResendOTP}
           >
             {timer > 0 ? `ارسال مجدد (${timer}s)` : "ارسال مجدد"}

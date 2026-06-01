@@ -8,7 +8,7 @@ import { Resend } from "resend";
 import { createUserSchema } from "./schema";
 import { redirect } from "next/navigation";
 import { encrypt } from "@/lib/encrypt";
-import { PromsieActionResponse } from "./interface";
+import { PromsieActionResponse, ResendOTPRequest } from "./interface";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -23,10 +23,7 @@ export async function createUser(
   });
 
   if (error) {
-    return {
-      error: "لطفاً تمام فیلدها را پر کنید.",
-      message: null,
-    };
+    return { error: "لطفاً تمام فیلدها را پر کنید." };
   }
 
   const existingUser = await prisma.user.findUnique({
@@ -34,10 +31,7 @@ export async function createUser(
   });
 
   if (existingUser) {
-    return {
-      error: "این ایمیل قبلاً ثبت شده است.",
-      message: null,
-    };
+    return { error: "این ایمیل قبلاً ثبت شده است." };
   }
 
   const hashedPassword = await hash(data.password, 12);
@@ -72,6 +66,49 @@ export async function createUser(
   const encryptedData = await encrypt(JSON.stringify(data));
 
   redirect(`/verify-email?data=${encodeURIComponent(encryptedData)}`);
+}
+
+export async function resendOTP({ email, nickname }: ResendOTPRequest) {
+  if (!email) {
+    throw Error("ایمیل ارسال نشده است.");
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (!user) {
+    throw Error("کاربر یافت نشده است.");
+  }
+
+  await prisma.verificationToken.deleteMany({
+    where: { identifier: email },
+  });
+
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  const expires = new Date(Date.now() + 10 * 60 * 1000);
+
+  console.log(otp);
+
+  await prisma.verificationToken.create({
+    data: {
+      identifier: email,
+      token: otp.toString(),
+      expires,
+    },
+  });
+
+  await resend.emails.send({
+    from: "Data Plus <onboarding@resend.dev>",
+    to: [email],
+    subject: "کد تأیید ایمیل شما (دوباره ارسال شده)",
+    react: OTPEmailTemplate({
+      nickname: nickname || "کاربر",
+      otp,
+    }),
+  });
+
+  return { message: "کد جدید ارسال شد." };
 }
 
 export async function toggleFavorite(id: string) {

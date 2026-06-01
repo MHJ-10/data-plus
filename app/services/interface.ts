@@ -9,11 +9,6 @@ export interface VerifyEmailRequest {
   otp: string;
 }
 
-export interface ResendOTPRequest {
-  email: string;
-  nickname: string;
-}
-
 export interface CheckPasswordRequest {
   id: string;
   password: string;
