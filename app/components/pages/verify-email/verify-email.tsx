@@ -1,24 +1,24 @@
 "use client";
 
+import { resendOTP, verifyEmail } from "@/data";
+import { SignupPayload } from "@/data/interface";
+import { decrypt } from "@/lib/encrypt";
 import { Button, Card, InputOTP, toast } from "@heroui/react";
 import { MailIcon, MoveRightIcon } from "lucide-react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SignupRequest, useVerifyEmail } from "@/services";
-import { decrypt } from "@/lib/encrypt";
-import { signIn } from "next-auth/react";
 import { useEffect, useRef, useState, useTransition } from "react";
-import { resendOTP } from "@/data";
 
 const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
-  const [userData, setUserData] = useState<SignupRequest | null>(null);
-  const [timer, setTimer] = useState(20);
+  const [userData, setUserData] = useState<SignupPayload | null>(null);
+  const [timer, setTimer] = useState(120);
   const otpRef = useRef<HTMLInputElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const router = useRouter();
 
-  const { mutate, isPending } = useVerifyEmail();
+  const [isVerifyPending, startVerifyTransition] = useTransition();
 
   const [isResendPending, startResendTransition] = useTransition();
 
@@ -44,7 +44,7 @@ const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
     const getUserData = async () => {
       if (encryptedData) {
         const stringifedData = await decrypt(decodeURIComponent(encryptedData));
-        setUserData(JSON.parse(stringifedData) as SignupRequest);
+        setUserData(JSON.parse(stringifedData));
       }
     };
     getUserData();
@@ -65,20 +65,20 @@ const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
 
   const verifyCode = async (otp: string) => {
     if (userData) {
-      mutate(
-        { email: userData.email, otp },
-        {
-          onSuccess: async () => {
+      const { email, password } = userData;
+      startVerifyTransition(async () => {
+        await verifyEmail({ email, otp, password })
+          .then(async (res) => {
             await signIn("credentials", {
               redirect: false,
-              email: userData.email,
-              password: userData.password,
+              email,
+              password,
             });
-            toast.success("ثبت نام با موفقیت انجام شد.");
+            toast.success(res.message);
             router.push("/dashboard");
-          },
-        },
-      );
+          })
+          .catch((err) => toast.danger(err.message));
+      });
     }
   };
 
@@ -118,7 +118,7 @@ const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
             maxLength={6}
             variant="secondary"
             onComplete={verifyCode}
-            isDisabled={isPending}
+            isDisabled={isVerifyPending}
             ref={otpRef}
           >
             <InputOTP.Group dir="ltr">
@@ -138,8 +138,8 @@ const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
             className="mx-auto font-bold"
             variant="ghost"
             size="lg"
-            isPending={isResendPending}
-            isDisabled={timer > 0 || isResendPending}
+            isPending={isResendPending || isVerifyPending}
+            isDisabled={timer > 0 || isResendPending || isVerifyPending}
             onPress={handleResendOTP}
           >
             {timer > 0 ? `ارسال مجدد (${timer}s)` : "ارسال مجدد"}
@@ -149,7 +149,7 @@ const VerifyEmail = ({ encryptedData }: { encryptedData?: string }) => {
           <Button
             variant="ghost"
             className="mx-auto mt-2 font-bold"
-            isPending={isPending}
+            isPending={isVerifyPending || isResendPending}
           >
             <Link href="/signup" replace className="flex items-center gap-2">
               <MoveRightIcon /> بازگشت به صفحه ثبت‌نام

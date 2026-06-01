@@ -2,13 +2,18 @@
 
 import { OTPEmailTemplate } from "@/components";
 import prisma from "@/lib/prisma";
-import { hash } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 import { createUserSchema } from "./schema";
 import { redirect } from "next/navigation";
 import { encrypt } from "@/lib/encrypt";
-import { PromsieActionResponse, ResendOTPRequest } from "./interface";
+import {
+  CheckPasswordPayload,
+  PromsieActionResponse,
+  ResendOTPPayload,
+  VerifyEmailPayload,
+} from "./interface";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -68,7 +73,7 @@ export async function createUser(
   redirect(`/verify-email?data=${encodeURIComponent(encryptedData)}`);
 }
 
-export async function resendOTP({ email, nickname }: ResendOTPRequest) {
+export async function resendOTP({ email, nickname }: ResendOTPPayload) {
   if (!email) {
     throw Error("ایمیل ارسال نشده است.");
   }
@@ -109,6 +114,61 @@ export async function resendOTP({ email, nickname }: ResendOTPRequest) {
   });
 
   return { message: "کد جدید ارسال شد." };
+}
+
+export async function verifyEmail(payload: VerifyEmailPayload) {
+  const { email, otp } = payload;
+
+  if (!email || !otp) {
+    throw Error("ایمیل یا کد اعتبارسنجی ارسال نشده است.");
+  }
+
+  const token = await prisma.verificationToken.findUnique({
+    where: {
+      identifier_token: {
+        identifier: email,
+        token: otp,
+      },
+    },
+  });
+
+  if (!token || token.expires < new Date()) {
+    throw Error("کد تأیید نامعتبر یا منقضی شده است.");
+  }
+
+  await prisma.user.update({
+    where: { email },
+    data: { emailVerified: new Date() },
+  });
+
+  await prisma.verificationToken.delete({
+    where: {
+      identifier_token: {
+        identifier: email,
+        token: otp,
+      },
+    },
+  });
+
+  return { message: "ثبت نام با موفقیت انجام شد." };
+}
+
+export async function checkPassword({ id, password }: CheckPasswordPayload) {
+  if (!password || !id) throw Error("اطلاعات لازم ارسال نشده است.");
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!user) throw Error("کاربر یافت نشد.");
+
+  const isValid = await compare(password, user.password || "");
+
+  if (!isValid) throw Error("رمز عبور فعلی نادرست است.");
+
+  return { message: "پس از اعمال تغییرات، آن‌ها را ذخیره کنید" };
 }
 
 export async function toggleFavorite(id: string) {

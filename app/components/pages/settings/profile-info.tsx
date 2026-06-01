@@ -1,6 +1,7 @@
 "use client";
 
-import { useCheckPassword, useUpdateUser } from "@/services";
+import { checkPassword } from "@/data";
+import { useUpdateUser } from "@/services";
 import {
   Button,
   Card,
@@ -22,7 +23,7 @@ import {
   UserIcon,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 interface ProfileForm {
   nickname?: string;
@@ -42,8 +43,8 @@ export const ProfileInfo = () => {
     newPassword: "",
   });
 
-  const { mutate: checkPassword, isPending: isCheckPending } =
-    useCheckPassword();
+  const [checkPending, startCheckTransition] = useTransition();
+
   const { mutate: updateUser, isPending: isUpdatePending } = useUpdateUser();
 
   const onConfirmPassword = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -54,18 +55,19 @@ export const ProfileInfo = () => {
       data[key as keyof ProfileForm] = value.toString();
     });
 
-    checkPassword(
-      {
+    startCheckTransition(async () => {
+      await checkPassword({
         id: session?.user?.id || "",
         password: data.password || "",
-      },
-      {
-        onSuccess: () => {
-          toast.info("پس از اعمال تغییرات، آن‌ها را ذخیره کنید");
+      })
+        .then((res) => {
+          toast.info(res.message);
           setFormData((prev) => ({ ...prev, ...data }));
-        },
-      },
-    );
+        })
+        .catch((err) => {
+          toast.danger(err.message);
+        });
+    });
   };
 
   const onSubmit = async () => {
@@ -283,7 +285,7 @@ export const ProfileInfo = () => {
                           variant="primary"
                           type="submit"
                           slot="close"
-                          isPending={isCheckPending}
+                          isPending={checkPending}
                         >
                           تأیید
                         </Button>

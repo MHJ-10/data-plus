@@ -1,27 +1,6 @@
 import { apiClient } from "@/lib/apiClient";
 import { useMutation } from "@tanstack/react-query";
-import {
-  CheckPasswordRequest,
-  DeleteAccountRequest,
-  UpdateUserRequest,
-  VerifyEmailRequest,
-} from "./interface";
-
-export const useVerifyEmail = () =>
-  useMutation({
-    mutationKey: ["verify-email"],
-    mutationFn: (body: VerifyEmailRequest) =>
-      apiClient.post("/auth/verify-email", {
-        body,
-      }),
-  });
-
-export const useCheckPassword = () =>
-  useMutation({
-    mutationKey: ["checkPassword"],
-    mutationFn: (body: CheckPasswordRequest) =>
-      apiClient.post("/auth/check-password", { body }),
-  });
+import { DeleteAccountRequest, UpdateUserRequest } from "./interface";
 
 export const useUpdateUser = () =>
   useMutation({

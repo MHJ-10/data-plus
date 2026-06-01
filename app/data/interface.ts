@@ -1,8 +1,6 @@
 import { z } from "zod";
 import { createUserSchema } from "./schema";
 
-export type CreateUser = z.infer<typeof createUserSchema>;
-
 interface ActionResponse {
   error?: string | null;
   message?: string | null;
@@ -10,26 +8,23 @@ interface ActionResponse {
 
 export type PromsieActionResponse = Promise<ActionResponse>;
 
-// export interface SignupRequest {
-//   nickname: string;
-//   email: string;
-//   password: string;
-// }
+export type SignupPayload = z.infer<typeof createUserSchema>;
 
-// export interface VerifyEmailRequest {
-//   email: string;
-//   otp: string;
-// }
-
-export interface ResendOTPRequest {
+export interface ResendOTPPayload {
   email: string;
   nickname: string;
 }
 
-// export interface CheckPasswordRequest {
-//   id: string;
-//   password: string;
-// }
+export interface VerifyEmailPayload {
+  email: string;
+  password: string;
+  otp: string;
+}
+
+export interface CheckPasswordPayload {
+  id: string;
+  password: string;
+}
 
 // export interface UpdateUserRequest {
 //   id: string;
