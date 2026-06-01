@@ -39,7 +39,7 @@ for (let i = 0; i < 47; i++) {
 
   analyses.push({
     user: {
-      connect: { id: "cmpnt89070000psp7z23kr6kl" },
+      connect: { id: "cmpv7z85t0000uzb2iss8y9if" },
     },
     datasetName,
     analysisTimeMs: randomInt(5, 5000),

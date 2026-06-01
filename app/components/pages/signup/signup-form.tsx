@@ -1,7 +1,5 @@
 "use client";
 
-import { encrypt } from "@/lib/encrypt";
-import { SignupRequest, useSignup } from "@/services";
 import {
   Button,
   Description,
@@ -10,45 +8,25 @@ import {
   Input,
   Label,
   TextField,
+  toast,
 } from "@heroui/react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useActionState, useState } from "react";
+
+import { createUser } from "@/data";
 
 export const SignupForm = () => {
-  const router = useRouter();
-
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const { mutate, isPending } = useSignup();
+  const [state, action, pending] = useActionState(createUser, null);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
-    });
-
-    const userData: SignupRequest = {
-      nickname: data.nickname,
-      email: data.email,
-      password: data.password,
-    };
-
-    const encryptedData = await encrypt(JSON.stringify(userData));
-
-    mutate(userData, {
-      onSuccess: () => {
-        router.push(`/verify-email?data=${encodeURIComponent(encryptedData)}`);
-      },
-    });
-  };
+  if (state?.error) {
+    toast.danger(state.error);
+  }
 
   return (
-    <Form className="space-y-6" onSubmit={onSubmit}>
+    <Form className="space-y-6" action={action}>
       <TextField
         isRequired
         name="nickname"
@@ -157,7 +135,7 @@ export const SignupForm = () => {
         className="bg-foreground hover:bg-foreground/90 w-full shadow-sm transition-colors"
         size="lg"
         type="submit"
-        isPending={isPending}
+        isPending={pending}
       >
         ایجاد حساب
       </Button>
