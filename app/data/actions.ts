@@ -8,10 +8,14 @@ import { Resend } from "resend";
 import { createUserSchema } from "./schema";
 import { redirect } from "next/navigation";
 import { encrypt } from "@/lib/encrypt";
+import { PromsieActionResponse } from "./interface";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function createUser(_: any, formData: FormData) {
+export async function createUser(
+  _: any,
+  formData: FormData,
+): PromsieActionResponse {
   const { data, error } = createUserSchema.safeParse({
     nickname: formData.get("nickname"),
     email: formData.get("email"),
@@ -21,6 +25,7 @@ export async function createUser(_: any, formData: FormData) {
   if (error) {
     return {
       error: "لطفاً تمام فیلدها را پر کنید.",
+      message: null,
     };
   }
 
@@ -31,6 +36,7 @@ export async function createUser(_: any, formData: FormData) {
   if (existingUser) {
     return {
       error: "این ایمیل قبلاً ثبت شده است.",
+      message: null,
     };
   }
 

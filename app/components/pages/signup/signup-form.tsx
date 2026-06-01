@@ -1,5 +1,6 @@
 "use client";
 
+import { createUser } from "@/data";
 import {
   Button,
   Description,
@@ -12,18 +13,16 @@ import {
 } from "@heroui/react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from "next/link";
-import { useActionState, useState } from "react";
-
-import { createUser } from "@/data";
+import { useActionState, useEffect, useState } from "react";
 
 export const SignupForm = () => {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
   const [state, action, pending] = useActionState(createUser, null);
 
-  if (state?.error) {
-    toast.danger(state.error);
-  }
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  useEffect(() => {
+    if (state?.error) toast.danger(state.error);
+  }, [state]);
 
   return (
     <Form className="space-y-6" action={action}>
