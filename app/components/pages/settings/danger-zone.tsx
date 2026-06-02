@@ -1,24 +1,25 @@
 "use client";
 
-import { useDeleteAccount } from "@/services";
+import { deleteAccount } from "@/data";
 import { Button, Card, toast } from "@heroui/react";
 import { Trash2Icon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
+import { useTransition } from "react";
 
 export const DangerZone = () => {
   const { data } = useSession();
-  const { mutate, isPending } = useDeleteAccount();
+
+  const [pending, startTransition] = useTransition();
 
   const onDeleteAccount = () => {
-    mutate(
-      { id: data?.user?.id || "" },
-      {
-        onSuccess: async () => {
-          toast.success("حساب کاربری با موفقیت حذف شد.");
+    startTransition(async () => {
+      await deleteAccount(data?.user?.id || "")
+        .then(async (res) => {
+          toast.success(res.message);
           await signOut({ redirectTo: "/" });
-        },
-      },
-    );
+        })
+        .catch((err) => toast.danger(err.message));
+    });
   };
 
   return (
@@ -38,7 +39,7 @@ export const DangerZone = () => {
           <Button
             variant="danger"
             size="lg"
-            isPending={isPending}
+            isPending={pending}
             onClick={onDeleteAccount}
           >
             حذف

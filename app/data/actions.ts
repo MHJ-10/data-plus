@@ -250,3 +250,19 @@ export async function deleteAnalysis(id: string) {
   revalidatePath("/dashboard/analyses");
   revalidatePath(`/dashboard/analyses/${id}`);
 }
+
+export async function deleteAccount(userId: string) {
+  if (!userId) throw Error("شناسه کاربر ارسال نشده است.");
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) throw Error("کاربر یافت نشد.");
+
+  await prisma.user.delete({
+    where: { id: userId },
+  });
+
+  return { message: "حساب کاربری با موفقیت حذف شد." };
+}
