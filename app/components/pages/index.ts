@@ -7,3 +7,4 @@ export * from "./dashboard";
 export * from "./settings";
 export * from "./analyses";
 export * from "./not-found";
+export * from "./error"
