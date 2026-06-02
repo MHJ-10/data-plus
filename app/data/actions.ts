@@ -12,6 +12,7 @@ import {
   CheckPasswordPayload,
   PromsieActionResponse,
   ResendOTPPayload,
+  UpdateUserPayload,
   VerifyEmailPayload,
 } from "./interface";
 
@@ -169,6 +170,44 @@ export async function checkPassword({ id, password }: CheckPasswordPayload) {
   if (!isValid) throw Error("رمز عبور فعلی نادرست است.");
 
   return { message: "پس از اعمال تغییرات، آن‌ها را ذخیره کنید" };
+}
+
+export async function updateUser(payload: UpdateUserPayload) {
+  const { id, nickName, newPassword } = payload;
+
+  if (!id || !nickName?.trim()) {
+    throw Error("اطلاعات به درستی وارد نشده است.");
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!user) {
+    throw Error("کاربر یافت نشد.");
+  }
+
+  const updateData: {
+    name: string;
+    password?: string;
+  } = {
+    name: nickName.trim(),
+  };
+
+  if (newPassword) {
+    updateData.password = await hash(newPassword, 12);
+  }
+
+  await prisma.user.update({
+    where: {
+      id,
+    },
+    data: updateData,
+  });
+
+  return { message: "اطلاعات با موفقیت بروزرسانی شد." };
 }
 
 export async function toggleFavorite(id: string) {

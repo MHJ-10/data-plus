@@ -1,7 +1,6 @@
 "use client";
 
-import { checkPassword } from "@/data";
-import { useUpdateUser } from "@/services";
+import { checkPassword, updateUser } from "@/data";
 import {
   Button,
   Card,
@@ -45,7 +44,7 @@ export const ProfileInfo = () => {
 
   const [checkPending, startCheckTransition] = useTransition();
 
-  const { mutate: updateUser, isPending: isUpdatePending } = useUpdateUser();
+  const [updatePending, startUpdateTransition] = useTransition();
 
   const onConfirmPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,22 +70,20 @@ export const ProfileInfo = () => {
   };
 
   const onSubmit = async () => {
-    updateUser(
-      {
+    startUpdateTransition(async () => {
+      await updateUser({
         id: session?.user?.id || "",
         nickName: formData.nickname || "",
         newPassword: formData.newPassword,
-      },
-      {
-        onSuccess: async () => {
+      })
+        .then(async (res) => {
           await updateSession({
             name: formData.nickname,
           });
-
-          toast.success("اطلاعات حساب با موفقیت بروزرسانی شد.");
-        },
-      },
-    );
+          toast.success(res.message);
+        })
+        .catch((err) => toast.danger(err.message));
+    });
   };
 
   useEffect(() => {
@@ -302,7 +299,7 @@ export const ProfileInfo = () => {
           <Button
             size="lg"
             className="text-background bg-foreground text-lg transition-colors hover:opacity-90"
-            isPending={isUpdatePending}
+            isPending={updatePending}
             type="button"
             onClick={onSubmit}
           >

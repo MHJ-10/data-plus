@@ -26,11 +26,11 @@ export interface CheckPasswordPayload {
   password: string;
 }
 
-// export interface UpdateUserRequest {
-//   id: string;
-//   nickName: string;
-//   newPassword?: string;
-// }
+export interface UpdateUserPayload {
+  id: string;
+  nickName: string;
+  newPassword?: string;
+}
 
 // export interface DeleteAccountRequest {
 //   id: string;

@@ -1,13 +1,6 @@
 import { apiClient } from "@/lib/apiClient";
 import { useMutation } from "@tanstack/react-query";
-import { DeleteAccountRequest, UpdateUserRequest } from "./interface";
-
-export const useUpdateUser = () =>
-  useMutation({
-    mutationKey: ["updateUser"],
-    mutationFn: (body: UpdateUserRequest) =>
-      apiClient.post("/auth/update-user", { body }),
-  });
+import { DeleteAccountRequest } from "./interface";
 
 export const useDeleteAccount = () =>
   useMutation({
