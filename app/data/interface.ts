@@ -32,6 +32,7 @@ export interface UpdateUserPayload {
   newPassword?: string;
 }
 
-// export interface DeleteAccountRequest {
-//   id: string;
-// }
+export interface RunAnalysisParams {
+  analysisId: string;
+  data: unknown[];
+}

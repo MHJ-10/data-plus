@@ -1,11 +1,11 @@
 "use client";
 
 import { Uploader } from "@/components";
-import { usePostAnalyze } from "@/services";
 import { Button, Card, Chip, Table, toast } from "@heroui/react";
-import { useRouter } from "next/navigation";
 import Papa from "papaparse";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { createAnalysis } from "@/data";
+import { useRouter } from "next/navigation";
 
 interface DatasetPreviewTable {
   size: number;
@@ -20,12 +20,13 @@ export const UploadCard = () => {
   const [preview, setPreview] = useState<DatasetPreviewTable | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
-  const { mutate: analyze, isPending } = usePostAnalyze();
-
   const router = useRouter();
+
+  const [pending, startTransition] = useTransition();
 
   const onDropFiles = async ([file]: File[]) => {
     setFile(file);
+
     const text = await file.text();
 
     const fileSize = file.size;
@@ -46,16 +47,17 @@ export const UploadCard = () => {
     });
   };
 
-  const onStartAnalyze = async () => {
+  const onStartAnalyze = () => {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      analyze(formData, {
-        onSuccess: (res) => {
-          console.log(res.data);
-          toast.info("در حال انتقال به صفحه تحلیل");
-          router.push(`/dashboard/analyses/${res.data.analysisId}`);
-        },
+      startTransition(async () => {
+        await createAnalysis(formData)
+          .then((res) => {
+            toast.info(res.message);
+            router.push(`/dashboard/analyses/${res.id}`);
+          })
+          .catch((err) => toast.danger(err.message));
       });
     }
   };
@@ -67,7 +69,7 @@ export const UploadCard = () => {
         setFile={setFile}
         options={{
           onDrop: onDropFiles,
-          maxSize: 1_000_000, // 10MB
+          maxSize: 10 * 1_000_000, // 10MB
         }}
       />
 
@@ -123,7 +125,7 @@ export const UploadCard = () => {
               size="lg"
               variant="tertiary"
               className="bg-foreground text-background"
-              isPending={isPending}
+              isPending={pending}
               onClick={onStartAnalyze}
               aria-label="start-analyze"
             >
@@ -133,7 +135,7 @@ export const UploadCard = () => {
               size="lg"
               variant="tertiary"
               className="text-foreground"
-              isPending={isPending}
+              isPending={pending}
               onClick={() => {
                 setPreview(null);
                 setFile(null);

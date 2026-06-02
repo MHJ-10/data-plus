@@ -44,7 +44,7 @@ const Uploader = (props: UploaderProps) => {
           {!file ? (
             <>
               <div className="bg-muted/30 flex size-20 items-center justify-center rounded-2xl">
-                <UploadIcon className="size-10 text-foreground" />
+                <UploadIcon className="text-foreground size-10" />
               </div>
               <Card.Title className="text-center font-bold sm:text-2xl/8">
                 فایل خود را اینجا رها کنید
