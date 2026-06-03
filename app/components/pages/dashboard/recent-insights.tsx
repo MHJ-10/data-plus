@@ -1,5 +1,7 @@
 "use client";
 
+import { EmptyState } from "@/components";
+import { EmptyInsightsIllustrationIcon } from "@/components/icons";
 import { Insight } from "@/generated/prisma/client";
 import { Card } from "@heroui/react";
 import { LightbulbIcon } from "lucide-react";
@@ -28,24 +30,34 @@ export const RecentInsights = ({ insights }: { insights?: Insight[] }) => {
           تحلیل‌های هوشمند
         </p>
       </Card.Header>
-      <Card.Content className="grid gap-8 md:grid-cols-3">
-        {insights?.map((insight) => (
-          <Card key={insight.id} variant="tertiary" className="p-5">
-            <div className="flex items-start gap-3">
-              <div className="bg-foreground/10 rounded-xl p-2">
-                <LightbulbIcon className="text-foreground size-5" />
-                <p>{insight.type}</p>
+
+      {insights?.length ? (
+        <Card.Content className="grid gap-8 md:grid-cols-3">
+          {insights.map((insight) => (
+            <Card key={insight.id} variant="tertiary" className="p-5">
+              <div className="flex items-start gap-3">
+                <div className="bg-foreground/10 rounded-xl p-2">
+                  <LightbulbIcon className="text-foreground size-5" />
+                  <p>{insight.type}</p>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-foreground text-xl font-semibold">
+                    {insight.title}
+                  </h3>
+                  <p className="text-muted text-lg">{insight.description}</p>
+                </div>
               </div>
-              <div className="flex-1">
-                <h3 className="text-foreground text-xl font-semibold">
-                  {insight.title}
-                </h3>
-                <p className="text-muted text-lg">{insight.description}</p>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </Card.Content>
+            </Card>
+          ))}
+        </Card.Content>
+      ) : (
+        <EmptyState
+          title="هنوز بینشی در دسترس نیست"
+          description="پس از تحلیل داده‌ها، یافته‌ها، روندها و پیشنهادهای تولیدشده توسط هوش مصنوعی در اینجا نمایش داده خواهند شد."
+          illustration={<EmptyInsightsIllustrationIcon />}
+          primaryAction={{ label: "آپلود دیتاست", href: "/dashboard/upload" }}
+        />
+      )}
     </Card>
   );
 };

@@ -1,10 +1,12 @@
-import { Card } from "@heroui/react";
+import { Button, Card } from "@heroui/react";
 import {
   BarChart3Icon,
   Columns3Icon,
   LightbulbIcon,
   TrendingUpIcon,
+  UploadIcon,
 } from "lucide-react";
+import Link from "next/link";
 
 interface Stats {
   analyses: number;
@@ -46,7 +48,25 @@ export const Stats = ({ stats }: StatsProps) => {
     },
   ];
 
-  return (
+  const isEmpty = statsData.every((stat) => stat.value === 0);
+
+  return isEmpty ? (
+    <Card
+      variant="secondary"
+      className="flex flex-col items-center gap-4 border py-8"
+    >
+      <div className="flex size-16 items-center justify-center rounded-2xl bg-linear-to-br from-purple-500 to-blue-600">
+        <UploadIcon className="text-background size-8" />
+      </div>
+      <p className="text-2xl font-bold">اولین دیتاست خود را بارگذاری کنید</p>
+      <p className="text-muted text-xl font-semibold">
+        داده‌ها را به‌صورت خودکار تحلیل کنید و بینش‌های بصری دریافت کنید.
+      </p>
+      <Button size="lg" variant="secondary">
+        <Link href="/dashboard/upload">شروع کنید</Link>
+      </Button>
+    </Card>
+  ) : (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {statsData.map(({ icon: Icon, title, value, color }) => (
         <Card key={title} className="border p-6">
