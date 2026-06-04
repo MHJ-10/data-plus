@@ -17,6 +17,8 @@ import { PreviewTable } from "./preview-table";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toggleFavorite } from "@/data/actions";
+import { EmptyState } from "@/components";
+import { InsufficientDataIllustrationIcon } from "@/components/icons";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -92,19 +94,29 @@ const AnalysisDetail = ({ analysis }: AnalysisDetailProps) => {
         </Button>
       </div>
 
-      <Card className="border bg-transparent">Insights</Card>
+      {!analysis.charts.length && !analysis.insights.length ? (
+        <EmptyState
+          title="داده کافی برای تولید نتایج وجود ندارد"
+          description="دیتاست آپلودشده اطلاعات کافی برای تولید نمودارها یا بینش‌های هوش مصنوعی را ندارد. لطفاً دیتاستی با تعداد سطرها و ستون‌های بیشتر بارگذاری کنید."
+          illustration={<InsufficientDataIllustrationIcon />}
+        />
+      ) : (
+        <>
+          <Card className="border bg-transparent">Insights</Card>
 
-      <h3 className="mb-4 text-2xl font-bold">نمودارهای ایجادشده</h3>
-      <div className="grid gap-5 lg:grid-cols-2">
-        {analysis.charts.map((chart) => (
-          <ChartCard
-            key={chart.title}
-            title={chart.title}
-            types={chart.availableTypes as ChartType[]}
-            data={chart.chartData as Record<string, string | number>[]}
-          />
-        ))}
-      </div>
+          <h3 className="mb-4 text-2xl font-bold">نمودارهای ایجادشده</h3>
+          <div className="grid gap-5 lg:grid-cols-2">
+            {analysis.charts.map((chart) => (
+              <ChartCard
+                key={chart.title}
+                title={chart.title}
+                types={chart.availableTypes as ChartType[]}
+                data={chart.chartData as Record<string, string | number>[]}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       <PreviewTable
         data={

@@ -3,6 +3,8 @@
 import { Prisma } from "@/generated/prisma/client";
 import { AnalysesTable } from "./analyses-table";
 import { Filter } from "./filter";
+import { EmptyState } from "@/components";
+import { EmptyTableIllustrationIcon } from "@/components/icons";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -25,9 +27,19 @@ const Analyses = ({ analyses, total }: AnalysesProps) => {
         </p>
       </div>
 
-      <Filter />
-
-      <AnalysesTable analyses={analyses} total={total} />
+      {analyses.length ? (
+        <>
+          <Filter />
+          <AnalysesTable analyses={analyses} total={total} />
+        </>
+      ) : (
+        <EmptyState
+          title="هنوز تحلیلی برای نمایش وجود ندارد"
+          description="دیتاست‌های خود را آپلود کنید و تحلیل را آغاز کنید تا نتایج اینجا ظاهر شوند."
+          illustration={<EmptyTableIllustrationIcon />}
+          primaryAction={{ label: "آپلود دیتاست", href: "/dashboard/upload" }}
+        />
+      )}
     </div>
   );
 };

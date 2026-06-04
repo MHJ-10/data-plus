@@ -6,6 +6,7 @@ import {
   Button,
   Chip,
   ChipVariants,
+  EmptyState,
   Modal,
   Table,
   TableCell,
@@ -81,7 +82,13 @@ export const AnalysesTable = ({ analyses, total }: AnalysesProps) => {
               عملیات
             </Table.Column>
           </Table.Header>
-          <Table.Body>
+          <Table.Body
+            renderEmptyState={() => (
+              <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
+                <span className="text-muted text-sm">نتیجه‌ای یافت نشد</span>
+              </EmptyState>
+            )}
+          >
             {analyses.map((analysis) => (
               <Table.Row
                 key={analysis.id}

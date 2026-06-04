@@ -46,12 +46,12 @@ const SeeInAction = () => {
 
       <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-3">
         <Card
-          className="grid grid-cols-1 sm:grid-cols-2 lg:col-span-2"
+          className="grid grid-cols-1 p-0 sm:grid-cols-2 lg:col-span-2"
           variant="transparent"
         >
           {["line", "bar", "pie"].map((type) => (
             <ChartCard
-              className="h-70 first:col-span-full"
+              className="first:col-span-full"
               key={type}
               data={data}
               hideActions
