@@ -29,7 +29,7 @@ const Footer = () => {
       <div className="container mx-auto grid grid-cols-1 items-center gap-y-12 md:grid-cols-2 lg:grid-cols-3">
         <div className="flex items-center justify-center gap-2 md:justify-start">
           <Image src="/logo.png" alt="data plus logo" width={40} height={40} />
-          <span className="text-3xl font-bold">دیتاپلاس</span>
+          <span className="text-3xl font-bold">دیتا پلاس</span>
         </div>
 
         <div className="text-muted flex items-center justify-center gap-6 text-xl md:justify-end">

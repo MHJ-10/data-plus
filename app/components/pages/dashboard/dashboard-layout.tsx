@@ -59,7 +59,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
                 height={36}
               />
               <h1 className="text-foreground text-xl font-semibold">
-                دیتاپلاس
+                دیتا پلاس
               </h1>
             </div>
           )}
@@ -182,7 +182,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
               width={20}
               height={20}
             />
-            <h1 className="text-foreground text-xl font-semibold">دیتاپلاس</h1>
+            <h1 className="text-foreground text-xl font-semibold">دیتا پلاس</h1>
           </div>
 
           <div className="hidden md:block" />
