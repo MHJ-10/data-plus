@@ -8,7 +8,7 @@ const PieChart = (props: ChartBaseProps) => {
   const { data, dataKey = "value", nameKey = "name" } = props;
 
   return (
-    <RPieChart className="aspect-[1] size-full" responsive>
+    <RPieChart className="h-75 w-full" responsive>
       <Pie
         data={data}
         nameKey={nameKey}

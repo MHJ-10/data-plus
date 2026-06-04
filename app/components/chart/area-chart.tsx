@@ -7,7 +7,7 @@ const AreaChart = (props: ChartBaseProps) => {
   const { data, dataKey = "value", nameKey = "name" } = props;
 
   return (
-    <RAreaChart className="aspect-[1.618] size-full" responsive data={data}>
+    <RAreaChart className="h-75 w-full" responsive data={data}>
       <defs>
         <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor={CHART_COLORS[5]} stopOpacity={0.8} />

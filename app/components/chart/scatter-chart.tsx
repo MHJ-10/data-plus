@@ -13,7 +13,7 @@ const ScatterChart = (props: ChartBaseProps) => {
   const { data, dataKey = "x", nameKey = "y" } = props;
 
   return (
-    <RScatterChart className="aspect-[1.618] size-full" responsive>
+    <RScatterChart className="h-75 w-full" responsive>
       <XAxis type="number" dataKey={dataKey} stroke="var(--color-foreground)" />
       <YAxis
         type="number"

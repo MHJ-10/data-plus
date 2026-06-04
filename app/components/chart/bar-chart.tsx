@@ -10,7 +10,7 @@ const BarChart = (props: ChartBaseProps) => {
   return (
     <RBarChart
       accessibilityLayer
-      className="aspect-[1.618] size-full"
+      className="h-75 w-full"
       responsive
       data={data}
     >

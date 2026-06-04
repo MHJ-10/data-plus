@@ -1,6 +1,14 @@
 "use client";
 
-import { Button, Card, Dropdown, Label, Tabs, toast } from "@heroui/react";
+import {
+  Button,
+  Card,
+  Dropdown,
+  Label,
+  Skeleton,
+  Tabs,
+  toast,
+} from "@heroui/react";
 import {
   AreaChartIcon,
   BarChart2Icon,
@@ -14,7 +22,7 @@ import {
 } from "lucide-react";
 import BarChart from "../chart/bar-chart";
 import { ChartType } from "@/utils/chart-candidate";
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import AreaChart from "../chart/area-chart";
 import PieChart from "../chart/pie-chart";
 import TreemapChart from "../chart/treemap-chart";
@@ -35,8 +43,19 @@ const ChartCard = (props: ChartCardProps) => {
   const { data, title, types, className, hideActions = false } = props;
 
   const [selectedType, setSelectedType] = useState<ChartType>(types[0]);
+  const [isLoading, setIsLoading] = useState(true);
   const chartRef = useRef<HTMLDivElement>(null);
   const downloadPng = useDownloadPNG(chartRef);
+
+  useEffect(() => {
+    const showLoading = () => {
+      setIsLoading(true);
+      const timer = setTimeout(() => setIsLoading(false), 300);
+      return () => clearTimeout(timer);
+    };
+
+    showLoading();
+  }, [selectedType]);
 
   const chartTypeMap: Record<ChartType, { label: string; icon: ReactNode }> = {
     area: { label: "مساحتی", icon: <AreaChartIcon /> },
@@ -147,8 +166,20 @@ const ChartCard = (props: ChartCardProps) => {
           ) : null}
         </div>
       </Card.Header>
-      <Card.Content ref={chartRef} className="size-full">
-        {renderChart(selectedType)}
+      <Card.Content ref={chartRef}>
+        {isLoading ? (
+          <div className="grid h-75 w-full grid-cols-12 items-end gap-4 p-4">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <Skeleton
+                key={i}
+                className="w-full rounded"
+                style={{ height: `${(i + 1) * 8}%` }}
+              />
+            ))}
+          </div>
+        ) : (
+          renderChart(selectedType)
+        )}
       </Card.Content>
     </Card>
   );

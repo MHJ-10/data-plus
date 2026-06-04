@@ -60,7 +60,7 @@ const TreemapChart = (props: ChartBaseProps) => {
   );
 
   return (
-    <ResponsiveContainer className="aspect-[1.618] size-full">
+    <ResponsiveContainer width="100%" height={300}>
       <Treemap
         data={sortedData}
         nameKey={nameKey}

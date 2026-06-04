@@ -8,7 +8,7 @@ const LineChart = (props: ChartBaseProps) => {
   const { data, dataKey = "value", nameKey = "name" } = props;
 
   return (
-    <RLineChart className="aspect-[1.618] size-full" responsive data={data}>
+    <RLineChart className="h-75 w-full" responsive data={data}>
       <XAxis dataKey={nameKey} stroke="var(--color-foreground)" />
       <YAxis
         width="auto"
