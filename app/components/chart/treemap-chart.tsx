@@ -67,7 +67,7 @@ const TreemapChart = (props: ChartBaseProps) => {
         data={sortedData}
         nameKey={nameKey}
         dataKey={dataKey}
-        fill="var(--color-foreground)"
+        fill={CHART_COLORS[0]}
         content={<CustomizedContent data={sortedData} dataKey={dataKey} />}
         animationDuration={500}
       >
