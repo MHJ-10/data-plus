@@ -37,10 +37,11 @@ interface ChartCardProps<T = { [key: string]: string | number }> {
   title?: string;
   className?: string;
   hideActions?: boolean;
+  nameKey?: string;
 }
 
 const ChartCard = (props: ChartCardProps) => {
-  const { data, title, types, className, hideActions = false } = props;
+  const { data, title, types, className, hideActions = false, nameKey } = props;
 
   const [selectedType, setSelectedType] = useState<ChartType>(types[0]);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,8 +66,6 @@ const ChartCard = (props: ChartCardProps) => {
     treemap: { label: "درختی", icon: <Grid3x3Icon /> },
     scatter: { label: "پراگندگی", icon: <ScatterChartIcon /> },
   };
-
-  const nameKey = Object.keys(data[0])[0];
 
   const renderChart = (type: ChartType) => {
     switch (type) {

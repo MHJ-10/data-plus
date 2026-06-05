@@ -13,7 +13,7 @@ export const PreviewTable = ({
       <Card.Content>
         <Table>
           <Table.ScrollContainer>
-            <Table.Content>
+            <Table.Content aria-label="data-preview">
               <Table.Header>
                 {Object.keys(data[0]).map((header, i) => (
                   <Table.Column

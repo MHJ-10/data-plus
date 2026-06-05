@@ -16,6 +16,8 @@ const CustomizedContent = (props: any) => {
   };
 
   const truncateText = (text: string, maxWidth: number) => {
+    if (!text) return "";
+
     const avgCharWidth = 6;
     const maxChars = Math.floor(maxWidth / avgCharWidth);
 
@@ -45,7 +47,7 @@ const CustomizedContent = (props: any) => {
           textAnchor="middle"
           className="fill-black text-sm"
         >
-          {truncateText(name, width)}
+          {truncateText(name || "unknown", width)}
         </text>
       )}
     </g>

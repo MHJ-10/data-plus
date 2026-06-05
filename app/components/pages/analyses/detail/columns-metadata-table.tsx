@@ -40,7 +40,7 @@ export const ColumnsMetadataTable = ({ data }: { data: ColumnMetadata[] }) => {
       <Card.Content>
         <Table>
           <TableScrollContainer>
-            <Table.Content>
+            <Table.Content aria-label="columns-metadata">
               <Table.Header>
                 <Table.Column
                   isRowHeader

@@ -48,7 +48,7 @@ const Error = ({ error, resetError }: ErrorProps) => {
           <Button
             size="lg"
             variant="tertiary"
-            onClick={() => router.replace("/")}
+            onClick={() => router.replace("/dashboard")}
           >
             بازگشت به پیشخوان
           </Button>
