@@ -168,6 +168,48 @@ model ColumnMetadata {
 
   averageLength Float?
 
+  // Statistical properties
+  mean Float?
+
+  median Float?
+
+  variance Float?
+
+  stdDev Float?
+
+  skewness Float?
+
+  kurtosis Float?
+
+  min Float?
+
+  max Float?
+
+  range Float?
+
+  q1 Float?
+
+  q3 Float?
+
+  iqr Float?
+
+  // Data quality metrics
+  completeness Float?
+
+  cardinalityRatio Float?
+
+  hasOutliers Boolean?
+
+  outlierCount Int?
+
+  outlierPercentage Float?
+
+  isSkewed Boolean?
+
+  isNormal Boolean?
+
+  dataDensity Float?
+
   createdAt DateTime @default(now())
 
   @@index([analysisId])

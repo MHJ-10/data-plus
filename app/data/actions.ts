@@ -344,6 +344,28 @@ const runAnalysis = async ({ data, analysisId }: RunAnalysisParams) => {
           uniqueCount: role.uniqueCount,
           averageLength: role.stats.avgStringLength,
           uniqueRatio: role.stats.uniqueRatio,
+          // Statistical properties
+          mean: role.columnStats?.mean,
+          median: role.columnStats?.median,
+          variance: role.columnStats?.variance,
+          stdDev: role.columnStats?.stdDev,
+          skewness: role.columnStats?.skewness,
+          kurtosis: role.columnStats?.kurtosis,
+          min: role.columnStats?.min,
+          max: role.columnStats?.max,
+          range: role.columnStats?.range,
+          q1: role.columnStats?.q1,
+          q3: role.columnStats?.q3,
+          iqr: role.columnStats?.iqr,
+          // Data quality metrics
+          completeness: role.quality?.completeness,
+          cardinalityRatio: role.quality?.cardinalityRatio,
+          hasOutliers: role.quality?.hasOutliers,
+          outlierCount: role.quality?.outlierCount,
+          outlierPercentage: role.quality?.outlierPercentage,
+          isSkewed: role.quality?.isSkewed,
+          isNormal: role.quality?.isNormal,
+          dataDensity: role.quality?.dataDensity,
         },
       });
     });
