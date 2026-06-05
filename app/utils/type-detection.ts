@@ -1,3 +1,5 @@
+import { calculateColumnStats, calculateDataQuality, ColumnStatistics, DataQualityMetrics } from "./analytics";
+
 export type ColumnType =
   | "boolean"
   | "number"
@@ -12,6 +14,8 @@ export interface DetectColumnTypeResponse {
   avgStringLength: number;
   uniqueCount: number;
   missingCount: number;
+  stats?: ColumnStatistics;
+  quality?: DataQualityMetrics;
 }
 
 function isBoolean(val: any) {
@@ -60,12 +64,15 @@ function detectColumnType(arr: any, colName: string): DetectColumnTypeResponse {
   let totalStringLength = 0;
 
   const uniqueSet = new Set<any>();
+  const numericValues: number[] = [];
 
   clean.forEach((v: any) => {
     uniqueSet.add(v);
 
-    if (isNumber(v)) numberCount++;
-    else if (isBoolean(v)) booleanCount++;
+    if (isNumber(v)) {
+      numberCount++;
+      numericValues.push(v);
+    } else if (isBoolean(v)) booleanCount++;
     else if (isDate(v)) dateCount++;
     else {
       stringCount++;
@@ -89,7 +96,21 @@ function detectColumnType(arr: any, colName: string): DetectColumnTypeResponse {
   else if (avgStringLength > 20 && uniqueRatio > 0.5) type = "text";
   else type = "category";
 
-  return { avgStringLength, uniqueRatio, type, uniqueCount, missingCount };
+  const result: DetectColumnTypeResponse = {
+    avgStringLength,
+    uniqueRatio,
+    type,
+    uniqueCount,
+    missingCount,
+  };
+
+  // Calculate statistical properties for numeric columns
+  if (type === "number" && numericValues.length > 0) {
+    result.stats = calculateColumnStats(numericValues);
+    result.quality = calculateDataQuality(arr, numericValues, uniqueCount);
+  }
+
+  return result;
 }
 
 function getRandomSample(arr: any[], size: number = 100) {

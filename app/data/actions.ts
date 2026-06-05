@@ -348,7 +348,7 @@ const runAnalysis = async ({ data, analysisId }: RunAnalysisParams) => {
       });
     });
 
-    const charts = generateCharts(roles);
+    const charts = generateCharts(roles, data);
 
     charts.forEach(async (chart) => {
       const generatedChart = await prisma.chart.create({
@@ -366,16 +366,24 @@ const runAnalysis = async ({ data, analysisId }: RunAnalysisParams) => {
 
       const builtChart = buildChartData(data, chart);
 
-      await prisma.chart.update({
-        where: {
-          id: generatedChart.id,
-        },
-        data: {
-          title: builtChart?.title,
-          chartData: builtChart?.data,
-          availableTypes: builtChart?.types,
-        },
-      });
+      if (builtChart?.data.length) {
+        await prisma.chart.update({
+          where: {
+            id: generatedChart.id,
+          },
+          data: {
+            title: builtChart?.title,
+            chartData: builtChart?.data,
+            availableTypes: builtChart?.types,
+          },
+        });
+      } else {
+        await prisma.chart.delete({
+          where: {
+            id: generatedChart.id,
+          },
+        });
+      }
     });
 
     const end = Date.now();

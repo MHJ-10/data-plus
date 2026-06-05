@@ -1,4 +1,5 @@
 import { ColumnType } from "./type-detection";
+import { ColumnStatistics, DataQualityMetrics } from "./analytics";
 
 type ColumnRole = "dimension" | "measure" | "temporal" | "ignore";
 
@@ -14,6 +15,8 @@ export interface MapAllRolesResponse {
   type: string;
   uniqueCount: number;
   missingCount: number;
+  columnStats?: ColumnStatistics;
+  quality?: DataQualityMetrics;
 }
 
 export function mapTypeToRole(type: ColumnType, stats: ColumnStat): ColumnRole {
@@ -50,13 +53,15 @@ export function mapAllRoles(data: Record<string, any>): MapAllRolesResponse[] {
   return Object.entries(data).map(
     ([
       column,
-      { type, avgStringLength, uniqueRatio, uniqueCount, missingCount },
+      { type, avgStringLength, uniqueRatio, uniqueCount, missingCount, stats, quality },
     ]) => ({
       column,
       type,
       uniqueCount,
       missingCount,
       stats: { avgStringLength, uniqueRatio },
+      columnStats: stats,
+      quality,
       role: mapTypeToRole(type, {
         avgStringLength,
         uniqueRatio,
