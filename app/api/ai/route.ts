@@ -11,7 +11,7 @@ const openrouter = createOpenRouter({
 
 export async function GET() {
   const analysis = await prisma.analysis.findUnique({
-    where: { id: "cmq0xu0970001wq0mk4x1bw7c" },
+    where: { id: "cmq2daa020020brb2vzoz2lye" },
     include: {
       columnMetadata: true,
       charts: true,
@@ -61,14 +61,25 @@ export async function GET() {
   };
 
   const result = await generateText({
-    model: openrouter("arcee-ai/trinity-large-preview:free"),
-    prompt: `You are an expert data analyst. Analyze this dataset and generate insightful observations.
+    model: openrouter("nvidia/nemotron-3-ultra-550b-a55b:free"),
+    prompt: `You are an expert data analyst.
 
 Dataset Context:
 ${JSON.stringify(context, null, 2)}
 
-Generate 5-8 high-quality insights. Focus on meaningful patterns, trends, correlations, and potential issues.
-Be specific and use only the given data. Do not hallucinate.`,
+TASK:
+Generate 5 to 8 high-quality, actionable insights from this dataset.
+
+RULES:
+- Each insight must be specific and reference real numbers, distributions, comparisons, or patterns from the data.
+- Do not hallucinate numbers.
+- Prioritize different types: TREND, CORRELATION, WARNING, INSIGHT.
+- Make the title short and punchy (one line).
+- Description should be 2-4 sentences, informative and professional.
+- Give a realistic score between 0.6 and 1.0 based on how important/strong the insight is.
+
+Return the insights in the requested JSON format only.
+`,
   });
 
   return NextResponse.json({ result });

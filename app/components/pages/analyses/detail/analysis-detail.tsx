@@ -19,6 +19,7 @@ import { useTransition } from "react";
 import { toggleFavorite } from "@/data/actions";
 import { EmptyState } from "@/components";
 import { InsufficientDataIllustrationIcon } from "@/components/icons";
+import { InsightsCard } from "./insights-card";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -102,7 +103,7 @@ const AnalysisDetail = ({ analysis }: AnalysisDetailProps) => {
         />
       ) : (
         <>
-          <Card className="border bg-transparent">Insights</Card>
+          <InsightsCard />
 
           <h3 className="mb-4 text-2xl font-bold">نمودارهای ایجادشده</h3>
           <div className="grid gap-5 lg:grid-cols-2">

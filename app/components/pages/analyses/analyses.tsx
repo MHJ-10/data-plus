@@ -5,8 +5,6 @@ import { AnalysesTable } from "./analyses-table";
 import { Filter } from "./filter";
 import { EmptyState } from "@/components";
 import { EmptyTableIllustrationIcon } from "@/components/icons";
-import { Button } from "@heroui/react";
-import axios from "axios";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -20,17 +18,6 @@ export interface AnalysesProps {
 }
 
 const Analyses = ({ analyses, total }: AnalysesProps) => {
-  const getInsight = async () => {
-    await axios
-      .get("/api/ai")
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <div className="space-y-8">
       <div>
@@ -39,8 +26,6 @@ const Analyses = ({ analyses, total }: AnalysesProps) => {
           دیتاست‌های آپلودشده خود را مدیریت و بررسی کنید
         </p>
       </div>
-
-      <Button onClick={getInsight}>Generate Insight</Button>
 
       {analyses.length ? (
         <>
