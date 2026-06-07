@@ -14,7 +14,6 @@ export async function GET() {
     where: { id: "cmq2daa020020brb2vzoz2lye" },
     include: {
       columnMetadata: true,
-      charts: true,
     },
   });
 
@@ -52,17 +51,10 @@ export async function GET() {
       isNormal: c.isNormal,
       dataDensity: c.dataDensity,
     })),
-    charts: analysis.charts.map((c) => ({
-      title: c.title,
-      type: c.category,
-      x: c.xField,
-      y: c.yField,
-    })),
   };
 
-  const result = await generateText({
-    model: openrouter("nvidia/nemotron-3-ultra-550b-a55b:free"),
-    prompt: `You are an expert data analyst.
+  const prompt = `
+You are a professional data analyst.
 
 Dataset Context:
 ${JSON.stringify(context, null, 2)}
@@ -71,16 +63,21 @@ TASK:
 Generate 5 to 8 high-quality, actionable insights from this dataset.
 
 RULES:
-- Each insight must be specific and reference real numbers, distributions, comparisons, or patterns from the data.
+- Title: Very short and punchy (max 8-10 words, ideally one line)
+- Description: Keep it concise — 1 to 2 sentences maximum (max 70 words)
+- Each insight must be specific and reference real numbers, distributions, comparisons, or patterns.
 - Do not hallucinate numbers.
 - Prioritize different types: TREND, CORRELATION, WARNING, INSIGHT.
-- Make the title short and punchy (one line).
-- Description should be 2-4 sentences, informative and professional.
-- Give a realistic score between 0.6 and 1.0 based on how important/strong the insight is.
+- Give a realistic score between 0.65 and 0.95.
 
-Return the insights in the requested JSON format only.
-`,
+IMPORTANT_NOTE: Return the insights in the requested JSON format only.
+`;
+
+
+  const result = await generateText({
+    model: openrouter("nvidia/nemotron-3-ultra-550b-a55b:free"),
+    prompt,
   });
 
-  return NextResponse.json({ result });
+  return NextResponse.json({ result, prompt });
 }
