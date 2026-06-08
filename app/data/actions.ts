@@ -422,6 +422,7 @@ const runAnalysis = async ({ data, analysisId }: RunAnalysisParams) => {
       },
     });
   } catch (error) {
+    console.log(error);
     await prisma.analysis.update({
       where: {
         id: analysisId,

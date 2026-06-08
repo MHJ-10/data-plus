@@ -6,22 +6,6 @@ import { Insight } from "@/generated/prisma/client";
 import { Card } from "@heroui/react";
 import { LightbulbIcon } from "lucide-react";
 
-const aiInsights = [
-  {
-    title: "شناسایی اوج درآمد",
-    description: "درآمد ماه آوریل نسبت به مارس، ۶۷٪ افزایش داشته است",
-  },
-  {
-    title: "پیشتازی دسته الکترونیک",
-    description:
-      "دسته الکترونیک با میانگین ۴٬۲۰۰ دلار، بالاترین ارزش تراکنش را دارد",
-  },
-  {
-    title: "هشدار داده‌های ناقص",
-    description: "۳٪ از مقادیر ستون موجودی در آخرین دیتاست ناقص هستند",
-  },
-];
-
 export const RecentInsights = ({ insights }: { insights?: Insight[] }) => {
   return (
     <Card className="border">

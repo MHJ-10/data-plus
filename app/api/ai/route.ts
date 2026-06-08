@@ -11,7 +11,7 @@ const openrouter = createOpenRouter({
 
 export async function GET() {
   const analysis = await prisma.analysis.findUnique({
-    where: { id: "cmq2daa020020brb2vzoz2lye" },
+    where: { id: "cmq0yqk0u00014g0mwvwg8407" },
     include: {
       columnMetadata: true,
     },
@@ -60,7 +60,7 @@ Dataset Context:
 ${JSON.stringify(context, null, 2)}
 
 TASK:
-Generate 5 to 8 high-quality, actionable insights from this dataset.
+Generate 4 to 8 high-quality, actionable insights from this dataset.
 
 RULES:
 - Title: Very short and punchy (max 8-10 words, ideally one line)
@@ -72,7 +72,6 @@ RULES:
 
 IMPORTANT_NOTE: Return the insights in the requested JSON format only.
 `;
-
 
   const result = await generateText({
     model: openrouter("nvidia/nemotron-3-ultra-550b-a55b:free"),

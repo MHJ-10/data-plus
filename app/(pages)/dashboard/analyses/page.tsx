@@ -1,7 +1,6 @@
 import { Analyses } from "@/components";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { redirect } from "next/navigation";
 
 interface AnalysesPageParams {
   searchParams: Promise<{

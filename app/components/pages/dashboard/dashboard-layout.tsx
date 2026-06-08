@@ -9,7 +9,6 @@ import {
   FolderOpen,
   LayoutDashboard,
   LogOutIcon,
-  RocketIcon,
   Settings,
   Upload,
 } from "lucide-react";
