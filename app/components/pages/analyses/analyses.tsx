@@ -8,7 +8,9 @@ import { EmptyTableIllustrationIcon } from "@/components/icons";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
-    charts: true;
+    charts: {
+      select: { id: true };
+    };
   };
 }>;
 

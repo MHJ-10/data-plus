@@ -23,7 +23,11 @@ const AnalysesPage = async ({ searchParams }: AnalysesPageParams) => {
 
   const analyses = await prisma.analysis.findMany({
     include: {
-      charts: true,
+      charts: {
+        select: {
+          id: true,
+        },
+      },
     },
     orderBy: {
       createdAt: order,
