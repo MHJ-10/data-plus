@@ -1,5 +1,6 @@
 import * as aq from "arquero";
 import { ChartCandidate } from "./chart-candidate";
+import { roundToTwoDecimals } from "./formatter";
 
 export function buildChartData(data: any, chart: ChartCandidate) {
   const table = aq.from(data);
@@ -15,7 +16,13 @@ export function buildChartData(data: any, chart: ChartCandidate) {
 
       return {
         types: ["bar", "treemap"],
-        data: chartData,
+        data: chartData.map((d) => ({
+          ...d,
+          [`${chart.y}`]:
+            "value" in d && typeof d.value === "number"
+              ? roundToTwoDecimals(d.value)
+              : 0,
+        })),
         title: `نمودار ${chart.x} - ${chart.y}`,
       };
     }
@@ -45,7 +52,11 @@ export function buildChartData(data: any, chart: ChartCandidate) {
 
       return {
         typs: ["line", "area"],
-        data: chartData,
+        data: chartData.map((d) => ({
+          ...d,
+          [`${chart.y}`]:
+            "y" in d && typeof d.y === "number" ? roundToTwoDecimals(d.y) : 0,
+        })),
         title: `نمودار ${chart.x} - ${chart.y}`,
       };
     }

@@ -46,6 +46,7 @@ const AnalysisDetail = ({ analysis }: AnalysisDetailProps) => {
                 types={chart.availableTypes as ChartType[]}
                 data={chart.chartData as Record<string, string | number>[]}
                 nameKey={chart.xField || "name"}
+                dataKey={chart.yField || "value"}
               />
             ))}
           </div>

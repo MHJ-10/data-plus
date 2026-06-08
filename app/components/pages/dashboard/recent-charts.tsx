@@ -20,6 +20,8 @@ export const RecentCharts = ({ charts }: { charts?: Chart[] }) => {
               title={chart.title}
               data={chart.chartData as Record<string, string | number>[]}
               types={chart.availableTypes as ChartType[]}
+              nameKey={chart.xField || "name"}
+              dataKey={chart.yField || "value"}
             />
           ))}
         </div>

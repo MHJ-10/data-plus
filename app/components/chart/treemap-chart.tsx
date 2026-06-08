@@ -3,6 +3,7 @@
 import { ResponsiveContainer, Tooltip, Treemap } from "recharts";
 import { ChartBaseProps } from "./interface";
 import { CHART_COLORS } from "@/constants";
+import { Card } from "@heroui/react";
 
 const CustomizedContent = (props: any) => {
   const { x, y, width, height, value, name, data, dataKey } = props;
@@ -54,6 +55,21 @@ const CustomizedContent = (props: any) => {
   );
 };
 
+const CustomTreemapTooltip = ({ active, payload, nameKey, valueKey }: any) => {
+  if (!active || !payload || !payload.length) return null;
+
+  const data = payload[0].payload;
+
+  return (
+    <Card className="bg-segment border-border rounded-md p-1">
+      <p className="leading-4">{data[nameKey] || data.name}</p>
+      <p className="leading-4" style={{ color: CHART_COLORS[0] }}>
+        {valueKey}: {data[valueKey]}
+      </p>
+    </Card>
+  );
+};
+
 const TreemapChart = (props: ChartBaseProps) => {
   const { data, dataKey = "value", nameKey = "name" } = props;
 
@@ -71,7 +87,11 @@ const TreemapChart = (props: ChartBaseProps) => {
         content={<CustomizedContent data={sortedData} dataKey={dataKey} />}
         animationDuration={500}
       >
-        <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
+        <Tooltip
+          content={
+            <CustomTreemapTooltip nameKey={nameKey} valueKey={dataKey} />
+          }
+        />
       </Treemap>
     </ResponsiveContainer>
   );

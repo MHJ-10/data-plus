@@ -38,10 +38,19 @@ interface ChartCardProps<T = { [key: string]: string | number }> {
   className?: string;
   hideActions?: boolean;
   nameKey?: string;
+  dataKey?: string;
 }
 
 const ChartCard = (props: ChartCardProps) => {
-  const { data, title, types, className, hideActions = false, nameKey } = props;
+  const {
+    data,
+    title,
+    types,
+    className,
+    hideActions = false,
+    nameKey,
+    dataKey,
+  } = props;
 
   const [selectedType, setSelectedType] = useState<ChartType>(types[0]);
   const [isLoading, setIsLoading] = useState(true);
@@ -70,17 +79,17 @@ const ChartCard = (props: ChartCardProps) => {
   const renderChart = (type: ChartType) => {
     switch (type) {
       case "area":
-        return <AreaChart nameKey={nameKey} data={data} />;
+        return <AreaChart nameKey={nameKey} dataKey={dataKey} data={data} />;
       case "bar":
-        return <BarChart nameKey={nameKey} data={data} />;
+        return <BarChart nameKey={nameKey} dataKey={dataKey} data={data} />;
       case "line":
-        return <LineChart nameKey={nameKey} data={data} />;
+        return <LineChart nameKey={nameKey} dataKey={dataKey} data={data} />;
       case "pie":
-        return <PieChart nameKey={nameKey} data={data} />;
+        return <PieChart nameKey={nameKey} dataKey={dataKey} data={data} />;
       case "treemap":
-        return <TreemapChart nameKey={nameKey} data={data} />;
+        return <TreemapChart nameKey={nameKey} dataKey={dataKey} data={data} />;
       case "scatter":
-        return <ScatterChart nameKey={nameKey} data={data} />;
+        return <ScatterChart nameKey={nameKey} dataKey={dataKey} data={data} />;
       default:
         return <></>;
     }
