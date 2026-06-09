@@ -10,7 +10,7 @@ const DashboardPage = async () => {
     take: 4,
     orderBy: { createdAt: "desc" },
     where: { userId },
-    include: { charts: true },
+    include: { charts: { select: { id: true } } },
   });
   const totalAnalysis = await prisma.analysis.count({ where: { userId } });
 

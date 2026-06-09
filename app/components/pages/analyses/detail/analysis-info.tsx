@@ -41,7 +41,7 @@ export const AnalysisInfo = ({ analysis }: { analysis: Analysis }) => {
           <div className="text-muted flex flex-wrap items-center gap-4 text-sm">
             <span className="flex items-center gap-1">
               <CalendarIcon className="size-4" />
-              {analysis.createdAt.toLocaleDateString("fa-IR", {
+              {new Date(analysis.createdAt).toLocaleDateString("fa-IR", {
                 month: "long",
                 day: "numeric",
                 year: "numeric",

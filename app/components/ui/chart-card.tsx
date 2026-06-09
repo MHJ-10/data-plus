@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import BarChart from "../chart/bar-chart";
 import { ChartType } from "@/utils/chart-candidate";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, Ref, useEffect, useRef, useState } from "react";
 import AreaChart from "../chart/area-chart";
 import PieChart from "../chart/pie-chart";
 import TreemapChart from "../chart/treemap-chart";
@@ -39,6 +39,7 @@ interface ChartCardProps<T = { [key: string]: string | number }> {
   hideActions?: boolean;
   nameKey?: string;
   dataKey?: string;
+  ref?: Ref<HTMLDivElement>;
 }
 
 const ChartCard = (props: ChartCardProps) => {
@@ -50,6 +51,7 @@ const ChartCard = (props: ChartCardProps) => {
     hideActions = false,
     nameKey,
     dataKey,
+    ref,
   } = props;
 
   const [selectedType, setSelectedType] = useState<ChartType>(types[0]);
@@ -117,7 +119,7 @@ const ChartCard = (props: ChartCardProps) => {
   };
 
   return (
-    <Card variant="secondary" className={cn("border", className)}>
+    <Card variant="secondary" ref={ref} className={cn("border", className)}>
       <Card.Header className="flex flex-row items-center justify-between">
         {title ? (
           <Card.Title className="flex-1 truncate text-xl">{title}</Card.Title>

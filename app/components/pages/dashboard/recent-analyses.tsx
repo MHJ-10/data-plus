@@ -10,7 +10,9 @@ import { EmptyState } from "@/components";
 
 export type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
-    charts: true;
+    charts: {
+      select: { id: true };
+    };
   };
 }>;
 

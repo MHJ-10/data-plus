@@ -20,7 +20,6 @@ const AnalysisDetailPage = async ({
       userId,
     },
     include: {
-      charts: true,
       columnMetadata: true,
       insights: true,
     },
