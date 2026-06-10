@@ -16,13 +16,17 @@ export function buildChartData(data: any, chart: ChartCandidate) {
 
       return {
         types: ["bar", "treemap"],
-        data: chartData.map((d) => ({
-          ...d,
-          [`${chart.y}`]:
-            "value" in d && typeof d.value === "number"
-              ? roundToTwoDecimals(d.value)
-              : 0,
-        })),
+        data: chartData.map((d: any) => {
+          const xKey = chart.x as string;
+          const yKey = chart.y as string;
+          return {
+            [xKey]: d[xKey],
+            [yKey]:
+              "value" in d && typeof d.value === "number"
+                ? roundToTwoDecimals(d.value)
+                : 0,
+          };
+        }),
         title: `نمودار ${chart.x} - ${chart.y}`,
       };
     }
@@ -46,17 +50,13 @@ export function buildChartData(data: any, chart: ChartCandidate) {
       const chartData = (
         table.orderby(chart.x).objects() as Array<Record<string, any>>
       ).map((d) => ({
-        x: d[chart.x as string],
-        y: d[chart.y as string],
+        [`${chart.x}`]: d[chart.x as string],
+        [`${chart.y}`]: d[chart.y as string],
       }));
 
       return {
-        typs: ["line", "area"],
-        data: chartData.map((d) => ({
-          ...d,
-          [`${chart.y}`]:
-            "y" in d && typeof d.y === "number" ? roundToTwoDecimals(d.y) : 0,
-        })),
+        types: ["line", "area"],
+        data: chartData,
         title: `نمودار ${chart.x} - ${chart.y}`,
       };
     }

@@ -44,11 +44,8 @@ const AnalysisDetail = ({ analysis }: { analysis: AnalysisWithRelations }) => {
 
   const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.5 });
 
-  console.log(isIntersecting);
-
   useEffect(() => {
     if (isIntersecting && hasNextPage && !isFetchingNextPage) {
-      console.log("hello world");
       fetchNextPage();
     }
   }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
@@ -59,7 +56,7 @@ const AnalysisDetail = ({ analysis }: { analysis: AnalysisWithRelations }) => {
     <div className="space-y-8">
       <AnalysisInfo analysis={analysis} />
 
-      {!data?.pages.length && !analysis.insights?.length ? (
+      {!data?.pages[0].data.length && !analysis.insights?.length ? (
         <EmptyState
           title="داده کافی برای تولید نتایج وجود ندارد"
           description="دیتاست آپلودشده اطلاعات کافی برای تولید نمودارها یا بینش‌های هوش مصنوعی را ندارد. لطفاً دیتاستی با تعداد سطرها و ستون‌های بیشتر بارگذاری کنید."
