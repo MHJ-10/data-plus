@@ -13,6 +13,7 @@ import { AnalysisInfo } from "./analysis-info";
 import { ColumnsMetadataTable } from "./columns-metadata-table";
 import { InsightsCard } from "./insights-card";
 import { PreviewTable } from "./preview-table";
+import { Loading } from "./loading";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -50,7 +51,7 @@ const AnalysisDetail = ({ analysis }: { analysis: AnalysisWithRelations }) => {
     }
   }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isLoading) return null;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="space-y-8">
