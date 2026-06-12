@@ -12,7 +12,7 @@ const uploadFeatures = [
   {
     title: "فرمت‌های پشتیبانی‌شده",
     description:
-      "آپلود فایل‌های CSV تا حجم ۱۰ مگابایت با پردازش سریع و خودکار داده‌ها",
+      "آپلود فایل‌های CSV تا حجم ۵ مگابایت با پردازش سریع و خودکار داده‌ها",
     icon: FileSpreadsheetIcon,
     color: "from-blue-500 to-blue-600",
   },

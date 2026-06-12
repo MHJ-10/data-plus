@@ -69,7 +69,7 @@ export const UploadCard = () => {
         setFile={setFile}
         options={{
           onDrop: onDropFiles,
-          maxSize: 10 * 1_000_000, // 10MB
+          maxSize: 5 * 1_000_000, // 5MB
         }}
       />
 

@@ -54,7 +54,7 @@ const Uploader = (props: UploaderProps) => {
                 </span>
                 <br />
                 <span className="text-muted text-base">
-                  پشتیبانی از فایل های CSV (تا ۱۰ مگابایت)
+                  پشتیبانی از فایل های CSV (تا ۵ مگابایت)
                 </span>
               </Card.Title>
             </>
