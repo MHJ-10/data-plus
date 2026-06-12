@@ -320,7 +320,7 @@ export async function createAnalysis(formData: FormData) {
   });
 
   return {
-    message: "در حال انتقال به صفحه تحلیل",
+    message: "انتقال به صفحه تحلیل",
     id: analysis.id,
   };
 }

@@ -26,7 +26,7 @@ export function mapTypeToRole(type: ColumnType, stats: ColumnStat): ColumnRole {
     return "ignore";
   }
 
-  if (type === "date") {
+  if (type === "date" || type === "temporal") {
     return "temporal";
   }
 

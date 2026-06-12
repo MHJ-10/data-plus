@@ -73,15 +73,17 @@ function scoreDistribution(
 }
 
 /**
- * Score variance/spread of data
+ * Score variance/spread of data - improved to prefer more variance
  */
 function scoreVariance(variance: number | undefined): number {
   if (variance === undefined) return 0.5;
 
   if (variance === 0) return 0.2; // No variation = boring
-  if (variance < 1) return 0.6; // Low variance = some patterns
+  if (variance < 0.1) return 0.5; // Very low variance
+  if (variance < 1) return 0.7; // Low variance = some patterns
   if (variance < 10) return 0.85; // Good variance
-  return 0.9; // High variance = great for exploration
+  if (variance < 100) return 0.95; // High variance
+  return 1; // Very high variance = perfect for exploration
 }
 
 /**
@@ -92,9 +94,10 @@ function scoreCorrelation(correlation: number): number {
 
   if (absCorr > 0.9) return 1; // Very strong
   if (absCorr > 0.7) return 0.95; // Strong
-  if (absCorr > 0.5) return 0.8; // Moderate
-  if (absCorr > 0.3) return 0.6; // Weak
-  return 0.4; // Very weak
+  if (absCorr > 0.5) return 0.85; // Moderate
+  if (absCorr > 0.4) return 0.7; // Weak-moderate (lowered threshold)
+  if (absCorr > 0.3) return 0.5; // Weak
+  return 0.2; // Very weak (still include for exploration)
 }
 
 /**
@@ -251,6 +254,7 @@ export function scoreCircularChart(
 
 /**
  * Score scatter charts (good for correlated measures)
+ * Improved: lower thresholds and better variance consideration
  */
 export function scoreScatterChart(
   measure1: MapAllRolesResponse,
@@ -259,8 +263,8 @@ export function scoreScatterChart(
 ): ScoringResult | null {
   const corrScore = scoreCorrelation(correlation);
 
-  // Skip if no meaningful correlation
-  if (corrScore < 0.4) return null;
+  // Lowered threshold to include weak correlations for exploration
+  if (corrScore < 0.2) return null;
 
   const quality1 = measure1.quality
     ? scoreDataQuality(measure1.quality.completeness, measure1.quality.outlierPercentage)
@@ -275,6 +279,9 @@ export function scoreScatterChart(
   const variance2 = scoreVariance(measure2.columnStats?.variance);
   const avgVariance = (variance1 + variance2) / 2;
 
+  // Prefer pairs with better variance
+  const varianceBonus = avgVariance > 0.7 ? 0.1 : 0;
+
   const factors: ScoringFactors = {
     cardinality: 0.8,
     dataDensity: 0.7,
@@ -284,7 +291,12 @@ export function scoreScatterChart(
     variance: avgVariance,
   };
 
-  const score = corrScore * 0.4 + avgQuality * 0.3 + avgVariance * 0.3;
+  // More weight on correlation strength, but also value variance and quality
+  const score =
+    corrScore * 0.4 +
+    avgQuality * 0.3 +
+    avgVariance * 0.25 +
+    varianceBonus * 0.05;
 
   return {
     chart: {
@@ -295,7 +307,7 @@ export function scoreScatterChart(
     },
     score,
     factors,
-    reason: `Strong scatter plot: ${measure1.column} vs ${measure2.column} (correlation: ${correlation.toFixed(2)})`,
+    reason: `Scatter plot: ${measure1.column} vs ${measure2.column} (r: ${correlation.toFixed(2)})`,
   };
 }
 

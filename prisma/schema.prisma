@@ -26,6 +26,7 @@ enum ColumnType {
   TEXT
   CATEGORY
   ID_LIKE
+  TEMPORAL
 }
 
 enum ColumnRole {

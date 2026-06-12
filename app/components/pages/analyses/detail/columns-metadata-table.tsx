@@ -19,6 +19,7 @@ const columnTypeMap: Record<ColumnType, string> = {
   TEXT: "متنی",
   CATEGORY: "دسته‌ای",
   ID_LIKE: "شناسه (ID)",
+  TEMPORAL: "زمانی",
 };
 
 const columnRoleMap: Record<
@@ -27,7 +28,7 @@ const columnRoleMap: Record<
 > = {
   DIMENSION: { label: "بعد تحلیلی", color: "success" },
   MEASURE: { label: "مقدار عددی", color: "warning" },
-  TEMPORAL: { label: "زمانی", color: "default" },
+  TEMPORAL: { label: "مقدار زمانی", color: "default" },
   IGNORE: { label: "نادیده گرفته‌شده", color: "danger" },
 };
 
