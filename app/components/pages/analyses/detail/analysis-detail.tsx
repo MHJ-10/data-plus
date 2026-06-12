@@ -65,7 +65,7 @@ const AnalysisDetail = ({ analysis }: { analysis: AnalysisWithRelations }) => {
         />
       ) : (
         <>
-          <InsightsCard />
+          {/* <InsightsCard /> */}
 
           <h3 className="mb-4 text-2xl font-bold">نمودارهای ایجادشده</h3>
           {data?.pages?.map((page, pageIndex) => (

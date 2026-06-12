@@ -16,15 +16,15 @@ const CustomizedContent = (props: any) => {
     return `color-mix(in srgb, ${CHART_COLORS[0]} ${intensity}%, white)`;
   };
 
-  const truncateText = (text: string, maxWidth: number) => {
+  const truncateText = (text: number | string, maxWidth: number) => {
     if (!text) return "";
 
     const avgCharWidth = 6;
     const maxChars = Math.floor(maxWidth / avgCharWidth);
 
-    if (text.length <= maxChars) return text;
+    if (text.toString().length <= maxChars) return text;
 
-    return text.slice(0, maxChars - 1) + "…";
+    return text.toString().slice(0, maxChars - 1) + "…";
   };
 
   const values = data.map((d: any) => d[dataKey]);
