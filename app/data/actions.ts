@@ -395,7 +395,8 @@ const runAnalysis = async ({ data, analysisId }: RunAnalysisParams) => {
           },
           data: {
             title: builtChart?.title,
-            chartData: builtChart?.data,
+            chartData:
+              builtChart?.data.filter((d: any) => d[chart.x || ""]) || [],
             availableTypes: builtChart?.types,
           },
         });
