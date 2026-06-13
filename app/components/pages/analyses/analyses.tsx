@@ -5,6 +5,7 @@ import { AnalysesTable } from "./analyses-table";
 import { Filter } from "./filter";
 import { EmptyState } from "@/components";
 import { EmptyTableIllustrationIcon } from "@/components/icons";
+import { useSearchParams } from "next/navigation";
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {
@@ -20,6 +21,9 @@ export interface AnalysesProps {
 }
 
 const Analyses = ({ analyses, total }: AnalysesProps) => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search");
+
   return (
     <div className="space-y-8">
       <div>
@@ -29,7 +33,7 @@ const Analyses = ({ analyses, total }: AnalysesProps) => {
         </p>
       </div>
 
-      {analyses.length ? (
+      {analyses.length || search ? (
         <>
           <Filter />
           <AnalysesTable analyses={analyses} total={total} />

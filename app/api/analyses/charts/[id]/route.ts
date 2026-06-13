@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 6;
 
 export async function GET(
   request: NextRequest,
@@ -11,7 +11,7 @@ export async function GET(
   try {
     const analysisId = (await params).id;
     const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get("page") || "10");
+    const page = parseInt(searchParams.get("page") || "1");
 
     const session = await auth();
     const userId = session?.user?.id;
