@@ -23,6 +23,7 @@ const LineChart = (props: ChartBaseProps) => {
         strokeWidth={2}
         dot={{ fill: CHART_COLORS[5] }}
         activeDot={{ stroke: CHART_COLORS[5] }}
+        isAnimationActive={false}
       />
       <Tooltip wrapperClassName="!bg-segment rounded-md !border-border !p-1" />
     </RLineChart>

@@ -31,6 +31,7 @@ const ScatterChart = (props: ChartBaseProps) => {
         activeShape={{ fill: "var(--color-accent)" }}
         data={data}
         fill="var(--color-foreground)"
+        isAnimationActive={false}
       />
     </RScatterChart>
   );

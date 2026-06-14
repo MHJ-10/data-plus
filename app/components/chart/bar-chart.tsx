@@ -25,6 +25,7 @@ const BarChart = (props: ChartBaseProps) => {
           stroke: CHART_COLORS[1],
         }}
         radius={[10, 10, 0, 0]}
+        isAnimationActive={false}
       />
     </RBarChart>
   );

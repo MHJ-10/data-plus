@@ -1,6 +1,5 @@
 "use client";
 
-import { ChartCard } from "@/components";
 import { InsufficientDataIllustrationIcon } from "@/components/icons";
 import { EmptyState } from "@/components/ui";
 import { Chart, Prisma } from "@/generated/prisma/client";
@@ -11,9 +10,13 @@ import axios from "axios";
 import { useEffect } from "react";
 import { AnalysisInfo } from "./analysis-info";
 import { ColumnsMetadataTable } from "./columns-metadata-table";
-import { InsightsCard } from "./insights-card";
 import { PreviewTable } from "./preview-table";
 import { Loading } from "./loading";
+import dynamic from "next/dynamic";
+
+const ChartCard = dynamic(() => import("@/components/ui/chart-card"), {
+  ssr: false,
+});
 
 type AnalysisWithRelations = Prisma.AnalysisGetPayload<{
   include: {

@@ -23,6 +23,7 @@ const AreaChart = (props: ChartBaseProps) => {
         stroke={CHART_COLORS[4]}
         fillOpacity={1}
         fill="url(#colorValue)"
+        isAnimationActive={false}
       />
     </RAreaChart>
   );

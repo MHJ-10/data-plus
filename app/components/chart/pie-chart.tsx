@@ -18,6 +18,7 @@ const PieChart = (props: ChartBaseProps) => {
         outerRadius="100%"
         fill="var(--color-link)"
         stroke="var(--color-background)"
+        isAnimationActive={false}
       >
         {data.map((_, index) => (
           <Cell
