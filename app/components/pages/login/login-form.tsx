@@ -15,9 +15,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { EyeOffIcon, EyeIcon } from "lucide-react";
 
-export const LoginForm = () => {
-  const router = useRouter();
+export const LoginForm = ({
+  callbackUrl = "/dashboard",
+}: {
+  callbackUrl?: string;
+}) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const router = useRouter();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,21 +35,16 @@ export const LoginForm = () => {
       redirect: false,
       email,
       password,
+      redirectTo: callbackUrl,
     });
 
     if (result?.error) {
-      toast.danger(
-        result.error === "EMAIL_NOT_VERIFIED"
-          ? "ایمیل شما هنوز تأیید نشده است. ابتدا ایمیل خود را تأیید کنید."
-          : "نام کاربری یا رمز عبور اشتباه است",
-      );
+      toast.danger("نام کاربری یا رمز عبور اشتباه است");
       return;
     }
 
-    if (result?.ok) {
-      toast.success("ورود با موفقیت انجام شد.");
-      router.push("/dashboard");
-    }
+    router.refresh();
+    router.replace(result?.url || callbackUrl);
   };
 
   return (

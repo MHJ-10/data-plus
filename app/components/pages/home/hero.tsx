@@ -10,7 +10,7 @@ const Hero = () => {
       <h1 className="text-center text-5xl font-bold md:text-6xl">
         تبدیل داده‌های خام به بینش‌های قابل‌استفاده{" "}
         <span className="from-accent/50 to-accent/70 animate-pulse bg-linear-to-l bg-clip-text text-transparent">
-          در
+          در{" "}
         </span>
         <br className="hidden lg:block" />
         <span className="from-accent/70 to-accent animate-pulse bg-linear-to-l bg-clip-text text-transparent">
@@ -26,7 +26,11 @@ const Hero = () => {
 
       <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
         <Button size="lg" variant="primary">
-          <Link href="/dashboard/upload" className="flex gap-2">
+          <Link
+            href="/dashboard/upload"
+            prefetch={false}
+            className="flex gap-2"
+          >
             آپلود دیتاست
             <UploadIcon className="animate-bounce" />
           </Link>

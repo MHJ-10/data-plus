@@ -1,11 +1,11 @@
 "use client";
 
 import { Uploader } from "@/components";
-import { Button, Card, Chip, Table, toast } from "@heroui/react";
-import Papa from "papaparse";
-import { useState, useTransition } from "react";
 import { createAnalysis } from "@/data";
+import { Button, Card, Chip, Table, toast } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { parse } from "papaparse";
+import { useState, useTransition } from "react";
 
 interface DatasetPreviewTable {
   size: number;
@@ -31,7 +31,7 @@ export const UploadCard = () => {
 
     const fileSize = file.size;
 
-    const { data } = Papa.parse(text, {
+    const { data } = parse(text, {
       header: true,
       dynamicTyping: true,
       skipEmptyLines: true,

@@ -5,7 +5,7 @@ import { LockIcon } from "lucide-react";
 import Image from "next/image";
 import { LoginForm } from "./login-form";
 
-const Login = () => {
+const Login = ({ callbackUrl }: { callbackUrl?: string | undefined }) => {
   return (
     <div className="container mx-auto flex h-screen w-full items-center justify-center px-4">
       <div className="grid w-full grid-cols-1 place-items-center gap-15 lg:grid-cols-5">
@@ -26,7 +26,7 @@ const Login = () => {
             </h3>
           </Card.Header>
           <Card.Content className="w-full">
-            <LoginForm />
+            <LoginForm callbackUrl={callbackUrl} />
           </Card.Content>
           <Card.Footer className="border-muted/30 text-muted border-t pt-4">
             <p className="text-muted flex items-center gap-2 text-xs">
@@ -53,19 +53,23 @@ const Login = () => {
 
           <Card.Content className="flex flex-row gap-4">
             <Card className="h-fit">
-              <p className="text-2xl font-bold text-foreground">تحلیل هوشمند</p>
+              <p className="text-foreground text-2xl font-bold">تحلیل هوشمند</p>
               <p className="text-muted text-lg font-semibold">
                 پردازش خودکار و سریع دیتاست‌ها
               </p>
             </Card>
             <Card className="mt-6 h-fit">
-              <p className="text-2xl font-bold text-foreground">بصری‌سازی پیشرفته</p>
+              <p className="text-foreground text-2xl font-bold">
+                بصری‌سازی پیشرفته
+              </p>
               <p className="text-muted text-lg font-semibold">
                 تولید نمودارهای حرفه‌ای در لحظه
               </p>
             </Card>
             <Card className="mt-12 h-fit">
-              <p className="text-2xl font-bold text-foreground">حریم خصوصی امن</p>
+              <p className="text-foreground text-2xl font-bold">
+                حریم خصوصی امن
+              </p>
               <p className="text-muted text-lg font-semibold">
                 داده‌های شما داخل مرورگر باقی می‌مانند
               </p>
