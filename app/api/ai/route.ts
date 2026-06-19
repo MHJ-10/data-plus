@@ -2,16 +2,35 @@
 
 import prisma from "@/lib/prisma";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { generateText } from "ai";
-import { NextResponse } from "next/server";
+import { Output, streamText } from "ai";
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 });
 
-export async function GET() {
+const insightSchema = z.object({
+  insights: z
+    .array(
+      z.object({
+        title: z.string().max(80),
+        description: z.string().max(280),
+        type: z.enum(["TREND", "INSIGHT", "WARNING", "CORRELATION"]),
+        score: z.number().min(0.65).max(0.95),
+      }),
+    )
+    .min(4)
+    .max(8),
+});
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+
+  const { prompt: analysisId } = body;
+
   const analysis = await prisma.analysis.findUnique({
-    where: { id: "cmq0yqk0u00014g0mwvwg8407" },
+    where: { id: analysisId },
     include: {
       columnMetadata: true,
     },
@@ -54,29 +73,37 @@ export async function GET() {
   };
 
   const prompt = `
-You are a professional data analyst.
+  // You are a professional data analyst.
 
-Dataset Context:
-${JSON.stringify(context, null, 2)}
+  // Dataset Context:
+  // ${JSON.stringify(context, null, 2)}
 
-TASK:
-Generate 4 to 8 high-quality, actionable insights from this dataset.
+  // TASK:
+  // Generate 5 to 7 high-quality, actionable insights.
 
-RULES:
-- Title: Very short and punchy (max 8-10 words, ideally one line)
-- Description: Keep it concise — 1 to 2 sentences maximum (max 70 words)
-- Each insight must be specific and reference real numbers, distributions, comparisons, or patterns.
-- Do not hallucinate numbers.
-- Prioritize different types: TREND, CORRELATION, WARNING, INSIGHT.
-- Give a realistic score between 0.65 and 0.95.
+  // RULES:
+  // - Title: Very short and punchy (max 8-10 words)
+  // - Description: 1 sentence only (max 60-70 words). Be specific with numbers.
+  // - Use real data only. Do not hallucinate.
+  // - Vary the types: TREND, INSIGHT, WARNING, CORRELATION.
+  // - Score: realistic importance (0.65 - 0.95)
 
-IMPORTANT_NOTE: Return the insights in the requested JSON format only.
-`;
+  // Respond with valid JSON only.
+  // IMPORTANT_NOTE: write title and description in persian language.
+  // `;
 
-  const result = await generateText({
-    model: openrouter("nvidia/nemotron-3-ultra-550b-a55b:free"),
-    prompt,
-  });
+  try {
+    const result = streamText({
+      model: openrouter("openai/gpt-oss-120b:free"),
+      prompt,
+      output: Output.object({
+        schema: insightSchema,
+      }),
+    });
 
-  return NextResponse.json({ result, prompt });
+    return result.toUIMessageStreamResponse();
+  } catch (error) {
+    console.log(error);
+    return new Response("ERROR", { status: 500 });
+  }
 }

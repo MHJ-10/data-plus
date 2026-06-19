@@ -10,6 +10,7 @@
     "email": "email dev --dir app/components/email-template -p 3030"
   },
   "dependencies": {
+    "@ai-sdk/react": "^3.0.210",
     "@auth/prisma-adapter": "^2.11.2",
     "@heroui/react": "^3.0.1",
     "@heroui/styles": "^3.0.1",
