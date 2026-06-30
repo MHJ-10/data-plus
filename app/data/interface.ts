@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createUserSchema } from "./schema";
+import { Insight } from "@/generated/prisma/client";
 
 interface ActionResponse {
   error?: string | null;
@@ -35,4 +36,9 @@ export interface UpdateUserPayload {
 export interface RunAnalysisParams {
   analysisId: string;
   data: unknown[];
+}
+
+export interface AddInsightsPayload {
+  id: string;
+  insights: Insight[];
 }

@@ -7,8 +7,6 @@ import { AnalysisWithRelations, RecentAnalyses } from "./recent-analyses";
 import { RecentCharts } from "./recent-charts";
 import { RecentInsights } from "./recent-insights";
 import { Stats } from "./stats";
-// import { Button } from "@heroui/react";
-// import axios from "axios";
 
 interface DashboardProps {
   stats: {
@@ -27,15 +25,6 @@ interface DashboardProps {
 const Dashboard = ({ stats, recentData }: DashboardProps) => {
   const { data } = useSession();
 
-  // const handleClick = async () => {
-  //   try {
-  //     const res = await axios.get("/api/ai");
-  //     console.log(res);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   return (
     <div className="space-y-8">
       <div>
@@ -47,8 +36,6 @@ const Dashboard = ({ stats, recentData }: DashboardProps) => {
         </p>
       </div>
 
-      {/* <Button onClick={handleClick}>Click</Button> */}
-
       <Stats stats={stats} />
 
       <NewAnalysis />
@@ -57,7 +44,7 @@ const Dashboard = ({ stats, recentData }: DashboardProps) => {
 
       <RecentAnalyses analyses={recentData.analyses} />
 
-      <RecentInsights />
+      <RecentInsights insights={recentData.insights} />
     </div>
   );
 };

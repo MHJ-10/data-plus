@@ -19,7 +19,7 @@ const InfoSkeleton = () => (
   </div>
 );
 
-const InsightsSkeleton = () => (
+export const InsightsSkeleton = () => (
   <Card className="w-full border bg-transparent">
     <Skeleton className="h-8 w-45 rounded" />
     <Card.Content className="grid gap-5 lg:grid-cols-2 2xl:grid-cols-4">

@@ -9,6 +9,7 @@ import { createUserSchema } from "./schema";
 import { redirect } from "next/navigation";
 import { encrypt } from "@/lib/encrypt";
 import {
+  AddInsightsPayload,
   CheckPasswordPayload,
   PromsieActionResponse,
   ResendOTPPayload,
@@ -434,3 +435,14 @@ const runAnalysis = async ({ data, analysisId }: RunAnalysisParams) => {
     });
   }
 };
+
+export async function addInsights({ id, insights }: AddInsightsPayload) {
+  insights.forEach(async (insight) => {
+    await prisma.insight.create({
+      data: {
+        ...insight,
+        analysisId: id,
+      },
+    });
+  });
+}

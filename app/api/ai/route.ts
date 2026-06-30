@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { Output, streamText } from "ai";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { z } from "zod";
 
 const openrouter = createOpenRouter({
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = streamText({
-      model: openrouter("openai/gpt-oss-120b:free"),
+      model: openrouter("google/gemma-4-26b-a4b-it:free"),
       prompt,
       output: Output.object({
         schema: insightSchema,
