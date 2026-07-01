@@ -16,6 +16,6 @@ export const insightSchema = z.object({
         score: z.number().min(0.65).max(0.95),
       }),
     )
-    .min(4)
-    .max(8),
+    .min(3)
+    .max(6),
 });
