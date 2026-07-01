@@ -13,7 +13,7 @@ import { ColumnsMetadataTable } from "./columns-metadata-table";
 import { PreviewTable } from "./preview-table";
 import { Loading } from "./loading";
 import dynamic from "next/dynamic";
-import { InsightsCard } from "./insights-card";
+import { InsightsCards } from "./insights-cards";
 
 const ChartCard = dynamic(() => import("@/components/ui/chart-card"), {
   ssr: false,
@@ -69,7 +69,7 @@ const AnalysisDetail = ({ analysis }: { analysis: AnalysisWithRelations }) => {
         />
       ) : (
         <>
-          <InsightsCard insights={analysis.insights} />
+          <InsightsCards insights={analysis.insights} />
 
           <h3 className="mb-4 text-2xl font-bold">نمودارهای ایجادشده</h3>
           {data?.pages?.map((page, pageIndex) => (

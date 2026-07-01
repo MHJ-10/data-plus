@@ -4,7 +4,7 @@ import { EmptyState } from "@/components";
 import { EmptyInsightsIllustrationIcon } from "@/components/icons";
 import { Insight } from "@/generated/prisma/client";
 import { Card } from "@heroui/react";
-import { insightTypeMap } from "../analyses/detail/insights-card";
+import { insightTypeMap } from "../analyses/detail/insights-cards";
 
 export const RecentInsights = ({ insights }: { insights?: Insight[] }) => {
   return (

@@ -37,7 +37,7 @@ export const insightTypeMap: Record<
   },
 };
 
-export const InsightsCard = ({ insights }: { insights?: Insight[] }) => {
+export const InsightsCards = ({ insights }: { insights?: Insight[] }) => {
   const params = useParams();
   const analysisId = params.id as string;
 
@@ -62,6 +62,8 @@ export const InsightsCard = ({ insights }: { insights?: Insight[] }) => {
   }, [analysisId, insights, submit]);
 
   if (isLoading && !object?.insights?.length) return <InsightsSkeleton />;
+
+  if (!isLoading && !object?.insights?.length && !insights?.length) return null;
 
   return (
     <>
