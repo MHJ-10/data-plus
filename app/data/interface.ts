@@ -40,5 +40,5 @@ export interface RunAnalysisParams {
 
 export interface AddInsightsPayload {
   id: string;
-  insights: Insight[];
+  insights: Pick<Insight, "title" | "type" | "score" | "description">[];
 }

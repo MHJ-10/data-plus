@@ -1,33 +1,17 @@
 "use server";
 
+import { insightSchema } from "@/data/schema";
 import prisma from "@/lib/prisma";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { Output, streamText } from "ai";
 import { NextRequest } from "next/server";
-import { z } from "zod";
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 });
 
-const insightSchema = z.object({
-  insights: z
-    .array(
-      z.object({
-        title: z.string().max(80),
-        description: z.string().max(280),
-        type: z.enum(["TREND", "INSIGHT", "WARNING", "CORRELATION"]),
-        score: z.number().min(0.65).max(0.95),
-      }),
-    )
-    .min(4)
-    .max(8),
-});
-
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-
-  const { prompt: analysisId } = body;
+  const analysisId = await req.json();
 
   const analysis = await prisma.analysis.findUnique({
     where: { id: analysisId },
@@ -101,7 +85,7 @@ export async function POST(req: NextRequest) {
       }),
     });
 
-    return result.toUIMessageStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
     console.log(error);
     return new Response("ERROR", { status: 500 });
