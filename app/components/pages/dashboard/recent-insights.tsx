@@ -11,7 +11,7 @@ export const RecentInsights = ({ insights }: { insights?: Insight[] }) => {
     <Card className="border">
       <Card.Header>
         <p className="text-foreground text-2xl font-semibold">
-          تحلیل‌های هوشمند
+          تحلیل‌های هوشمند اخیر
         </p>
       </Card.Header>
 
