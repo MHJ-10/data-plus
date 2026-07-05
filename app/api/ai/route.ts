@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = streamText({
-      model: openrouter("google/gemma-4-26b-a4b-it:free"),
+      model: openrouter("openrouter/free"),
       prompt,
       output: Output.object({
         schema: insightSchema,
