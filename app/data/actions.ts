@@ -50,8 +50,16 @@ export async function createUser(
     where: { email: data.email },
   });
 
+  const isUserVerified = !!existingUser?.emailVerified;
+
   if (existingUser) {
-    return { error: "این ایمیل قبلاً ثبت شده است." };
+    if (isUserVerified) {
+      return { error: "این ایمیل قبلاً ثبت شده است." };
+    } else {
+      await prisma.user.delete({
+        where: { email: data.email },
+      });
+    }
   }
 
   const hashedPassword = await hash(data.password, 12);
@@ -77,7 +85,7 @@ export async function createUser(
   });
 
   await resend.emails.send({
-    from: "Data Plus <onboarding@resend.dev>",
+    from: "Data Plus <support@data-plus.ir>",
     to: [data.email],
     subject: "کد تأیید ایمیل شما",
     react: OTPEmailTemplate({ nickname: data.nickname, otp }),
@@ -119,7 +127,7 @@ export async function resendOTP({ email, nickname }: ResendOTPPayload) {
   });
 
   await resend.emails.send({
-    from: "Data Plus <onboarding@resend.dev>",
+    from: "Data Plus <support@data-plus.ir>",
     to: [email],
     subject: "کد تأیید ایمیل شما (دوباره ارسال شده)",
     react: OTPEmailTemplate({
