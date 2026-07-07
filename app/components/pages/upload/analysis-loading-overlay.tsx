@@ -61,7 +61,7 @@ export const AnalysisLoadingOverlay = () => {
         <div className="flex flex-col items-center gap-2">
           <p
             key={phraseIndex}
-            className="text-xl font-medium tracking-tight"
+            className="text-center text-xl font-medium tracking-tight"
             style={{ animation: "fadeUp 350ms ease both" }}
           >
             {PHRASES[phraseIndex]}
