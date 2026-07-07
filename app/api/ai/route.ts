@@ -78,7 +78,15 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = streamText({
-      model: openrouter("openrouter/free"),
+      model: openrouter("tencent/hy3:free", {
+        extraBody: {
+          models: [
+            "nvidia/nemotron-3-ultra-550b-a55b:free",
+            "nvidia/nemotron-3-super-120b-a12b:free",
+            "openai/gpt-oss-120b:free",
+          ],
+        },
+      }),
       prompt,
       output: Output.object({
         schema: insightSchema,
@@ -91,3 +99,21 @@ export async function POST(req: NextRequest) {
     return new Response("ERROR", { status: 500 });
   }
 }
+
+// tencent/hy3:free
+// nvidia/nemotron-3-ultra-550b-a55b:free
+// nvidia/nemotron-3-super-120b-a12b:free
+// openai/gpt-oss-120b:free
+// poolside/laguna-m.1:free
+// openai/gpt-oss-20b:free
+// poolside/laguna-xs-2.1:free
+
+// Google Gemma 4 26B A4B
+// Google Gemma 4 31B
+// Qwen 3 Next 80B
+// Qwen 3 Coder
+// OpenAI GPT-OSS 120B
+// Meta Llama 3.3 70B
+// Meta Llama 3.2 3B
+// Hermes 3 Llama 405B
+// Dolphin Mistral Venice

@@ -6,6 +6,7 @@ import { Button, Card, Chip, Table, toast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { parse } from "papaparse";
 import { useState, useTransition } from "react";
+import { AnalysisLoadingOverlay } from "./analysis-loading-overlay";
 
 interface DatasetPreviewTable {
   size: number;
@@ -61,6 +62,8 @@ export const UploadCard = () => {
       });
     }
   };
+
+  if (pending) return <AnalysisLoadingOverlay />;
 
   return (
     <>
