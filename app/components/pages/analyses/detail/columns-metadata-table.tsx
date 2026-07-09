@@ -37,6 +37,9 @@ export const ColumnsMetadataTable = ({ data }: { data: ColumnMetadata[] }) => {
     <Card className="border bg-transparent">
       <Card.Header className="text-foreground text-xl font-bold">
         اطلاعات ستون‌ها
+        <sub className="text-muted py-1 text-sm">
+          بر اساس نمونه‌ای از داده‌های دیتاست محاسبه شده است.
+        </sub>
       </Card.Header>
       <Card.Content>
         <Table>
