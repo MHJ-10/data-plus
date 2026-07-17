@@ -323,7 +323,7 @@ export async function createAnalysis(formData: FormData) {
     },
   });
 
-  runAnalysis({
+  await runAnalysis({
     data,
     analysisId: analysis.id,
   });
