@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Harmattan } from "next/font/google";
 import "./globals.css";
 import Provider from "./provider";
+import { Analytics } from "@vercel/analytics/next";
 
 const harmattan = Harmattan({
   variable: "--font-harmattan",
@@ -42,6 +43,7 @@ export default function RootLayout({
         <Provider>
           <div className="relative z-10">{children}</div>
         </Provider>
+        <Analytics />
       </body>
     </html>
   );
