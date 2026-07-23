@@ -32,7 +32,6 @@ The project is designed to make exploratory data analysis accessible to users wh
 - [Screenshots](#screenshots)
 - [Future Improvements](#future-improvements)
 - [Contributing](#contributing)
-- [License](#license)
 - [Author](#author)
 
 ## Overview
@@ -420,15 +419,15 @@ The application implements several security mechanisms:
 
 ## Screenshots
 
-![Landing Page Screenshot](<Screenshot 1405-04-29 at 22.46.31.png>)
+<img width="1512" height="826" alt="Data Plus Landing Page" src="https://github.com/user-attachments/assets/2bdc1798-4353-4eb0-b43e-f94750fef18b" />
 
-![Upload Page Screenshot](<Screenshot 1405-04-29 at 22.46.48.png>)
+<img width="1258" height="827" alt="Data Plus Upload Page" src="https://github.com/user-attachments/assets/856503d0-90fe-4e6f-a7e9-cab751ef4a3f" />
 
-![Analysis Dashboard Screenshot](<Screenshot 1405-04-29 at 22.47.09.png>)
+<img width="1258" height="827" alt="Data Plus Dashboard Page" src="https://github.com/user-attachments/assets/d7d21e57-1b6b-48ed-b0e8-08cbd1ea5119" />
 
-![Charts Screenshot](<Screenshot 1405-04-29 at 22.47.36.png>)
+<img width="1247" height="765" alt="Data Plus Charts" src="https://github.com/user-attachments/assets/649f2651-b2c8-479d-a386-77f2f028741e" />
 
-![AI Insights Screenshot](<Screenshot 1405-04-29 at 22.48.21.png>)
+<img width="1245" height="628" alt="Data Plus Insights" src="https://github.com/user-attachments/assets/49fdd897-abf6-4ccf-a94c-7c7051a7aeb5" />
 
 ## Future Improvements
 
