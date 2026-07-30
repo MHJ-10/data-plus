@@ -78,10 +78,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = streamText({
-      model: openrouter("google/gemma-4-26b-a4b-it:free", {
+      model: openrouter("inclusionai/ling-3.0-flash:free", {
         extraBody: {
           models: [
-            "inclusionai/ling-3.0-flash:free",
+            "google/gemma-4-26b-a4b-it:free",
             "nvidia/nemotron-3-ultra-550b-a55b:free",
             "openai/gpt-oss-120b:free",
           ],
