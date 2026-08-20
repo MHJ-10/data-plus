@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = streamText({
-      model: openrouter("inclusionai/ling-3.0-flash:free", {
+      model: openrouter("liquid/lfm-2.5-2.6b:free", {
         extraBody: {
           models: [
             "google/gemma-4-26b-a4b-it:free",
